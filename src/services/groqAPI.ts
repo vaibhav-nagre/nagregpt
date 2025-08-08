@@ -1,5 +1,6 @@
 import { config } from '../config';
 import { FeedbackManager } from '../utils/feedbackManager';
+import { ResponseAnalyzer } from '../utils/responseAnalyzer';
 
 export interface GroqMessage {
   role: 'system' | 'user' | 'assistant';
@@ -52,11 +53,11 @@ export class GroqAPI {
         model,
         messages,
         stream: !!onStream,
-        max_tokens: 4096, // Reduced from 8192 to encourage shorter responses
-        temperature: 0.5, // Reduced from 0.7 for more focused responses
-        top_p: 0.8, // Reduced from 0.9 for more focused responses
-        frequency_penalty: 0.2, // Increased to reduce repetition
-        presence_penalty: 0.2, // Increased to encourage conciseness
+        max_tokens: 6144, // Increased to allow for more detailed responses
+        temperature: 0.6, // Balanced for accuracy and natural flow
+        top_p: 0.85, // Balanced for comprehensive yet focused responses
+        frequency_penalty: 0.1, // Reduced to allow for detailed explanations
+        presence_penalty: 0.15, // Balanced to encourage thoroughness without repetition
         stop: null,
       };
       
@@ -182,26 +183,40 @@ export function convertToGroqMessages(messages: { role: 'user' | 'assistant'; co
   // Get learning context from user feedback
   const learningContext = FeedbackManager.generateLearningContext();
   
+  // Analyze the conversation for response style
+  const userMessages = messages.filter(m => m.role === 'user').map(m => m.content);
+  const lastUserMessage = userMessages[userMessages.length - 1] || '';
+  const previousUserMessages = userMessages.slice(0, -1);
+  
+  const responseStyle = ResponseAnalyzer.getResponseStyle(lastUserMessage, previousUserMessages);
+  const responseInstructions = ResponseAnalyzer.generateResponseInstructions(responseStyle);
+  
   return [
     {
       role: 'system',
-      content: `You are NagreGPT, a helpful AI assistant. Be concise and direct in your responses.
+      content: `You are NagreGPT, a knowledgeable AI assistant that provides accurate, well-structured responses.
 
-Key behaviors:
-- Answer exactly what is asked - no more, no less
-- Be brief and to the point
+${responseInstructions}
+
+Core Behaviors:
+- Always prioritize accuracy and relevance over everything else
+- Provide factual, well-researched information
+- Use clear, professional language appropriate for the topic
+- Include specific details that add genuine value
+- When discussing technical topics, explain key concepts appropriately
+- For factual questions, provide complete and accurate answers
 - Only provide code when specifically requested
-- Don't add extra explanations unless asked
-- Use simple, clear language
-- Stick to the specific question or task
-- If asked a yes/no question, give a yes/no answer first
-- Only elaborate when explicitly requested
-- Maintain context from previous messages in the conversation
+- Maintain conversation context and build upon previous topics
 - Learn from user feedback: 👍 = good response, 👎 = needs improvement, ❤️ = excellent response
-- Adapt your response style based on what the user seems to prefer
-- Remember what the user has asked before and build upon that knowledge
+- Adapt to user preferences while maintaining high quality
 
-Focus on giving precise, focused answers that directly address the user's question without unnecessary details while maintaining conversation context.${learningContext}`,
+Quality Standards:
+- Ensure high accuracy in all information provided
+- Include relevant examples when they enhance understanding
+- Structure responses with clear organization
+- Balance comprehensiveness with readability
+- Focus on practical, actionable insights when applicable
+- Verify information accuracy before including it${learningContext}`,
     },
     ...messages.map(msg => ({
       role: msg.role as 'user' | 'assistant',
