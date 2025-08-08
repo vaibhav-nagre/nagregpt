@@ -4,11 +4,11 @@
   "version": "1.0.0",
   "type": "module",
   "description": "NagreGPT - A ChatGPT clone powered by Groq's Llama models",
-  "author": "Your Name",
-  "homepage": "https://yourusername.github.io/chatgpt/",
+  "author": "Vaibhav Nagre",
+  "homepage": "https://vaibhav-nagre.github.io/nagregpt/",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/chatgpt.git"
+    "url": "https://github.com/vaibhav-nagre/nagregpt.git"
   },
   "scripts": {
     "dev": "vite",

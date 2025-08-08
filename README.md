@@ -9,7 +9,7 @@
 
 ### ✨ A pixel-perfect ChatGPT clone with advanced AI learning capabilities
 
-[🚀 Live Demo](https://yourusername.github.io/nagregpt) • [📖 Documentation](#features) • [🛠️ Setup](#installation)
+[🚀 Live Demo](https://vaibhav-nagre.github.io/nagregpt) • [📖 Documentation](#features) • [🛠️ Setup](#installation)
 
 </div>
 
@@ -47,7 +47,7 @@
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/nagregpt.git
+git clone https://github.com/vaibhav-nagre/nagregpt.git
 
 # Navigate to project
 cd nagregpt
@@ -120,10 +120,10 @@ The AI learns from your feedback patterns and adapts its response style to match
 
 <div align="center">
 
-![GitHub stars](https://img.shields.io/github/stars/yourusername/nagregpt?style=social)
-![GitHub forks](https://img.shields.io/github/forks/yourusername/nagregpt?style=social)
-![GitHub issues](https://img.shields.io/github/issues/yourusername/nagregpt)
-![GitHub last commit](https://img.shields.io/github/last-commit/yourusername/nagregpt)
+![GitHub stars](https://img.shields.io/github/stars/vaibhav-nagre/nagregpt?style=social)
+![GitHub forks](https://img.shields.io/github/forks/vaibhav-nagre/nagregpt?style=social)
+![GitHub issues](https://img.shields.io/github/issues/vaibhav-nagre/nagregpt)
+![GitHub last commit](https://img.shields.io/github/last-commit/vaibhav-nagre/nagregpt)
 
 </div>
 
@@ -142,9 +142,9 @@ We love contributions! Feel free to:
 
 <div align="center">
 
-### 💖 **Made with love by [Vaibhav Nagre](https://github.com/yourusername)**
+### 💖 **Made with love by [Vaibhav Nagre](https://github.com/vaibhav-nagre)**
 
-**[⭐ Star this repo](https://github.com/yourusername/nagregpt)** • **[🐦 Follow on Twitter](https://twitter.com/yourusername)** • **[💼 LinkedIn](https://linkedin.com/in/yourusername)**
+**[⭐ Star this repo](https://github.com/vaibhav-nagre/nagregpt)** • **[🐦 Follow on Twitter](https://twitter.com/vaibhavnagre)** • **[💼 LinkedIn](https://linkedin.com/in/vaibhavnagre)**
 
 ---
 
