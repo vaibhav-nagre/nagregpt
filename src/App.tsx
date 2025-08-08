@@ -1,13 +1,12 @@
 import { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import { ChatProvider, useChat } from './context/ChatContext';
 import Chat from './components/Chat';
 import Header from './components/Header';
 
 function AppContent() {
-  const { state, createNewConversation } = useChat();
+  const { state, clearCurrentConversation } = useChat();
   const navigate = useNavigate();
-  const location = useLocation();
 
   useEffect(() => {
     // Apply theme class to document element
@@ -20,17 +19,12 @@ function AppContent() {
 
   // Handle home navigation
   const handleHomeClick = () => {
-    // Create a new conversation and navigate to home
-    createNewConversation();
+    // Clear current conversation and navigate to home
+    clearCurrentConversation();
     navigate('/', { replace: true });
   };
 
-  // Auto-navigate to a conversation route if we have an active conversation but are on root
-  useEffect(() => {
-    if (location.pathname === '/' && state.currentConversationId) {
-      navigate(`/chat/${state.currentConversationId}`, { replace: true });
-    }
-  }, [state.currentConversationId, location.pathname, navigate]);
+  // No auto-navigation - let users explicitly choose to continue conversations
 
   return (
     <div className="h-screen flex flex-col bg-gradient-to-br from-white to-gray-50 dark:from-gpt-gray-900 dark:to-gpt-gray-800 animate-fade-in">

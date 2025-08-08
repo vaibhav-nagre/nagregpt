@@ -6,6 +6,7 @@ interface ChatContextType {
   state: ChatState;
   createNewConversation: () => string;
   switchConversation: (id: string) => void;
+  clearCurrentConversation: () => void;
   addMessage: (message: Omit<Message, 'id' | 'timestamp'>, conversationId?: string) => void;
   updateLastMessage: (content: string, conversationId?: string) => void;
   editMessage: (messageId: string, newContent: string, conversationId?: string) => void;
@@ -19,6 +20,7 @@ interface ChatContextType {
 type ChatAction =
   | { type: 'CREATE_CONVERSATION'; payload: Conversation }
   | { type: 'SWITCH_CONVERSATION'; payload: string }
+  | { type: 'CLEAR_CURRENT_CONVERSATION' }
   | { type: 'ADD_MESSAGE'; payload: { conversationId: string; message: Message } }
   | { type: 'UPDATE_LAST_MESSAGE'; payload: { conversationId: string; content: string } }
   | { type: 'EDIT_MESSAGE'; payload: { conversationId: string; messageId: string; content: string } }
@@ -50,6 +52,12 @@ function chatReducer(state: ChatState, action: ChatAction): ChatState {
       return {
         ...state,
         currentConversationId: action.payload,
+      };
+
+    case 'CLEAR_CURRENT_CONVERSATION':
+      return {
+        ...state,
+        currentConversationId: null,
       };
 
     case 'ADD_MESSAGE':
@@ -247,6 +255,10 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
     dispatch({ type: 'SWITCH_CONVERSATION', payload: id });
   };
 
+  const clearCurrentConversation = () => {
+    dispatch({ type: 'CLEAR_CURRENT_CONVERSATION' });
+  };
+
   const addMessage = (messageData: Omit<Message, 'id' | 'timestamp'>, conversationId?: string) => {
     const targetConversationId = conversationId || state.currentConversationId;
     if (!targetConversationId) return;
@@ -336,6 +348,7 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
         state,
         createNewConversation,
         switchConversation,
+        clearCurrentConversation,
         addMessage,
         updateLastMessage,
         editMessage,

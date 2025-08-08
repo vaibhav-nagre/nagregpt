@@ -29,12 +29,8 @@ export default function Chat() {
         // Conversation doesn't exist, redirect to home
         navigate('/', { replace: true });
       }
-    } else {
-      // No conversation ID in URL, but we have an active conversation
-      if (state.currentConversationId) {
-        navigate(`/chat/${state.currentConversationId}`, { replace: true });
-      }
     }
+    // Removed auto-navigation to conversation URLs - let users stay on home page
   }, [conversationId, state.conversations, state.currentConversationId, switchConversation, navigate]);
 
   const currentConversation = state.conversations.find(
@@ -57,7 +53,7 @@ export default function Chat() {
     if (!conversationId) {
       conversationId = createNewConversation();
       console.log('📝 Created new conversation:', conversationId);
-      // Navigate to the new conversation URL
+      // Navigate to the new conversation URL only when sending a message
       navigate(`/chat/${conversationId}`, { replace: true });
     }
 
@@ -305,7 +301,7 @@ export default function Chat() {
   return (
     <div className="flex-1 flex flex-col h-full">
       {/* Messages container with enhanced animations */}
-      <div className="flex-1 overflow-y-auto px-2 sm:px-4 py-2 sm:py-4 space-y-2 scroll-smooth max-w-4xl mx-auto w-full scrollbar-hide">
+      <div className="flex-1 overflow-y-auto px-2 sm:px-4 py-2 sm:py-4 space-y-1 sm:space-y-2 scroll-smooth max-w-4xl mx-auto w-full scrollbar-hide">
         {/* Animated gradient background overlay */}
         <div className="fixed inset-0 pointer-events-none">
           <div className="absolute inset-0 bg-gradient-to-br from-transparent via-gpt-blue-500/5 to-transparent animate-gradient-shift"></div>
