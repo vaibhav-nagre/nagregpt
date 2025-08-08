@@ -1,0 +1,138 @@
+import { useState, useEffect } from 'react';
+import { useChat } from '../context/ChatContext';
+import { 
+  SunIcon, 
+  MoonIcon,
+  PlusIcon,
+  SparklesIcon,
+  CheckIcon,
+  BoltIcon
+} from '@heroicons/react/24/outline';
+import { FeedbackManager } from '../utils/feedbackManager';
+
+export default function Header() {
+  const { state, toggleTheme, createNewConversation } = useChat();
+  const [showNewChatMessage, setShowNewChatMessage] = useState(false);
+  const [showFeedbackTooltip, setShowFeedbackTooltip] = useState(false);
+  const [feedbackStats, setFeedbackStats] = useState({ likes: 0, dislikes: 0, loves: 0, total: 0 });
+
+  const handleNewChat = () => {
+    createNewConversation();
+    setShowNewChatMessage(true);
+  };
+
+  // Update feedback stats
+  useEffect(() => {
+    const updateStats = () => {
+      setFeedbackStats(FeedbackManager.getFeedbackStats());
+    };
+    updateStats();
+    
+    // Update stats every 5 seconds while tooltip is shown
+    let interval: number;
+    if (showFeedbackTooltip) {
+      interval = setInterval(updateStats, 5000) as unknown as number;
+    }
+    
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [showFeedbackTooltip]);
+
+  // Hide the message after 2 seconds
+  useEffect(() => {
+    if (showNewChatMessage) {
+      const timer = setTimeout(() => {
+        setShowNewChatMessage(false);
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [showNewChatMessage]);
+
+  return (
+    <header className="flex items-center justify-between h-16 px-6 border-b border-gray-200/50 dark:border-gpt-gray-600/50 bg-white/80 dark:bg-gpt-gray-800/80 backdrop-blur-md glass animate-slide-in-left">
+      {/* Left side - Logo and New Chat */}
+      <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-3 animate-bounce-in">
+          <div className="relative">
+            <div className="w-10 h-10 bg-gradient-to-br from-gpt-green-500 to-gpt-blue-500 rounded-xl flex items-center justify-center shadow-lg animate-glow">
+              <SparklesIcon className="w-6 h-6 text-white" />
+            </div>
+            <div className="absolute -top-1 -right-1 w-3 h-3 bg-gpt-green-500 rounded-full animate-pulse"></div>
+          </div>
+          <h1 className="text-xl font-bold bg-gradient-to-r from-gpt-green-500 to-gpt-blue-500 bg-clip-text text-transparent">
+            NagreGPT
+          </h1>
+        </div>
+        
+        <button
+          onClick={handleNewChat}
+          className="flex items-center space-x-2 px-4 py-2 text-sm rounded-xl bg-gray-100 dark:bg-gpt-gray-700 hover:bg-gray-200 dark:hover:bg-gpt-gray-600 transition-all duration-200 hover-lift focus-ring btn-primary"
+        >
+          <PlusIcon className="w-4 h-4" />
+          <span>New Chat</span>
+        </button>
+
+        {/* New Chat Success Message */}
+        {showNewChatMessage && (
+          <div className="flex items-center space-x-2 px-3 py-2 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded-lg animate-slide-in-right">
+            <CheckIcon className="w-4 h-4" />
+            <span className="text-sm font-medium">New chat started!</span>
+          </div>
+        )}
+      </div>
+
+      {/* Right side - Learning indicator and Theme toggle */}
+      <div className="flex items-center space-x-3">
+        {/* Learning Status Indicator */}
+        {feedbackStats.total > 0 && (
+          <div 
+            className="relative"
+            onMouseEnter={() => setShowFeedbackTooltip(true)}
+            onMouseLeave={() => setShowFeedbackTooltip(false)}
+          >
+            <div className="flex items-center space-x-1 px-3 py-2 rounded-xl bg-gradient-to-r from-gpt-green-500/10 to-gpt-blue-500/10 border border-gpt-green-500/20">
+              <BoltIcon className="w-4 h-4 text-gpt-green-500 animate-pulse" />
+              <span className="text-xs font-medium text-gpt-green-600 dark:text-gpt-green-400">
+                Learning ({feedbackStats.total})
+              </span>
+            </div>
+            
+            {/* Feedback Tooltip */}
+            {showFeedbackTooltip && (
+              <div className="absolute top-full right-0 mt-2 w-48 p-3 bg-white dark:bg-gpt-gray-800 border border-gray-200 dark:border-gpt-gray-600 rounded-xl shadow-lg z-50 animate-slide-in-up">
+                <div className="text-sm font-medium text-gray-900 dark:text-white mb-2">AI Learning Progress</div>
+                <div className="space-y-1 text-xs">
+                  <div className="flex justify-between text-gray-600 dark:text-gray-400">
+                    <span>❤️ Excellent:</span>
+                    <span>{feedbackStats.loves}</span>
+                  </div>
+                  <div className="flex justify-between text-gray-600 dark:text-gray-400">
+                    <span>👍 Good:</span>
+                    <span>{feedbackStats.likes}</span>
+                  </div>
+                  <div className="flex justify-between text-gray-600 dark:text-gray-400">
+                    <span>👎 Needs Work:</span>
+                    <span>{feedbackStats.dislikes}</span>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
+        <button
+          onClick={toggleTheme}
+          className="p-3 rounded-xl bg-gray-100 dark:bg-gpt-gray-700 hover:bg-gray-200 dark:hover:bg-gpt-gray-600 transition-all duration-200 hover-lift focus-ring group"
+          title={`Switch to ${state.theme === 'light' ? 'dark' : 'light'} mode`}
+        >
+          {state.theme === 'light' ? (
+            <MoonIcon className="w-5 h-5 text-gray-700 dark:text-gray-300 group-hover:rotate-12 transition-transform duration-200" />
+          ) : (
+            <SunIcon className="w-5 h-5 text-gray-700 dark:text-gray-300 group-hover:rotate-12 transition-transform duration-200" />
+          )}
+        </button>
+      </div>
+    </header>
+  );
+}
