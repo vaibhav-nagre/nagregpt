@@ -10,12 +10,12 @@ import type { FileAnalysis } from '../utils/fileProcessor';
 export default function Chat() {
   const { conversationId } = useParams<{ conversationId?: string }>();
   const navigate = useNavigate();
-  const { state, addMessage, updateLastMessage, setLoading, createNewConversation, switchConversation, editMessage, deleteMessage, addReaction } = useChat();
+  const { state, addMessage, updateLastMessage, setLoading, createNewConversation, switchConversation, clearCurrentConversation, editMessage, deleteMessage, addReaction } = useChat();
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [currentStreamingMessage, setCurrentStreamingMessage] = useState<string>('');
   const [abortController, setAbortController] = useState<AbortController | null>(null);
 
-  // Handle URL-based conversation switching
+    // Handle URL-based conversation switching
   useEffect(() => {
     if (conversationId) {
       // Check if the conversation exists
@@ -29,9 +29,14 @@ export default function Chat() {
         // Conversation doesn't exist, redirect to home
         navigate('/', { replace: true });
       }
+    } else {
+      // No conversation ID in URL - we're on home page
+      // Clear current conversation to show welcome page
+      if (state.currentConversationId) {
+        clearCurrentConversation();
+      }
     }
-    // Removed auto-navigation to conversation URLs - let users stay on home page
-  }, [conversationId, state.conversations, state.currentConversationId, switchConversation, navigate]);
+  }, [conversationId, state.conversations, state.currentConversationId, switchConversation, clearCurrentConversation, navigate]);
 
   const currentConversation = state.conversations.find(
     conv => conv.id === state.currentConversationId
