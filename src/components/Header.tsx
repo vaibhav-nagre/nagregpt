@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useChat } from '../context/ChatContext';
 import { 
   SunIcon, 
@@ -15,13 +16,16 @@ interface HeaderProps {
 }
 
 export default function Header({ onHomeClick }: HeaderProps) {
-  const { state, toggleTheme, createNewConversation } = useChat();
+  const { state, toggleTheme, clearCurrentConversation } = useChat();
+  const navigate = useNavigate();
   const [showNewChatMessage, setShowNewChatMessage] = useState(false);
   const [showFeedbackTooltip, setShowFeedbackTooltip] = useState(false);
   const [feedbackStats, setFeedbackStats] = useState({ likes: 0, dislikes: 0, loves: 0, total: 0 });
 
   const handleNewChat = () => {
-    createNewConversation();
+    // Clear current conversation and navigate to home to show welcome page
+    clearCurrentConversation();
+    navigate('/', { replace: true });
     setShowNewChatMessage(true);
   };
 
@@ -29,8 +33,9 @@ export default function Header({ onHomeClick }: HeaderProps) {
     if (onHomeClick) {
       onHomeClick();
     } else {
-      // Fallback behavior
-      createNewConversation();
+      // Fallback behavior - clear conversation and go to home
+      clearCurrentConversation();
+      navigate('/', { replace: true });
     }
   };
 
