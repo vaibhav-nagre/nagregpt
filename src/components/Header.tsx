@@ -10,7 +10,11 @@ import {
 } from '@heroicons/react/24/outline';
 import { FeedbackManager } from '../utils/feedbackManager';
 
-export default function Header() {
+interface HeaderProps {
+  onHomeClick?: () => void;
+}
+
+export default function Header({ onHomeClick }: HeaderProps) {
   const { state, toggleTheme, createNewConversation } = useChat();
   const [showNewChatMessage, setShowNewChatMessage] = useState(false);
   const [showFeedbackTooltip, setShowFeedbackTooltip] = useState(false);
@@ -21,23 +25,50 @@ export default function Header() {
     setShowNewChatMessage(true);
   };
 
-  // Update feedback stats
+  const handleLogoClick = () => {
+    if (onHomeClick) {
+      onHomeClick();
+    } else {
+      // Fallback behavior
+      createNewConversation();
+    }
+  };
+
+  // Update feedback stats more frequently and listen for changes
   useEffect(() => {
     const updateStats = () => {
-      setFeedbackStats(FeedbackManager.getFeedbackStats());
+      const newStats = FeedbackManager.getFeedbackStats();
+      setFeedbackStats(newStats);
     };
+    
+    // Initial update
     updateStats();
     
-    // Update stats every 5 seconds while tooltip is shown
-    let interval: number;
-    if (showFeedbackTooltip) {
-      interval = setInterval(updateStats, 5000) as unknown as number;
-    }
+    // Set up interval for regular updates (every 2 seconds)
+    const interval = setInterval(updateStats, 2000);
+    
+    // Listen for storage changes (in case feedback is updated in another tab)
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'nagregpt-feedback' || e.key === 'nagregpt-state') {
+        updateStats();
+      }
+    };
+    
+    window.addEventListener('storage', handleStorageChange);
+    
+    // Listen for custom events (for real-time updates)
+    const handleFeedbackUpdate = () => {
+      updateStats();
+    };
+    
+    window.addEventListener('feedback-updated', handleFeedbackUpdate);
     
     return () => {
-      if (interval) clearInterval(interval);
+      clearInterval(interval);
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('feedback-updated', handleFeedbackUpdate);
     };
-  }, [showFeedbackTooltip]);
+  }, []);
 
   // Hide the message after 2 seconds
   useEffect(() => {
@@ -53,7 +84,11 @@ export default function Header() {
     <header className="flex items-center justify-between h-14 sm:h-16 px-3 sm:px-6 border-b border-gray-200/50 dark:border-gpt-gray-600/50 bg-white/80 dark:bg-gpt-gray-800/80 backdrop-blur-md glass animate-slide-in-left">
       {/* Left side - Logo and New Chat */}
       <div className="flex items-center space-x-2 sm:space-x-4">
-        <div className="flex items-center space-x-2 sm:space-x-3 animate-bounce-in">
+        <button 
+          onClick={handleLogoClick}
+          className="flex items-center space-x-2 sm:space-x-3 animate-bounce-in hover:scale-105 transition-transform duration-200 cursor-pointer focus-ring rounded-xl px-2 py-1"
+          title="Go to Home"
+        >
           <div className="relative">
             <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-gpt-green-500 to-gpt-blue-500 rounded-xl flex items-center justify-center shadow-lg animate-glow">
               <SparklesIcon className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
@@ -63,7 +98,7 @@ export default function Header() {
           <h1 className="text-lg sm:text-xl font-bold bg-gradient-to-r from-gpt-green-500 to-gpt-blue-500 bg-clip-text text-transparent">
             NagreGPT
           </h1>
-        </div>
+        </button>
         
         <button
           onClick={handleNewChat}

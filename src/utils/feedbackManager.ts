@@ -32,6 +32,11 @@ export class FeedbackManager {
     try {
       localStorage.setItem(this.STORAGE_KEY, JSON.stringify(updatedFeedback));
       console.log(`📝 Stored ${reaction} feedback for message`, messageId);
+      
+      // Dispatch custom event for real-time UI updates
+      window.dispatchEvent(new CustomEvent('feedback-updated', {
+        detail: { reaction, messageId, stats: this.getFeedbackStats() }
+      }));
     } catch (error) {
       console.error('Failed to store feedback:', error);
     }

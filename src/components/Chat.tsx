@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useChat } from '../context/ChatContext';
 import MessageComponent from './Message';
 import EnhancedChatInput from './EnhancedChatInput';
@@ -7,10 +8,34 @@ import { FileProcessor } from '../utils/fileProcessor';
 import type { FileAnalysis } from '../utils/fileProcessor';
 
 export default function Chat() {
-  const { state, addMessage, updateLastMessage, setLoading, createNewConversation, editMessage, deleteMessage, addReaction } = useChat();
+  const { conversationId } = useParams<{ conversationId?: string }>();
+  const navigate = useNavigate();
+  const { state, addMessage, updateLastMessage, setLoading, createNewConversation, switchConversation, editMessage, deleteMessage, addReaction } = useChat();
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [currentStreamingMessage, setCurrentStreamingMessage] = useState<string>('');
   const [abortController, setAbortController] = useState<AbortController | null>(null);
+
+  // Handle URL-based conversation switching
+  useEffect(() => {
+    if (conversationId) {
+      // Check if the conversation exists
+      const conversationExists = state.conversations.some(conv => conv.id === conversationId);
+      if (conversationExists) {
+        // Switch to the conversation if it's not already active
+        if (state.currentConversationId !== conversationId) {
+          switchConversation(conversationId);
+        }
+      } else {
+        // Conversation doesn't exist, redirect to home
+        navigate('/', { replace: true });
+      }
+    } else {
+      // No conversation ID in URL, but we have an active conversation
+      if (state.currentConversationId) {
+        navigate(`/chat/${state.currentConversationId}`, { replace: true });
+      }
+    }
+  }, [conversationId, state.conversations, state.currentConversationId, switchConversation, navigate]);
 
   const currentConversation = state.conversations.find(
     conv => conv.id === state.currentConversationId
@@ -32,6 +57,8 @@ export default function Chat() {
     if (!conversationId) {
       conversationId = createNewConversation();
       console.log('📝 Created new conversation:', conversationId);
+      // Navigate to the new conversation URL
+      navigate(`/chat/${conversationId}`, { replace: true });
     }
 
     // Process attached files if any
