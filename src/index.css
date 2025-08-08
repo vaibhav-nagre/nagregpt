@@ -478,3 +478,46 @@
     transform: rotate(360deg); 
   }
 }
+
+/* Mobile optimizations */
+@media (max-width: 640px) {
+  /* Improve touch targets */
+  button {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Better text readability on mobile */
+  body {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+  
+  /* Optimize input focus behavior */
+  input, textarea {
+    font-size: 16px; /* Prevent zoom on iOS */
+  }
+  
+  /* Better scrolling performance */
+  * {
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Prevent horizontal scroll */
+  body, html {
+    overflow-x: hidden;
+  }
+}
+
+/* Touch-friendly interactions */
+@media (hover: none) and (pointer: coarse) {
+  /* Show mobile-friendly states without hover */
+  .group .opacity-0 {
+    opacity: 1;
+  }
+  
+  /* Larger touch targets */
+  button, a {
+    padding: 0.75rem;
+  }
+}

@@ -278,7 +278,7 @@ export default function Chat() {
   return (
     <div className="flex-1 flex flex-col h-full">
       {/* Messages container with enhanced animations */}
-      <div className="flex-1 overflow-y-auto px-2 py-4 space-y-2 scroll-smooth max-w-5xl mx-auto w-full scrollbar-hide">
+      <div className="flex-1 overflow-y-auto px-2 sm:px-4 py-2 sm:py-4 space-y-2 scroll-smooth max-w-4xl mx-auto w-full scrollbar-hide">
         {/* Animated gradient background overlay */}
         <div className="fixed inset-0 pointer-events-none">
           <div className="absolute inset-0 bg-gradient-to-br from-transparent via-gpt-blue-500/5 to-transparent animate-gradient-shift"></div>
@@ -286,31 +286,31 @@ export default function Chat() {
         
         {/* Empty state message for new chat */}
         {currentConversation.messages.length === 0 && (
-          <div className="flex-1 flex items-center justify-center py-12 animate-fade-in-up">
-            <div className="text-center max-w-md mx-auto">
-              <div className="w-16 h-16 bg-gradient-to-br from-gpt-green-500 to-gpt-blue-500 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg animate-bounce-in">
-                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="flex-1 flex items-center justify-center py-8 sm:py-12 animate-fade-in-up">
+            <div className="text-center max-w-md mx-auto px-4">
+              <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-gpt-green-500 to-gpt-blue-500 rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6 shadow-lg animate-bounce-in">
+                <svg className="w-6 h-6 sm:w-8 sm:h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-3 animate-slide-in-left">
+              <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2 sm:mb-3 animate-slide-in-left">
                 Ready to chat!
               </h3>
-              <p className="text-gray-600 dark:text-gray-400 mb-6 animate-slide-in-right">
+              <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mb-4 sm:mb-6 animate-slide-in-right">
                 Start typing your prompt below or upload files for analysis. 
                 Ask me anything - I'm here to help! ✨
               </p>
-              <div className="flex flex-wrap justify-center gap-2 text-sm animate-fade-in">
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gpt-gray-700 rounded-full text-gray-600 dark:text-gray-400">
+              <div className="flex flex-wrap justify-center gap-1 sm:gap-2 text-xs sm:text-sm animate-fade-in">
+                <span className="px-2 sm:px-3 py-1 bg-gray-100 dark:bg-gpt-gray-700 rounded-full text-gray-600 dark:text-gray-400">
                   💡 Ask questions
                 </span>
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gpt-gray-700 rounded-full text-gray-600 dark:text-gray-400">
+                <span className="px-2 sm:px-3 py-1 bg-gray-100 dark:bg-gpt-gray-700 rounded-full text-gray-600 dark:text-gray-400">
                   📝 Write content
                 </span>
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gpt-gray-700 rounded-full text-gray-600 dark:text-gray-400">
+                <span className="px-2 sm:px-3 py-1 bg-gray-100 dark:bg-gpt-gray-700 rounded-full text-gray-600 dark:text-gray-400">
                   🔍 Analyze files
                 </span>
-                <span className="px-3 py-1 bg-gray-100 dark:bg-gpt-gray-700 rounded-full text-gray-600 dark:text-gray-400">
+                <span className="px-2 sm:px-3 py-1 bg-gray-100 dark:bg-gpt-gray-700 rounded-full text-gray-600 dark:text-gray-400">
                   💻 Code help
                 </span>
               </div>

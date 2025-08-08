@@ -50,32 +50,33 @@ export default function Header() {
   }, [showNewChatMessage]);
 
   return (
-    <header className="flex items-center justify-between h-16 px-6 border-b border-gray-200/50 dark:border-gpt-gray-600/50 bg-white/80 dark:bg-gpt-gray-800/80 backdrop-blur-md glass animate-slide-in-left">
+    <header className="flex items-center justify-between h-14 sm:h-16 px-3 sm:px-6 border-b border-gray-200/50 dark:border-gpt-gray-600/50 bg-white/80 dark:bg-gpt-gray-800/80 backdrop-blur-md glass animate-slide-in-left">
       {/* Left side - Logo and New Chat */}
-      <div className="flex items-center space-x-4">
-        <div className="flex items-center space-x-3 animate-bounce-in">
+      <div className="flex items-center space-x-2 sm:space-x-4">
+        <div className="flex items-center space-x-2 sm:space-x-3 animate-bounce-in">
           <div className="relative">
-            <div className="w-10 h-10 bg-gradient-to-br from-gpt-green-500 to-gpt-blue-500 rounded-xl flex items-center justify-center shadow-lg animate-glow">
-              <SparklesIcon className="w-6 h-6 text-white" />
+            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-gpt-green-500 to-gpt-blue-500 rounded-xl flex items-center justify-center shadow-lg animate-glow">
+              <SparklesIcon className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
             </div>
-            <div className="absolute -top-1 -right-1 w-3 h-3 bg-gpt-green-500 rounded-full animate-pulse"></div>
+            <div className="absolute -top-1 -right-1 w-2 h-2 sm:w-3 sm:h-3 bg-gpt-green-500 rounded-full animate-pulse"></div>
           </div>
-          <h1 className="text-xl font-bold bg-gradient-to-r from-gpt-green-500 to-gpt-blue-500 bg-clip-text text-transparent">
+          <h1 className="text-lg sm:text-xl font-bold bg-gradient-to-r from-gpt-green-500 to-gpt-blue-500 bg-clip-text text-transparent">
             NagreGPT
           </h1>
         </div>
         
         <button
           onClick={handleNewChat}
-          className="flex items-center space-x-2 px-4 py-2 text-sm rounded-xl bg-gray-100 dark:bg-gpt-gray-700 hover:bg-gray-200 dark:hover:bg-gpt-gray-600 transition-all duration-200 hover-lift focus-ring btn-primary"
+          className="flex items-center space-x-1 sm:space-x-2 px-2 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm rounded-xl bg-gray-100 dark:bg-gpt-gray-700 hover:bg-gray-200 dark:hover:bg-gpt-gray-600 transition-all duration-200 hover-lift focus-ring btn-primary"
         >
-          <PlusIcon className="w-4 h-4" />
-          <span>New Chat</span>
+          <PlusIcon className="w-3 h-3 sm:w-4 sm:h-4" />
+          <span className="hidden xs:inline">New Chat</span>
+          <span className="xs:hidden">New</span>
         </button>
 
         {/* New Chat Success Message */}
         {showNewChatMessage && (
-          <div className="flex items-center space-x-2 px-3 py-2 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded-lg animate-slide-in-right">
+          <div className="hidden sm:flex items-center space-x-2 px-3 py-2 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded-lg animate-slide-in-right">
             <CheckIcon className="w-4 h-4" />
             <span className="text-sm font-medium">New chat started!</span>
           </div>
@@ -83,16 +84,16 @@ export default function Header() {
       </div>
 
       {/* Right side - Learning indicator and Theme toggle */}
-      <div className="flex items-center space-x-3">
+      <div className="flex items-center space-x-1 sm:space-x-3">
         {/* Learning Status Indicator */}
         {feedbackStats.total > 0 && (
           <div 
-            className="relative"
+            className="relative hidden sm:block"
             onMouseEnter={() => setShowFeedbackTooltip(true)}
             onMouseLeave={() => setShowFeedbackTooltip(false)}
           >
-            <div className="flex items-center space-x-1 px-3 py-2 rounded-xl bg-gradient-to-r from-gpt-green-500/10 to-gpt-blue-500/10 border border-gpt-green-500/20">
-              <BoltIcon className="w-4 h-4 text-gpt-green-500 animate-pulse" />
+            <div className="flex items-center space-x-1 px-2 sm:px-3 py-1.5 sm:py-2 rounded-xl bg-gradient-to-r from-gpt-green-500/10 to-gpt-blue-500/10 border border-gpt-green-500/20">
+              <BoltIcon className="w-3 h-3 sm:w-4 sm:h-4 text-gpt-green-500 animate-pulse" />
               <span className="text-xs font-medium text-gpt-green-600 dark:text-gpt-green-400">
                 Learning ({feedbackStats.total})
               </span>
@@ -123,13 +124,13 @@ export default function Header() {
 
         <button
           onClick={toggleTheme}
-          className="p-3 rounded-xl bg-gray-100 dark:bg-gpt-gray-700 hover:bg-gray-200 dark:hover:bg-gpt-gray-600 transition-all duration-200 hover-lift focus-ring group"
+          className="p-2 sm:p-3 rounded-xl bg-gray-100 dark:bg-gpt-gray-700 hover:bg-gray-200 dark:hover:bg-gpt-gray-600 transition-all duration-200 hover-lift focus-ring group"
           title={`Switch to ${state.theme === 'light' ? 'dark' : 'light'} mode`}
         >
           {state.theme === 'light' ? (
-            <MoonIcon className="w-5 h-5 text-gray-700 dark:text-gray-300 group-hover:rotate-12 transition-transform duration-200" />
+            <MoonIcon className="w-4 h-4 sm:w-5 sm:h-5 text-gray-700 dark:text-gray-300 group-hover:rotate-12 transition-transform duration-200" />
           ) : (
-            <SunIcon className="w-5 h-5 text-gray-700 dark:text-gray-300 group-hover:rotate-12 transition-transform duration-200" />
+            <SunIcon className="w-4 h-4 sm:w-5 sm:h-5 text-gray-700 dark:text-gray-300 group-hover:rotate-12 transition-transform duration-200" />
           )}
         </button>
       </div>

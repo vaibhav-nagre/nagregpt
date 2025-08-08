@@ -34,7 +34,7 @@ const initialState: ChatState = {
   conversations: [],
   currentConversationId: null,
   isLoading: false,
-  theme: 'dark',
+  theme: 'light',
 };
 
 function chatReducer(state: ChatState, action: ChatAction): ChatState {

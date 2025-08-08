@@ -189,11 +189,11 @@ export default function EnhancedChatInput({ onSendMessage, isLoading, onStop, di
 
   return (
     <div className="sticky bottom-0 bg-white/95 dark:bg-gpt-gray-800/95 backdrop-blur-md border-t border-gray-200/50 dark:border-gpt-gray-600/50">
-      <div className="max-w-5xl mx-auto px-4 py-3">
+      <div className="max-w-4xl mx-auto px-2 sm:px-4 py-2 sm:py-3">
         
         {/* File Previews */}
         {attachedFiles.length > 0 && (
-          <div className="mb-3 flex flex-wrap gap-2 animate-fade-in">
+          <div className="mb-2 sm:mb-3 flex flex-wrap gap-1 sm:gap-2 animate-fade-in">
             {attachedFiles.map((attachedFile, index) => {
               const file = attachedFile.file;
               const isLogFile = file.name.toLowerCase().includes('.log');
@@ -210,34 +210,34 @@ export default function EnhancedChatInput({ onSendMessage, isLoading, onStop, di
               };
 
               return (
-                <div key={index} className="relative bg-gray-100 dark:bg-gray-700 rounded-lg p-3 flex items-start space-x-3 animate-slide-in-up min-w-48 max-w-64">
+                <div key={index} className="relative bg-gray-100 dark:bg-gray-700 rounded-lg p-2 sm:p-3 flex items-start space-x-2 sm:space-x-3 animate-slide-in-up min-w-32 sm:min-w-48 max-w-48 sm:max-w-64">
                   <div className="flex-shrink-0">
                     {attachedFile.type === 'image' && attachedFile.preview ? (
-                      <img src={attachedFile.preview} alt="Preview" className="w-10 h-10 rounded object-cover" />
+                      <img src={attachedFile.preview} alt="Preview" className="w-8 h-8 sm:w-10 sm:h-10 rounded object-cover" />
                     ) : isPDF ? (
-                      <div className="w-10 h-10 bg-red-100 dark:bg-red-900 rounded flex items-center justify-center">
-                        <DocumentIcon className="w-6 h-6 text-red-600 dark:text-red-400" />
+                      <div className="w-8 h-8 sm:w-10 sm:h-10 bg-red-100 dark:bg-red-900 rounded flex items-center justify-center">
+                        <DocumentIcon className="w-4 h-4 sm:w-6 sm:h-6 text-red-600 dark:text-red-400" />
                       </div>
                     ) : isLogFile ? (
-                      <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900 rounded flex items-center justify-center">
-                        <DocumentIcon className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+                      <div className="w-8 h-8 sm:w-10 sm:h-10 bg-blue-100 dark:bg-blue-900 rounded flex items-center justify-center">
+                        <DocumentIcon className="w-4 h-4 sm:w-6 sm:h-6 text-blue-600 dark:text-blue-400" />
                       </div>
                     ) : isTextFile ? (
-                      <div className="w-10 h-10 bg-green-100 dark:bg-green-900 rounded flex items-center justify-center">
-                        <DocumentIcon className="w-6 h-6 text-green-600 dark:text-green-400" />
+                      <div className="w-8 h-8 sm:w-10 sm:h-10 bg-green-100 dark:bg-green-900 rounded flex items-center justify-center">
+                        <DocumentIcon className="w-4 h-4 sm:w-6 sm:h-6 text-green-600 dark:text-green-400" />
                       </div>
                     ) : attachedFile.type === 'audio' ? (
-                      <div className="w-10 h-10 bg-purple-100 dark:bg-purple-900 rounded flex items-center justify-center">
-                        <SpeakerWaveIcon className="w-6 h-6 text-purple-600 dark:text-purple-400" />
+                      <div className="w-8 h-8 sm:w-10 sm:h-10 bg-purple-100 dark:bg-purple-900 rounded flex items-center justify-center">
+                        <SpeakerWaveIcon className="w-4 h-4 sm:w-6 sm:h-6 text-purple-600 dark:text-purple-400" />
                       </div>
                     ) : (
-                      <div className="w-10 h-10 bg-gray-200 dark:bg-gray-600 rounded flex items-center justify-center">
-                        <DocumentIcon className="w-6 h-6 text-gray-500" />
+                      <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gray-200 dark:bg-gray-600 rounded flex items-center justify-center">
+                        <DocumentIcon className="w-4 h-4 sm:w-6 sm:h-6 text-gray-500" />
                       </div>
                     )}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">
+                    <p className="text-xs sm:text-sm font-medium text-gray-900 dark:text-gray-100 truncate">
                       {file.name}
                     </p>
                     <p className="text-xs text-gray-500 dark:text-gray-400">
@@ -271,7 +271,7 @@ export default function EnhancedChatInput({ onSendMessage, isLoading, onStop, di
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="flex items-end space-x-3">
+        <form onSubmit={handleSubmit} className="flex items-end space-x-2 sm:space-x-3">
           {/* Enhanced textarea with drag & drop */}
           <div 
             className={`flex-1 relative file-upload-zone transition-all duration-300 ${isDragOver ? 'scale-102' : ''}`}
@@ -279,17 +279,17 @@ export default function EnhancedChatInput({ onSendMessage, isLoading, onStop, di
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
           >
-            <div className="relative flex items-center bg-white dark:bg-gpt-gray-700 rounded-3xl border border-gray-300 dark:border-gpt-gray-600 shadow-lg hover:shadow-xl transition-all duration-200">
+            <div className="relative flex items-center bg-white dark:bg-gpt-gray-700 rounded-2xl sm:rounded-3xl border border-gray-300 dark:border-gpt-gray-600 shadow-lg hover:shadow-xl transition-all duration-200">
               
               {/* File upload button */}
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
                 disabled={disabled}
-                className="flex-shrink-0 p-2 ml-3 text-gray-400 dark:text-gray-500 hover:text-blue-500 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-gpt-gray-600 rounded-full transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex-shrink-0 p-1.5 sm:p-2 ml-2 sm:ml-3 text-gray-400 dark:text-gray-500 hover:text-blue-500 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-gpt-gray-600 rounded-full transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                 title="Upload files"
               >
-                <PaperClipIcon className="w-4 h-4" />
+                <PaperClipIcon className="w-3 h-3 sm:w-4 sm:h-4" />
               </button>
               
               {/* Text input */}
@@ -300,7 +300,7 @@ export default function EnhancedChatInput({ onSendMessage, isLoading, onStop, di
                 onKeyDown={handleKeyDown}
                 placeholder={disabled ? "Please wait..." : isListening ? "Listening..." : "Message NagreGPT..."}
                 disabled={disabled}
-                className="flex-1 resize-none border-0 bg-transparent px-3 py-3 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed text-sm max-h-32"
+                className="flex-1 resize-none border-0 bg-transparent px-2 sm:px-3 py-2 sm:py-3 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed text-sm max-h-32"
                 rows={1}
               />
               
@@ -309,14 +309,14 @@ export default function EnhancedChatInput({ onSendMessage, isLoading, onStop, di
                 type="button"
                 onClick={handleVoiceInput}
                 disabled={disabled}
-                className={`flex-shrink-0 p-2 mr-2 rounded-full transition-all disabled:opacity-50 disabled:cursor-not-allowed ${
+                className={`flex-shrink-0 p-1.5 sm:p-2 mr-1 sm:mr-2 rounded-full transition-all disabled:opacity-50 disabled:cursor-not-allowed ${
                   isListening 
                     ? 'text-red-500 bg-red-100 dark:bg-red-900 recording-pulse' 
                     : 'text-gray-400 dark:text-gray-500 hover:text-blue-500 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-gpt-gray-600'
                 }`}
                 title={isListening ? "Stop listening" : "Voice input"}
               >
-                <MicrophoneIcon className="w-4 h-4" />
+                <MicrophoneIcon className="w-3 h-3 sm:w-4 sm:h-4" />
               </button>
 
               {/* Voice record button */}
@@ -324,14 +324,14 @@ export default function EnhancedChatInput({ onSendMessage, isLoading, onStop, di
                 type="button"
                 onClick={handleVoiceRecord}
                 disabled={disabled}
-                className={`flex-shrink-0 p-2 mr-2 rounded-full transition-all disabled:opacity-50 disabled:cursor-not-allowed ${
+                className={`flex-shrink-0 p-1.5 sm:p-2 mr-1 sm:mr-2 rounded-full transition-all disabled:opacity-50 disabled:cursor-not-allowed ${
                   isRecording 
                     ? 'text-red-500 bg-red-100 dark:bg-red-900 recording-pulse' 
                     : 'text-gray-400 dark:text-gray-500 hover:text-red-500 dark:hover:text-red-400 hover:bg-gray-100 dark:hover:bg-gpt-gray-600'
                 }`}
                 title={isRecording ? "Stop recording" : "Record audio"}
               >
-                <div className="w-4 h-4 bg-current rounded-full" />
+                <div className="w-3 h-3 sm:w-4 sm:h-4 bg-current rounded-full" />
               </button>
             </div>
           </div>
@@ -341,19 +341,19 @@ export default function EnhancedChatInput({ onSendMessage, isLoading, onStop, di
             <button
               type="button"
               onClick={onStop}
-              className="flex-shrink-0 p-3 bg-red-500 hover:bg-red-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-200 hover-lift"
+              className="flex-shrink-0 p-2 sm:p-3 bg-red-500 hover:bg-red-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-200 hover-lift"
               title="Stop generation"
             >
-              <StopIcon className="w-5 h-5" />
+              <StopIcon className="w-4 h-4 sm:w-5 sm:h-5" />
             </button>
           ) : (
             <button
               type="submit"
               disabled={(!message.trim() && attachedFiles.length === 0) || disabled}
-              className="flex-shrink-0 p-3 bg-gradient-to-r from-gpt-green-500 to-gpt-blue-500 hover:from-gpt-green-600 hover:to-gpt-blue-600 disabled:from-gray-300 disabled:to-gray-400 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed hover-lift"
+              className="flex-shrink-0 p-2 sm:p-3 bg-gradient-to-r from-gpt-green-500 to-gpt-blue-500 hover:from-gpt-green-600 hover:to-gpt-blue-600 disabled:from-gray-300 disabled:to-gray-400 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed hover-lift"
               title="Send message"
             >
-              <PaperAirplaneIcon className="w-5 h-5" />
+              <PaperAirplaneIcon className="w-4 h-4 sm:w-5 sm:h-5" />
             </button>
           )}
         </form>
