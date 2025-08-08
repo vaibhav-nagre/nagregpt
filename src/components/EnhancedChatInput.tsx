@@ -7,8 +7,10 @@ import {
   PhotoIcon,
   XMarkIcon,
   SpeakerWaveIcon,
-  PaperAirplaneIcon
+  PaperAirplaneIcon,
+  MusicalNoteIcon
 } from '@heroicons/react/24/outline';
+import AudioRecorder from './AudioRecorder';
 
 interface ChatInputProps {
   onSendMessage: (message: string, files?: File[]) => void;
@@ -29,6 +31,7 @@ export default function EnhancedChatInput({ onSendMessage, isLoading, onStop, di
   const [attachedFiles, setAttachedFiles] = useState<AttachedFile[]>([]);
   const [isDragOver, setIsDragOver] = useState(false);
   const [isListening, setIsListening] = useState(false);
+  const [showAdvancedRecorder, setShowAdvancedRecorder] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
@@ -333,6 +336,17 @@ export default function EnhancedChatInput({ onSendMessage, isLoading, onStop, di
               >
                 <div className="w-3 h-3 sm:w-4 sm:h-4 bg-current rounded-full" />
               </button>
+
+              {/* Advanced Audio Recorder Toggle */}
+              <button
+                type="button"
+                onClick={() => setShowAdvancedRecorder(!showAdvancedRecorder)}
+                disabled={disabled}
+                className="flex-shrink-0 p-1.5 sm:p-2 mr-1 sm:mr-2 text-gray-400 dark:text-gray-500 hover:text-purple-500 dark:hover:text-purple-400 hover:bg-gray-100 dark:hover:bg-gpt-gray-600 rounded-full transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                title="Advanced Audio Recorder"
+              >
+                <MusicalNoteIcon className="w-3 h-3 sm:w-4 sm:h-4" />
+              </button>
             </div>
           </div>
 
@@ -357,6 +371,45 @@ export default function EnhancedChatInput({ onSendMessage, isLoading, onStop, di
             </button>
           )}
         </form>
+
+        {/* Advanced Audio Recorder Modal */}
+        {showAdvancedRecorder && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full">
+              <div className="p-6">
+                <div className="flex justify-between items-center mb-4">
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                    Advanced Audio Recorder
+                  </h3>
+                  <button
+                    onClick={() => setShowAdvancedRecorder(false)}
+                    className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                  >
+                    <XMarkIcon className="w-5 h-5" />
+                  </button>
+                </div>
+                
+                <AudioRecorder
+                  onRecordingComplete={(audioFile) => {
+                    handleFileUpload([audioFile] as any);
+                    setShowAdvancedRecorder(false);
+                  }}
+                  disabled={disabled}
+                />
+                
+                <div className="mt-4 text-sm text-gray-600 dark:text-gray-400">
+                  <p className="font-medium mb-2">Features:</p>
+                  <ul className="space-y-1 text-xs">
+                    <li>• Song identification and analysis</li>
+                    <li>• Voice training feedback</li>
+                    <li>• Audio quality assessment</li>
+                    <li>• Real-time visualization</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Hidden file input */}
         <input

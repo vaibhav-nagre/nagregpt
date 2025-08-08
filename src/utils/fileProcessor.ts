@@ -1,9 +1,12 @@
+import { AudioAnalyzer, type AudioAnalysisResult } from '../services/audioAnalyzer';
+
 export interface FileAnalysis {
   filename: string;
   type: string;
   size: number;
   content: string;
   summary?: string;
+  audioAnalysis?: AudioAnalysisResult;
 }
 
 export class FileProcessor {
@@ -27,6 +30,16 @@ export class FileProcessor {
         // Handle images (OCR could be added later)
         analysis.content = `[Image file: ${file.name}]`;
         analysis.summary = `Image file uploaded. Filename: ${file.name}, Size: ${this.formatFileSize(file.size)}`;
+      } else if (file.type.startsWith('audio/')) {
+        // Handle audio files with advanced analysis
+        analysis.content = `[Audio file: ${file.name}]`;
+        try {
+          analysis.audioAnalysis = await AudioAnalyzer.analyzeAudio(file);
+          analysis.summary = `Audio file analyzed. Type: ${analysis.audioAnalysis.type}, Duration: ${Math.round(analysis.audioAnalysis.analysis.audioFeatures.duration)}s, Confidence: ${Math.round(analysis.audioAnalysis.confidence * 100)}%`;
+        } catch (error) {
+          console.error('Audio analysis failed:', error);
+          analysis.summary = `Audio file uploaded but could not be analyzed. Filename: ${file.name}, Size: ${this.formatFileSize(file.size)}`;
+        }
       } else {
         // Handle other file types
         analysis.content = `[File: ${file.name}]`;
@@ -148,7 +161,10 @@ Content preview: ${preview}`;
         prompt += `Summary: ${analysis.summary}\n`;
       }
       
-      if (analysis.content && analysis.content.length > 0 && !analysis.content.startsWith('[')) {
+      // Handle audio analysis
+      if (analysis.audioAnalysis) {
+        prompt += AudioAnalyzer.formatAnalysisForAI(analysis.audioAnalysis, userMessage);
+      } else if (analysis.content && analysis.content.length > 0 && !analysis.content.startsWith('[')) {
         // Only include content if it's actual readable text
         const contentPreview = analysis.content.length > 2000 
           ? analysis.content.substring(0, 2000) + '\n... (content truncated for brevity)'
@@ -159,7 +175,11 @@ Content preview: ${preview}`;
       prompt += '\n---\n\n';
     });
 
-    prompt += `Please analyze the uploaded file(s) and provide insights based on the user's request. If the files contain logs, help identify issues, patterns, or important information. If they contain data, help analyze trends or key findings.`;
+    if (fileAnalyses.some(f => f.audioAnalysis)) {
+      prompt += `Please provide detailed analysis and feedback based on the audio characteristics above. If this is a song attempt, provide constructive feedback about singing, pitch, rhythm, and style. If it's speech, analyze the vocal qualities, pace, and clarity. For instrumental music, comment on the musical elements, tempo, and overall composition quality.`;
+    } else {
+      prompt += `Please analyze the uploaded file(s) and provide insights based on the user's request. If the files contain logs, help identify issues, patterns, or important information. If they contain data, help analyze trends or key findings.`;
+    }
 
     return prompt;
   }
