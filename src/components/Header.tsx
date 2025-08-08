@@ -16,16 +16,16 @@ interface HeaderProps {
 }
 
 export default function Header({ onHomeClick }: HeaderProps) {
-  const { state, toggleTheme, clearCurrentConversation } = useChat();
+  const { state, toggleTheme, clearCurrentConversation, createNewConversation } = useChat();
   const navigate = useNavigate();
   const [showNewChatMessage, setShowNewChatMessage] = useState(false);
   const [showFeedbackTooltip, setShowFeedbackTooltip] = useState(false);
   const [feedbackStats, setFeedbackStats] = useState({ likes: 0, dislikes: 0, loves: 0, total: 0 });
 
   const handleNewChat = () => {
-    // Clear current conversation and navigate to home to show welcome page
-    clearCurrentConversation();
-    navigate('/', { replace: true });
+    // Create a new conversation and navigate to it
+    const newConversationId = createNewConversation();
+    navigate(`/chat/${newConversationId}`, { replace: true });
     setShowNewChatMessage(true);
   };
 
