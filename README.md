@@ -1,7 +1,11 @@
 <!-- Header with animated typing effect -->
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/vaibhav-nagre/nagregpt/main/public/logo-horizontal.svg" alt="NagreGPT Logo" width="400" />
+<img src="https://raw.githubusercontent.com/vaibhav-nagre/nagregpt/main/public<img src="https://user-images.githubusercontent.com/74038190/225813708-98b745f2-7d22-48cf-9150-083f1b00d6c9.gif" width="120" />
+
+### 🔄 How It Works
+
+<table>-horizontal.svg" alt="NagreGPT Logo" width="400" />
 
 <br/><br/>
 
@@ -204,7 +208,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ### **💖 Created with passion by [Vaibhav Nagre](https://github.com/vaibhav-nagre)**
 
 <div align="center">
-  <img src="https://github.com/vaibhav-nagre.png" alt="Vaibhav Nagre" width="80" style="border-radius: 50%; border: 3px solid #00D4FF;" />
+  <img src="https://github.com/vaibhav-nagre.png" alt="Vaibhav Nagre" width="100" style="border-radius: 50%; border: 4px solid #00D4FF; box-shadow: 0 4px 12px rgba(0, 212, 255, 0.3);" />
 </div>
 
 <p>
