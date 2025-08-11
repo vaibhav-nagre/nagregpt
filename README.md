@@ -35,44 +35,52 @@
 <!-- Hero Section with animated gradient -->
 <div align="center">
 
-## 🎯 **What Makes NagreGPT Special?**
+## 🎯 What Makes NagreGPT Special?
 
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="900">
 
+### 🚀 Core Advantages
+
 <table>
 <tr>
-<td width="50%" align="center">
+<td align="center" width="25%">
 
-### 🆓 **Completely Free** 
-<img src="https://user-images.githubusercontent.com/74038190/216122041-518ac897-8d92-4c6b-9b3f-ca01dcaf38ee.png" width="50" />
+### 🆓 Completely Free
+<img src="https://user-images.githubusercontent.com/74038190/216122041-518ac897-8d92-4c6b-9b3f-ca01dcaf38ee.png" width="60" />
 
-💸 **Zero Cost** - No subscriptions or hidden fees  
-♾️ **Unlimited Usage** - Chat as much as you want  
-🚫 **No Rate Limits** - Powered by Groq's free tier  
-
-### ⚡ **Lightning Fast** 
-<img src="https://user-images.githubusercontent.com/74038190/213760705-0d5bf320-4f43-4352-b74b-0889ae726bf7.gif" width="50" />
-
-⚡ **Sub-second Responses** - Groq's optimized hardware  
-🌊 **Real-time Streaming** - See responses as they generate  
-📄 **Instant File Analysis** - Upload and analyze documents  
+**Zero Cost** - No subscriptions  
+**Unlimited Usage** - Chat forever  
+**No Rate Limits** - Powered by Groq  
 
 </td>
-<td width="50%" align="center">
+<td align="center" width="25%">
 
-### 🧠 **Intelligent Learning** 
-<img src="https://user-images.githubusercontent.com/74038190/225813708-98b745f2-7d22-48cf-9150-083f1b00d6c9.gif" width="50" />
+### ⚡ Lightning Fast
+<img src="https://user-images.githubusercontent.com/74038190/213760705-0d5bf320-4f43-4352-b74b-0889ae726bf7.gif" width="60" />
 
-🔄 **Adaptive AI** - Learns from your feedback  
-🧩 **Context Memory** - Remembers conversation history  
-🎨 **Personal Preferences** - Adapts to your style  
+**Sub-second Responses** - Optimized hardware  
+**Real-time Streaming** - Live generation  
+**Instant Analysis** - Upload & analyze files  
 
-### 🎨 **Beautiful Interface** 
-<img src="https://user-images.githubusercontent.com/74038190/212284087-bbe7e430-757e-4901-90bf-4cd2ce3e1852.gif" width="50" />
+</td>
+<td align="center" width="25%">
 
-✨ **Modern Design** - Clean, intuitive ChatGPT-like UI  
-📱 **Responsive** - Perfect on mobile and desktop  
-🌓 **Dark/Light Themes** - Switch themes seamlessly  
+### 🧠 Intelligent Learning
+<img src="https://user-images.githubusercontent.com/74038190/225813708-98b745f2-7d22-48cf-9150-083f1b00d6c9.gif" width="60" />
+
+**Adaptive AI** - Learns from feedback  
+**Context Memory** - Remembers history  
+**Personal Style** - Adapts to you  
+
+</td>
+<td align="center" width="25%">
+
+### 🎨 Beautiful Interface
+<img src="https://user-images.githubusercontent.com/74038190/212284087-bbe7e430-757e-4901-90bf-4cd2ce3e1852.gif" width="60" />
+
+**Modern Design** - ChatGPT-like UI  
+**Responsive** - Mobile & desktop  
+**Dark/Light Themes** - Seamless switching  
 
 </td>
 </tr>
@@ -114,7 +122,7 @@
 <!-- Features showcase with animated emojis -->
 <div align="center">
 
-## 🚀 **Features That Set Us Apart**
+## 🚀 Features That Set Us Apart
 
 <img src="https://user-images.githubusercontent.com/74038190/212257454-16e3712e-945a-4ca2-b238-408ad0bf87e6.gif" width="100"><img src="https://user-images.githubusercontent.com/74038190/212257472-08e52665-c503-4bd9-aa20-f5a4dae769b5.gif" width="100">
 
@@ -122,39 +130,39 @@
 <tr>
 <td align="center" width="33%">
 
-### 💬 **Smart Conversations**
+### 💬 Smart Conversations
 <img src="https://user-images.githubusercontent.com/74038190/229223263-cf2e4b07-2615-4f87-9c38-e37600f8381a.gif" width="80" />
 
-🤖 **Advanced AI Responses**  
+**Advanced AI Responses**  
 <img src="https://user-images.githubusercontent.com/74038190/212284115-f47cd8ff-2ffb-4b04-b5bf-4d1c14c0247f.gif" width="20" /> **Code Generation & Debug**  
-🔍 **Web Search Integration**  
-📊 **Data Analysis & Insights**  
+**Web Search Integration**  
+**Data Analysis & Insights**  
 
 <img src="https://user-images.githubusercontent.com/74038190/212257465-7ce8d493-cac5-494e-982a-5a9deb852c4b.gif" width="30">
 
 </td>
 <td align="center" width="33%">
 
-### 📁 **File Intelligence**
+### 📁 File Intelligence
 <img src="https://user-images.githubusercontent.com/74038190/229223156-0cbdaba9-3128-4d8e-8719-b6b4cf741b67.gif" width="80" />
 
-📄 **PDF Analysis & Summary**  
-📊 **CSV/Excel Processing**  
-🖼️ **Image Understanding**  
-📝 **Text Document Review**  
+**PDF Analysis & Summary**  
+**CSV/Excel Processing**  
+**Image Understanding**  
+**Text Document Review**  
 
 <img src="https://user-images.githubusercontent.com/74038190/212257468-1e9a91f1-b626-4baa-b15d-5c385b1974d3.gif" width="30">
 
 </td>
 <td align="center" width="33%">
 
-### 🧠 **Learning Engine**
+### 🧠 Learning Engine
 <img src="https://user-images.githubusercontent.com/74038190/229223185-c15c5bff-edb7-44c6-bf44-a5ac7afd25af.gif" width="80" />
 
-👍 **Feedback Learning System**  
-🎯 **Response Optimization**  
-📈 **Performance Analytics**  
-🔄 **Continuous AI Improvement**  
+**Feedback Learning System**  
+**Response Optimization**  
+**Performance Analytics**  
+**Continuous AI Improvement**  
 
 <img src="https://user-images.githubusercontent.com/74038190/212257467-871d32b7-e401-42e8-a166-fcfd7baa4c6b.gif" width="30">
 
@@ -167,29 +175,29 @@
 <!-- Animated separator with floating elements -->
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="600">
 
-### **🌟 Why Choose NagreGPT?**
+### 🌟 Why Choose NagreGPT?
 
 <table>
 <tr>
 <td align="center" width="20%">
 <img src="https://user-images.githubusercontent.com/74038190/216120974-24a76b31-7f39-41f1-a38f-b3c1377cc612.png" width="50" /><br/>
-**Free Forever**
+<strong>Free Forever</strong>
 </td>
 <td align="center" width="20%">
 <img src="https://user-images.githubusercontent.com/74038190/216120981-b9507c36-0e04-4469-8e27-c99271b45ba5.png" width="50" /><br/>
-**Lightning Speed**
+<strong>Lightning Speed</strong>
 </td>
 <td align="center" width="20%">
 <img src="https://user-images.githubusercontent.com/74038190/216121986-1a506a75-2381-41c2-8e14-a7e09cb49d7e.png" width="50" /><br/>
-**Smart Learning**
+<strong>Smart Learning</strong>
 </td>
 <td align="center" width="20%">
 <img src="https://user-images.githubusercontent.com/74038190/216122003-9306a43f-dcc8-4f24-af31-28ebc2e17d85.png" width="50" /><br/>
-**File Analysis**
+<strong>File Analysis</strong>
 </td>
 <td align="center" width="20%">
 <img src="https://user-images.githubusercontent.com/74038190/216122069-5b8169d7-1d8e-4a13-b245-a8e4176c99f8.png" width="50" /><br/>
-**Beautiful UI**
+<strong>Beautiful UI</strong>
 </td>
 </tr>
 </table>
@@ -208,7 +216,89 @@
 <img src="https://user-images.githubusercontent.com/74038190/212257472-08e52665-c503-4bd9-aa20-f5a4dae769b5.gif" width="60" />
 <img src="https://user-images.githubusercontent.com/74038190/225813708-98b745f2-7d22-48cf-9150-083f1b00d6c9.gif" width="120" />
 
-### 🔮 **Neural Network Learning Process**
+### 🔮 Neural Network Learning Process
+
+<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="800">
+
+<!-- Enhanced Learning Flow Diagram -->
+<div align="center">
+
+<table>
+<tr>
+<td align="center" width="20%">
+
+<img src="https://img.shields.io/badge/STEP_1-INPUT-FF6B6B?style=for-the-badge&logo=user&logoColor=white" />
+<img src="https://user-images.githubusercontent.com/74038190/229223263-cf2e4b07-2615-4f87-9c38-e37600f8381a.gif" width="80" />
+<br/>**User Query Processing**<br/>
+<sub>Context analysis & intent recognition</sub>
+
+</td>
+<td align="center" width="5%">
+
+<img src="https://user-images.githubusercontent.com/74038190/212257454-16e3712e-945a-4ca2-b238-408ad0bf87e6.gif" width="40" />
+
+</td>
+<td align="center" width="20%">
+
+<img src="https://img.shields.io/badge/STEP_2-PROCESS-4ECDC4?style=for-the-badge&logo=cpu&logoColor=white" />
+<img src="https://user-images.githubusercontent.com/74038190/212257467-871d32b7-e401-42e8-a166-fcfd7baa4c6b.gif" width="80" />
+<br/>**AI Generation**<br/>
+<sub>Groq Llama model inference</sub>
+
+</td>
+<td align="center" width="5%">
+
+<img src="https://user-images.githubusercontent.com/74038190/212257465-7ce8d493-cac5-494e-982a-5a9deb852c4b.gif" width="40" />
+
+</td>
+<td align="center" width="20%">
+
+<img src="https://img.shields.io/badge/STEP_3-OUTPUT-45B7D1?style=for-the-badge&logo=message-square&logoColor=white" />
+<img src="https://user-images.githubusercontent.com/74038190/212284115-f47cd8ff-2ffb-4b04-b5bf-4d1c14c0247f.gif" width="80" />
+<br/>**Response Delivery**<br/>
+<sub>Real-time streaming output</sub>
+
+</td>
+<td align="center" width="5%">
+
+<img src="https://user-images.githubusercontent.com/74038190/212257468-1e9a91f1-b626-4baa-b15d-5c385b1974d3.gif" width="40" />
+
+</td>
+<td align="center" width="20%">
+
+<img src="https://img.shields.io/badge/STEP_4-FEEDBACK-9C27B0?style=for-the-badge&logo=heart&logoColor=white" />
+<img src="https://user-images.githubusercontent.com/74038190/216120981-b9507c36-0e04-4469-8e27-c99271b45ba5.png" width="80" />
+<br/>**User Feedback**<br/>
+<sub>Reaction collection</sub>
+
+</td>
+</tr>
+</table>
+
+<img src="https://user-images.githubusercontent.com/74038190/212257459-63ede8ca-7ba7-4b44-a911-38b48bc0a117.gif" width="60" />
+
+<table>
+<tr>
+<td align="center" width="50%">
+
+<img src="https://img.shields.io/badge/STEP_5-LEARNING-4CAF50?style=for-the-badge&logo=brain&logoColor=white" />
+<img src="https://user-images.githubusercontent.com/74038190/229223156-0cbdaba9-3128-4d8e-8719-b6b4cf741b67.gif" width="100" />
+<br/>**Pattern Storage & Analysis**<br/>
+<sub>Global database optimization</sub>
+
+</td>
+<td align="center" width="50%">
+
+<img src="https://img.shields.io/badge/STEP_6-EVOLUTION-FF9800?style=for-the-badge&logo=trending-up&logoColor=white" />
+<img src="https://user-images.githubusercontent.com/74038190/229223185-c15c5bff-edb7-44c6-bf44-a5ac7afd25af.gif" width="100" />
+<br/>**Next Generation AI**<br/>
+<sub>Improved future responses</sub>
+
+</td>
+</tr>
+</table>
+
+</div>
 
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="800">
 
@@ -287,41 +377,41 @@ graph TD
 <!-- Animated Data Flow -->
 <img src="https://user-images.githubusercontent.com/74038190/212257454-16e3712e-945a-4ca2-b238-408ad0bf87e6.gif" width="100"><img src="https://user-images.githubusercontent.com/74038190/212257460-738ff738-247f-4445-a718-cdd0ca76e2db.gif" width="100"><img src="https://user-images.githubusercontent.com/74038190/212257465-7ce8d493-cac5-494e-982a-5a9deb852c4b.gif" width="100"><img src="https://user-images.githubusercontent.com/74038190/212257468-1e9a91f1-b626-4baa-b15d-5c385b1974d3.gif" width="100"><img src="https://user-images.githubusercontent.com/74038190/212257459-63ede8ca-7ba7-4b44-a911-38b48bc0a117.gif" width="100">
 
-### 🔄 **Continuous Learning Ecosystem**
+### 🔄 Continuous Learning Ecosystem
 
 <table>
 <tr>
 <td align="center" width="33%">
 
-### 🎨 **Pattern Recognition**
+### 🎨 Pattern Recognition
 <img src="https://user-images.githubusercontent.com/74038190/229223185-c15c5bff-edb7-44c6-bf44-a5ac7afd25af.gif" width="100" />
 
-🔍 **Context Analysis** - Understanding user intent  
-🎯 **Style Detection** - Identifying preferred formats  
-📊 **Success Metrics** - Tracking response quality  
-🧩 **Pattern Matching** - Finding similar scenarios  
+**Context Analysis** - Understanding user intent  
+**Style Detection** - Identifying preferred formats  
+**Success Metrics** - Tracking response quality  
+**Pattern Matching** - Finding similar scenarios  
 
 </td>
 <td align="center" width="33%">
 
-### 🚀 **Real-time Adaptation**
+### 🚀 Real-time Adaptation
 <img src="https://user-images.githubusercontent.com/74038190/213760705-0d5bf320-4f43-4352-b74b-0889ae726bf7.gif" width="100" />
 
-⚡ **Instant Learning** - Immediate feedback processing  
-🔄 **Dynamic Updates** - Live model adjustments  
-📈 **Performance Boost** - Continuous improvement  
-🎪 **Smart Predictions** - Anticipating user needs  
+**Instant Learning** - Immediate feedback processing  
+**Dynamic Updates** - Live model adjustments  
+**Performance Boost** - Continuous improvement  
+**Smart Predictions** - Anticipating user needs  
 
 </td>
 <td align="center" width="33%">
 
-### 🌐 **Global Intelligence**
+### 🌐 Global Intelligence
 <img src="https://user-images.githubusercontent.com/74038190/212257472-08e52665-c503-4bd9-aa20-f5a4dae769b5.gif" width="100" />
 
-🌍 **Collective Learning** - Learning from all users  
-📊 **Data Synthesis** - Combining insights globally  
-🎯 **Optimization Engine** - Refining algorithms  
-💡 **Innovation Loop** - Evolving capabilities  
+**Collective Learning** - Learning from all users  
+**Data Synthesis** - Combining insights globally  
+**Optimization Engine** - Refining algorithms  
+**Innovation Loop** - Evolving capabilities  
 
 </td>
 </tr>
@@ -330,7 +420,7 @@ graph TD
 <!-- Learning Statistics Showcase -->
 <img src="https://user-images.githubusercontent.com/74038190/212284158-e840e285-664b-44d7-b79b-e264b5e54825.gif" width="600">
 
-### 📊 **Learning Performance Dashboard**
+### 📊 Learning Performance Dashboard
 
 <table>
 <tr>
