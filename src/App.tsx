@@ -27,7 +27,7 @@ function AppContent() {
   // No auto-navigation - let users explicitly choose to continue conversations
 
   return (
-    <div className="h-screen flex flex-col bg-gradient-to-br from-white to-gray-50 dark:from-gpt-gray-900 dark:to-gpt-gray-800 animate-fade-in">
+    <div className="h-screen flex flex-col bg-gradient-to-br from-white to-gray-50 dark:from-gpt-gray-900 dark:to-gpt-gray-800 animate-fade-in mobile-viewport">
       {/* Header */}
       <Header onHomeClick={handleHomeClick} />
       

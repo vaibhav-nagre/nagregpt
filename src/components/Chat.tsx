@@ -20,6 +20,15 @@ export default function Chat() {
     return window.innerWidth <= 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   };
 
+  // Enhanced mobile detection with screen size categories
+  const getScreenSize = () => {
+    const width = window.innerWidth;
+    if (width < 480) return 'xs'; // Extra small phones
+    if (width < 768) return 'sm'; // Small phones/tablets
+    if (width < 1024) return 'md'; // Tablets
+    return 'lg'; // Desktop
+  };
+
     // Handle URL-based conversation switching
   useEffect(() => {
     if (conversationId) {
@@ -223,31 +232,56 @@ export default function Chat() {
   if (!currentConversation) {
     // Show simplified mobile experience or redirect to new chat
     const isMobileDevice = isMobile();
+    const screenSize = getScreenSize();
     
     return (
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col min-h-0">
         {/* Animated Welcome screen */}
-        <div className="flex-1 flex items-center justify-center p-4 sm:p-8">
-          <div className={`text-center mx-auto animate-fade-in-up ${isMobileDevice ? 'max-w-sm' : 'max-w-2xl'}`}>
+        <div className="flex-1 flex items-center justify-center p-3 sm:p-6 md:p-8 overflow-y-auto">
+          <div className={`text-center mx-auto animate-fade-in-up w-full ${
+            screenSize === 'xs' ? 'max-w-xs px-2' : 
+            screenSize === 'sm' ? 'max-w-sm px-4' : 
+            isMobileDevice ? 'max-w-md px-6' : 'max-w-2xl'
+          }`}>
             {/* Animated Logo */}
-            <div className="relative mb-6 sm:mb-8 animate-bounce-in">
-              <div className={`${isMobileDevice ? 'w-16 h-16' : 'w-24 h-24'} bg-gradient-to-br from-gpt-green-500 via-gpt-blue-500 to-purple-500 rounded-3xl flex items-center justify-center mx-auto mb-4 sm:mb-6 shadow-2xl animate-glow`}>
-                <svg className={`${isMobileDevice ? 'w-8 h-8' : 'w-12 h-12'} text-white`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="relative mb-4 sm:mb-6 md:mb-8 animate-bounce-in">
+              <div className={`${
+                screenSize === 'xs' ? 'w-12 h-12' :
+                screenSize === 'sm' ? 'w-14 h-14' :
+                isMobileDevice ? 'w-16 h-16' : 'w-24 h-24'
+              } bg-gradient-to-br from-gpt-green-500 via-gpt-blue-500 to-purple-500 rounded-2xl sm:rounded-3xl flex items-center justify-center mx-auto mb-3 sm:mb-4 md:mb-6 shadow-xl sm:shadow-2xl animate-glow`}>
+                <svg className={`${
+                  screenSize === 'xs' ? 'w-6 h-6' :
+                  screenSize === 'sm' ? 'w-7 h-7' :
+                  isMobileDevice ? 'w-8 h-8' : 'w-12 h-12'
+                } text-white`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
               </div>
-              <div className="absolute -top-2 -right-2 w-4 h-4 sm:w-6 sm:h-6 bg-gpt-green-500 rounded-full animate-pulse"></div>
-              <div className="absolute -bottom-2 -left-2 w-3 h-3 sm:w-4 sm:h-4 bg-gpt-blue-500 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
+              <div className={`absolute -top-1 sm:-top-2 -right-1 sm:-right-2 ${
+                isMobileDevice ? 'w-3 h-3 sm:w-4 sm:h-4' : 'w-6 h-6'
+              } bg-gpt-green-500 rounded-full animate-pulse`}></div>
+              <div className={`absolute -bottom-1 sm:-bottom-2 -left-1 sm:-left-2 ${
+                isMobileDevice ? 'w-2 h-2 sm:w-3 sm:h-3' : 'w-4 h-4'
+              } bg-gpt-blue-500 rounded-full animate-pulse`} style={{ animationDelay: '0.5s' }}></div>
             </div>
 
-            <h1 className={`${isMobileDevice ? 'text-2xl' : 'text-4xl'} font-bold text-gray-900 dark:text-gray-100 mb-3 sm:mb-4 animate-slide-in-left`}>
+            <h1 className={`${
+              screenSize === 'xs' ? 'text-xl' :
+              screenSize === 'sm' ? 'text-2xl' :
+              isMobileDevice ? 'text-2xl sm:text-3xl' : 'text-4xl'
+            } font-bold text-gray-900 dark:text-gray-100 mb-2 sm:mb-3 md:mb-4 animate-slide-in-left leading-tight`}>
               Welcome to{' '}
               <span className="bg-gradient-to-r from-gpt-green-500 to-gpt-blue-500 bg-clip-text text-transparent">
                 NagreGPT
               </span>
             </h1>
             
-            <p className={`${isMobileDevice ? 'text-base mb-6' : 'text-xl mb-12'} text-gray-600 dark:text-gray-400 animate-slide-in-right`}>
+            <p className={`${
+              screenSize === 'xs' ? 'text-sm mb-4' :
+              screenSize === 'sm' ? 'text-base mb-5' :
+              isMobileDevice ? 'text-base mb-6' : 'text-xl mb-12'
+            } text-gray-600 dark:text-gray-400 animate-slide-in-right leading-relaxed`}>
               Your AI assistant powered by{' '}
               <span className="font-semibold text-gpt-green-500">Groq's lightning-fast</span>{' '}
               Llama models. {!isMobileDevice && 'Ask anything, and let\'s start creating together! ✨'}
@@ -256,15 +290,23 @@ export default function Chat() {
             
             {/* Mobile: Quick start button, Desktop: Feature Grid */}
             {isMobileDevice ? (
-              <div className="mb-6">
+              <div className={`${screenSize === 'xs' ? 'mb-4' : 'mb-6'}`}>
                 <button
                   onClick={() => {
                     const newConversationId = createNewConversation();
                     navigate(`/chat/${newConversationId}`, { replace: true });
                   }}
-                  className="w-full px-6 py-3 bg-gradient-to-r from-gpt-green-500 to-gpt-blue-500 text-white rounded-xl font-medium hover:from-gpt-green-600 hover:to-gpt-blue-600 transition-all duration-200 shadow-lg hover:shadow-xl animate-glow"
+                  className={`w-full ${
+                    screenSize === 'xs' ? 'px-4 py-3 text-sm' :
+                    screenSize === 'sm' ? 'px-5 py-3 text-base' :
+                    'px-6 py-4 text-base'
+                  } bg-gradient-to-r from-gpt-green-500 to-gpt-blue-500 text-white rounded-xl font-medium hover:from-gpt-green-600 hover:to-gpt-blue-600 active:scale-95 transition-all duration-200 shadow-lg hover:shadow-xl animate-glow touch-manipulation`}
+                  style={{ minHeight: '48px' }}
                 >
-                  🚀 Start New Chat
+                  <span className="flex items-center justify-center space-x-2">
+                    <span>🚀</span>
+                    <span>Start New Chat</span>
+                  </span>
                 </button>
               </div>
             ) : (
@@ -335,9 +377,9 @@ export default function Chat() {
   }
 
   return (
-    <div className="flex-1 flex flex-col h-full">
-      {/* Messages container with enhanced animations */}
-      <div className="flex-1 overflow-y-auto px-2 sm:px-4 py-2 sm:py-4 space-y-1 sm:space-y-2 scroll-smooth max-w-4xl mx-auto w-full scrollbar-hide">
+    <div className="flex-1 flex flex-col h-full min-h-0">
+      {/* Messages container with enhanced mobile animations */}
+      <div className="flex-1 overflow-y-auto px-1 sm:px-2 md:px-4 py-1 sm:py-2 md:py-4 space-y-1 sm:space-y-2 scroll-smooth max-w-4xl mx-auto w-full scrollbar-hide overscroll-contain">
         {/* Animated gradient background overlay */}
         <div className="fixed inset-0 pointer-events-none">
           <div className="absolute inset-0 bg-gradient-to-br from-transparent via-gpt-blue-500/5 to-transparent animate-gradient-shift"></div>
@@ -345,31 +387,31 @@ export default function Chat() {
         
         {/* Empty state message for new chat */}
         {currentConversation.messages.length === 0 && (
-          <div className="flex-1 flex items-center justify-center py-8 sm:py-12 animate-fade-in-up">
-            <div className="text-center max-w-md mx-auto px-4">
-              <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-gpt-green-500 to-gpt-blue-500 rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6 shadow-lg animate-bounce-in">
-                <svg className="w-6 h-6 sm:w-8 sm:h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="flex-1 flex items-center justify-center py-6 sm:py-8 md:py-12 animate-fade-in-up min-h-[50vh]">
+            <div className="text-center max-w-xs sm:max-w-md mx-auto px-3 sm:px-4">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 bg-gradient-to-br from-gpt-green-500 to-gpt-blue-500 rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-4 md:mb-6 shadow-lg animate-bounce-in">
+                <svg className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                 </svg>
               </div>
-              <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2 sm:mb-3 animate-slide-in-left">
+              <h3 className="text-base sm:text-lg md:text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2 sm:mb-3 animate-slide-in-left">
                 Ready to chat!
               </h3>
-              <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mb-4 sm:mb-6 animate-slide-in-right">
+              <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mb-4 sm:mb-6 animate-slide-in-right leading-relaxed">
                 Start typing your prompt below or upload files for analysis. 
                 Ask me anything - I'm here to help! ✨
               </p>
               <div className="flex flex-wrap justify-center gap-1 sm:gap-2 text-xs sm:text-sm animate-fade-in">
-                <span className="px-2 sm:px-3 py-1 bg-gray-100 dark:bg-gpt-gray-700 rounded-full text-gray-600 dark:text-gray-400">
+                <span className="px-2 sm:px-3 py-1 bg-gray-100 dark:bg-gpt-gray-700 rounded-full text-gray-600 dark:text-gray-400 whitespace-nowrap">
                   💡 Ask questions
                 </span>
-                <span className="px-2 sm:px-3 py-1 bg-gray-100 dark:bg-gpt-gray-700 rounded-full text-gray-600 dark:text-gray-400">
+                <span className="px-2 sm:px-3 py-1 bg-gray-100 dark:bg-gpt-gray-700 rounded-full text-gray-600 dark:text-gray-400 whitespace-nowrap">
                   📝 Write content
                 </span>
-                <span className="px-2 sm:px-3 py-1 bg-gray-100 dark:bg-gpt-gray-700 rounded-full text-gray-600 dark:text-gray-400">
+                <span className="px-2 sm:px-3 py-1 bg-gray-100 dark:bg-gpt-gray-700 rounded-full text-gray-600 dark:text-gray-400 whitespace-nowrap">
                   🔍 Analyze files
                 </span>
-                <span className="px-2 sm:px-3 py-1 bg-gray-100 dark:bg-gpt-gray-700 rounded-full text-gray-600 dark:text-gray-400">
+                <span className="px-2 sm:px-3 py-1 bg-gray-100 dark:bg-gpt-gray-700 rounded-full text-gray-600 dark:text-gray-400 whitespace-nowrap">
                   💻 Code help
                 </span>
               </div>

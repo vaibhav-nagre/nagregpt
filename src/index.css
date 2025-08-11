@@ -507,6 +507,50 @@
   body, html {
     overflow-x: hidden;
   }
+  
+  /* Mobile-specific message spacing */
+  .message-container {
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Compact header on mobile */
+  header {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    height: 3.5rem;
+  }
+  
+  /* Better mobile input area */
+  .chat-input-area {
+    padding: 0.75rem;
+  }
+  
+  /* Optimize viewport for mobile */
+  .mobile-viewport {
+    min-height: 100vh;
+    min-height: 100dvh; /* Dynamic viewport height */
+  }
+}
+
+/* Extra small screens (phones < 480px) */
+@media (max-width: 479px) {
+  /* Even more compact spacing */
+  .container {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+  
+  /* Smaller text on very small screens */
+  h1 {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+  
+  /* Compact buttons */
+  button {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+  }
 }
 
 /* Touch-friendly interactions */
@@ -519,5 +563,33 @@
   /* Larger touch targets */
   button, a {
     padding: 0.75rem;
+    min-height: 48px;
+  }
+  
+  /* Remove hover effects on touch devices */
+  .hover\:scale-105:hover {
+    transform: none;
+  }
+  
+  /* Better active states for touch */
+  button:active {
+    transform: scale(0.95);
+    transition: transform 0.1s ease;
+  }
+  
+  /* Instant feedback for touches */
+  .touch-manipulation {
+    touch-action: manipulation;
+  }
+}
+
+/* Safe area for devices with notches */
+@supports (padding: max(0px)) {
+  .safe-area-top {
+    padding-top: max(0.75rem, env(safe-area-inset-top));
+  }
+  
+  .safe-area-bottom {
+    padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
   }
 }
