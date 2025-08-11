@@ -323,7 +323,7 @@ export default function Chat() {
                 <div className="mb-8">
                   <button
                     onClick={() => handleSendMessage("Say hello and tell me you're working!")}
-                    className="px-6 py-3 bg-gradient-to-r from-gpt-green-500 to-gpt-blue-500 text-white rounded-xl font-medium hover:from-gpt-green-600 hover:to-gpt-blue-600 transition-all duration-200 shadow-lg hover:shadow-xl mr-4"
+                    className="px-6 py-3 bg-gray-500 text-white rounded-xl font-medium hover:bg-gray-600 transition-colors duration-200 mr-4"
                   >
                     🧪 Test API Connection
                   </button>
