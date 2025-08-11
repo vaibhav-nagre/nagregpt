@@ -220,26 +220,23 @@ export default function Chat() {
             isMobileDevice ? 'max-w-md px-6' : 'max-w-2xl'
           }`}>
             
+            {/* Logo and Brand */}
             <div className="relative mb-4 sm:mb-6 md:mb-8 animate-bounce-in">
-              <div className={`${
-                screenSize === 'xs' ? 'w-12 h-12' :
-                screenSize === 'sm' ? 'w-14 h-14' :
-                isMobileDevice ? 'w-16 h-16' : 'w-24 h-24'
-              } bg-gradient-to-br from-gpt-green-500 via-gpt-blue-500 to-purple-500 rounded-2xl sm:rounded-3xl flex items-center justify-center mx-auto mb-3 sm:mb-4 md:mb-6 shadow-xl sm:shadow-2xl animate-glow`}>
-                <svg className={`${
-                  screenSize === 'xs' ? 'w-6 h-6' :
-                  screenSize === 'sm' ? 'w-7 h-7' :
-                  isMobileDevice ? 'w-8 h-8' : 'w-12 h-12'
-                } text-white`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-              </div>
+              <img 
+                src="/logo.svg" 
+                alt="NagreGPT Logo" 
+                className={`${
+                  screenSize === 'xs' ? 'w-16 h-16' :
+                  screenSize === 'sm' ? 'w-20 h-20' :
+                  isMobileDevice ? 'w-24 h-24' : 'w-32 h-32'
+                } mx-auto rounded-2xl shadow-xl animate-glow`}
+              />
               <div className={`absolute -top-1 sm:-top-2 -right-1 sm:-right-2 ${
                 isMobileDevice ? 'w-3 h-3 sm:w-4 sm:h-4' : 'w-6 h-6'
-              } bg-gpt-green-500 rounded-full animate-pulse`}></div>
+              } bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full animate-pulse`}></div>
               <div className={`absolute -bottom-1 sm:-bottom-2 -left-1 sm:-left-2 ${
                 isMobileDevice ? 'w-2 h-2 sm:w-3 sm:h-3' : 'w-4 h-4'
-              } bg-gpt-blue-500 rounded-full animate-pulse`} style={{ animationDelay: '0.5s' }}></div>
+              } bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full animate-pulse`} style={{ animationDelay: '0.5s' }}></div>
             </div>
 
             <h1 className={`${
@@ -248,7 +245,7 @@ export default function Chat() {
               isMobileDevice ? 'text-2xl sm:text-3xl' : 'text-4xl'
             } font-bold text-gray-900 dark:text-gray-100 mb-2 sm:mb-3 md:mb-4 animate-slide-in-left leading-tight`}>
               Welcome to{' '}
-              <span className="bg-gradient-to-r from-gpt-green-500 to-gpt-blue-500 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-blue-600 bg-clip-text text-transparent">
                 NagreGPT
               </span>
             </h1>

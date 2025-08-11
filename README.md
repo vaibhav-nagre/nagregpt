@@ -1,8 +1,9 @@
 <!-- Header with animated typing effect -->
 <div align="center">
 
-# 🚀 NagreGPT
-### *Unlimited Free AI Assistant with High Accuracy*
+<img src="public/logo-horizontal.svg" alt="NagreGPT Logo" width="400" />
+
+<br/><br/>
 
 <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=22&pause=1000&color=00D4FF&center=true&vCenter=true&width=600&lines=🤖+Powered+by+Groq's+Lightning-Fast+Models;📱+Beautiful+Responsive+Interface;🧠+Learns+from+Your+Interactions;📄+Analyzes+Files+%26+Documents;🌟+100%25+Free+%26+Open+Source" alt="Typing SVG" />
 

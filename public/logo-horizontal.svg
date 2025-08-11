@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 80" width="300" height="80">
+  <defs>
+    <linearGradient id="primaryGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00D4FF;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#0099CC;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0066AA;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="accentGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF6B6B;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4ECDC4;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#00D4FF;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0066AA;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Logo icon on the left -->
+  <g transform="translate(40, 40)">
+    <!-- Background circle -->
+    <circle cx="0" cy="0" r="35" fill="url(#primaryGradient)" opacity="0.1"/>
+    
+    <!-- Neural network -->
+    <g opacity="0.8">
+      <circle cx="0" cy="0" r="5" fill="url(#accentGradient)"/>
+      <circle cx="-15" cy="-10" r="3" fill="url(#primaryGradient)"/>
+      <circle cx="15" cy="-10" r="3" fill="url(#primaryGradient)"/>
+      <circle cx="-15" cy="10" r="3" fill="url(#primaryGradient)"/>
+      <circle cx="15" cy="10" r="3" fill="url(#primaryGradient)"/>
+      
+      <line x1="0" y1="0" x2="-15" y2="-10" stroke="url(#primaryGradient)" stroke-width="1.5" opacity="0.6"/>
+      <line x1="0" y1="0" x2="15" y2="-10" stroke="url(#primaryGradient)" stroke-width="1.5" opacity="0.6"/>
+      <line x1="0" y1="0" x2="-15" y2="10" stroke="url(#primaryGradient)" stroke-width="1.5" opacity="0.6"/>
+      <line x1="0" y1="0" x2="15" y2="10" stroke="url(#primaryGradient)" stroke-width="1.5" opacity="0.6"/>
+    </g>
+    
+    <!-- Central "N" -->
+    <path d="M -8 -12 L -8 12 L -5 12 L -5 -3 L 5 12 L 8 12 L 8 -12 L 5 -12 L 5 3 L -5 -12 Z" 
+          fill="url(#primaryGradient)"/>
+  </g>
+  
+  <!-- Company name -->
+  <g transform="translate(95, 40)">
+    <!-- NagreGPT text -->
+    <text x="0" y="8" font-family="'Segoe UI', 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif" 
+          font-size="32" font-weight="700" fill="url(#textGradient)">
+      NagreGPT
+    </text>
+    
+    <!-- Tagline -->
+    <text x="0" y="26" font-family="'Segoe UI', 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif" 
+          font-size="12" font-weight="400" fill="#666" opacity="0.8">
+      Unlimited Free AI Assistant
+    </text>
+  </g>
+  
+  <!-- Subtle animation -->
+  <circle cx="40" cy="40" r="40" fill="none" stroke="url(#accentGradient)" stroke-width="0.5" opacity="0">
+    <animate attributeName="r" values="40;45;40" dur="3s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;0.3;0" dur="3s" repeatCount="indefinite"/>
+  </circle>
+</svg>

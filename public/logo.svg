@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <!-- Gradient definitions -->
+    <linearGradient id="primaryGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00D4FF;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#0099CC;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0066AA;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="accentGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF6B6B;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4ECDC4;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="neuralGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00D4FF;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#FF6B6B;stop-opacity:0.6" />
+    </linearGradient>
+    
+    <!-- Filter for glow effect -->
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <!-- Animation -->
+    <animateTransform id="rotate" attributeName="transform" type="rotate" 
+                      values="0 100 100;360 100 100" dur="20s" repeatCount="indefinite"/>
+  </defs>
+  
+  <!-- Background circle with subtle glow -->
+  <circle cx="100" cy="100" r="95" fill="url(#primaryGradient)" opacity="0.1" filter="url(#glow)"/>
+  
+  <!-- Outer ring -->
+  <circle cx="100" cy="100" r="85" fill="none" stroke="url(#primaryGradient)" stroke-width="2" opacity="0.3">
+    <animateTransform attributeName="transform" type="rotate" 
+                      values="0 100 100;360 100 100" dur="30s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- Neural network nodes -->
+  <g opacity="0.6">
+    <!-- Center nodes -->
+    <circle cx="100" cy="100" r="8" fill="url(#accentGradient)"/>
+    <circle cx="70" cy="80" r="5" fill="url(#primaryGradient)"/>
+    <circle cx="130" cy="80" r="5" fill="url(#primaryGradient)"/>
+    <circle cx="70" cy="120" r="5" fill="url(#primaryGradient)"/>
+    <circle cx="130" cy="120" r="5" fill="url(#primaryGradient)"/>
+    
+    <!-- Outer nodes -->
+    <circle cx="100" cy="50" r="4" fill="url(#accentGradient)" opacity="0.8"/>
+    <circle cx="100" cy="150" r="4" fill="url(#accentGradient)" opacity="0.8"/>
+    <circle cx="50" cy="100" r="4" fill="url(#accentGradient)" opacity="0.8"/>
+    <circle cx="150" cy="100" r="4" fill="url(#accentGradient)" opacity="0.8"/>
+    
+    <!-- Connection lines -->
+    <line x1="100" y1="100" x2="70" y2="80" stroke="url(#neuralGradient)" stroke-width="2" opacity="0.6"/>
+    <line x1="100" y1="100" x2="130" y2="80" stroke="url(#neuralGradient)" stroke-width="2" opacity="0.6"/>
+    <line x1="100" y1="100" x2="70" y2="120" stroke="url(#neuralGradient)" stroke-width="2" opacity="0.6"/>
+    <line x1="100" y1="100" x2="130" y2="120" stroke="url(#neuralGradient)" stroke-width="2" opacity="0.6"/>
+    
+    <line x1="70" y1="80" x2="100" y2="50" stroke="url(#neuralGradient)" stroke-width="1.5" opacity="0.4"/>
+    <line x1="130" y1="80" x2="100" y2="50" stroke="url(#neuralGradient)" stroke-width="1.5" opacity="0.4"/>
+    <line x1="70" y1="120" x2="100" y2="150" stroke="url(#neuralGradient)" stroke-width="1.5" opacity="0.4"/>
+    <line x1="130" y1="120" x2="100" y2="150" stroke="url(#neuralGradient)" stroke-width="1.5" opacity="0.4"/>
+    
+    <line x1="70" y1="80" x2="50" y2="100" stroke="url(#neuralGradient)" stroke-width="1.5" opacity="0.4"/>
+    <line x1="70" y1="120" x2="50" y2="100" stroke="url(#neuralGradient)" stroke-width="1.5" opacity="0.4"/>
+    <line x1="130" y1="80" x2="150" y2="100" stroke="url(#neuralGradient)" stroke-width="1.5" opacity="0.4"/>
+    <line x1="130" y1="120" x2="150" y2="100" stroke="url(#neuralGradient)" stroke-width="1.5" opacity="0.4"/>
+  </g>
+  
+  <!-- Central "N" lettermark -->
+  <g transform="translate(100, 100)">
+    <path d="M -15 -20 L -15 20 L -10 20 L -10 -5 L 10 20 L 15 20 L 15 -20 L 10 -20 L 10 5 L -10 -20 Z" 
+          fill="url(#primaryGradient)" filter="url(#glow)"/>
+  </g>
+  
+  <!-- Pulse animation for center -->
+  <circle cx="100" cy="100" r="12" fill="none" stroke="url(#accentGradient)" stroke-width="1" opacity="0">
+    <animate attributeName="r" values="12;20;12" dur="2s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;0.8;0" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- Data flow particles -->
+  <g opacity="0.7">
+    <circle r="2" fill="url(#accentGradient)">
+      <animateMotion dur="4s" repeatCount="indefinite">
+        <path d="M 70,80 Q 100,60 130,80"/>
+      </animateMotion>
+    </circle>
+    <circle r="2" fill="url(#primaryGradient)">
+      <animateMotion dur="3s" repeatCount="indefinite">
+        <path d="M 130,120 Q 100,140 70,120"/>
+      </animateMotion>
+    </circle>
+    <circle r="1.5" fill="url(#accentGradient)">
+      <animateMotion dur="5s" repeatCount="indefinite">
+        <path d="M 50,100 Q 100,80 150,100"/>
+      </animateMotion>
+    </circle>
+  </g>
+</svg>

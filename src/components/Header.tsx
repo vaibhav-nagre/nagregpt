@@ -5,7 +5,6 @@ import {
   SunIcon, 
   MoonIcon,
   PlusIcon,
-  SparklesIcon,
   CheckIcon,
   ChartBarIcon
 } from '@heroicons/react/24/outline';
@@ -87,12 +86,14 @@ export default function Header({ onHomeClick }: HeaderProps) {
           title="Go to Home"
         >
           <div className="relative">
-            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-gpt-green-500 to-gpt-blue-500 rounded-xl flex items-center justify-center shadow-lg animate-glow">
-              <SparklesIcon className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
-            </div>
-            <div className="absolute -top-1 -right-1 w-2 h-2 sm:w-3 sm:h-3 bg-gpt-green-500 rounded-full animate-pulse"></div>
+            <img 
+              src="/logo.svg" 
+              alt="NagreGPT Logo" 
+              className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl shadow-lg animate-glow"
+            />
+            <div className="absolute -top-1 -right-1 w-2 h-2 sm:w-3 sm:h-3 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full animate-pulse"></div>
           </div>
-          <h1 className="text-lg sm:text-xl font-bold bg-gradient-to-r from-gpt-green-500 to-gpt-blue-500 bg-clip-text text-transparent">
+          <h1 className="text-lg sm:text-xl font-bold bg-gradient-to-r from-cyan-400 via-blue-500 to-blue-600 bg-clip-text text-transparent">
             NagreGPT
           </h1>
         </button>
