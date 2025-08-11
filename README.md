@@ -1,7 +1,9 @@
 <!-- Header with animated typing effect -->
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/vaibhav-nagre/nagregpt/main/public<img src="https://user-images.githubusercontent.com/74038190/225813708-98b745f2-7d22-48cf-9150-083f1b00d6c9.gif" width="120" />
+<img src="https://raw.githubusercontent.com/vaibhav-nagre/nagregpt/main/publ## 🧠 AI Learning System
+
+<img src="https://user-images.githubusercontent.com/74038190/225813708-98b745f2-7d22-48cf-9150-083f1b00d6c9.gif" width="120" />
 
 ### 🔄 How It Works
 
@@ -208,7 +210,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ### **💖 Created with passion by [Vaibhav Nagre](https://github.com/vaibhav-nagre)**
 
 <div align="center">
-  <img src="https://github.com/vaibhav-nagre.png" alt="Vaibhav Nagre" width="100" style="border-radius: 50%; border: 4px solid #00D4FF; box-shadow: 0 4px 12px rgba(0, 212, 255, 0.3);" />
+  <div style="display: inline-block; padding: 10px; background: linear-gradient(45deg, #00D4FF, #4ECDC4, #45B7D1); border-radius: 50%; margin: 10px;">
+    <img src="https://github.com/vaibhav-nagre.png" alt="Vaibhav Nagre" width="100" style="border-radius: 50%; border: 4px solid #ffffff; box-shadow: 0 8px 24px rgba(0, 212, 255, 0.4), 0 0 0 3px rgba(0, 212, 255, 0.2); display: block;" />
+  </div>
 </div>
 
 <p>
