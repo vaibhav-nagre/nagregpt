@@ -14,6 +14,7 @@ export default function Chat() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [currentStreamingMessage, setCurrentStreamingMessage] = useState<string>('');
   const [abortController, setAbortController] = useState<AbortController | null>(null);
+  const redirectingRef = useRef(false);
 
   const isMobile = () => {
     return window.innerWidth <= 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
@@ -29,6 +30,7 @@ export default function Chat() {
 
   useEffect(() => {
     if (conversationId) {
+      redirectingRef.current = false; // Reset redirect flag when we have a conversationId
       const conversationExists = state.conversations.some(conv => conv.id === conversationId);
       if (conversationExists) {
         if (state.currentConversationId !== conversationId) {
@@ -38,13 +40,16 @@ export default function Chat() {
         navigate('/', { replace: true });
       }
     } else {
-      if (isMobile() && !state.currentConversationId) {
+      // Only redirect mobile users to new chat if they're on the home page and don't have any conversation
+      if (isMobile() && !state.currentConversationId && window.location.pathname === '/' && !redirectingRef.current) {
+        redirectingRef.current = true; // Set flag to prevent multiple redirects
         const newConversationId = createNewConversation();
         navigate(`/chat/${newConversationId}`, { replace: true });
         return;
       }
       
-      if (state.currentConversationId) {
+      // Clear current conversation only if we're on the home page
+      if (state.currentConversationId && window.location.pathname === '/') {
         clearCurrentConversation();
       }
     }
@@ -266,8 +271,11 @@ export default function Chat() {
               <div className={`${screenSize === 'xs' ? 'mb-4' : 'mb-6'}`}>
                 <button
                   onClick={() => {
-                    const newConversationId = createNewConversation();
-                    navigate(`/chat/${newConversationId}`, { replace: true });
+                    if (!redirectingRef.current) {
+                      redirectingRef.current = true;
+                      const newConversationId = createNewConversation();
+                      navigate(`/chat/${newConversationId}`, { replace: true });
+                    }
                   }}
                   className={`w-full ${
                     screenSize === 'xs' ? 'px-4 py-3 text-sm' :
@@ -287,10 +295,10 @@ export default function Chat() {
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
               {[
-                { icon: '💡', title: 'Creative Writing' },
-                { icon: '🔧', title: 'Code Assistant'},
-                { icon: '📚', title: 'Learning Helper'},
-                { icon: '✨', title: 'General Chat'},
+                { icon: '💡', title: 'Creative Writing', desc: '' },
+                { icon: '🔧', title: 'Code Assistant', desc: '' },
+                { icon: '📚', title: 'Learning Helper', desc: '' },
+                { icon: '✨', title: 'General Chat', desc: '' },
               ].map((feature, index) => (
                 <div 
                   key={feature.title}
