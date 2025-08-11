@@ -1,7 +1,7 @@
 <!-- Header with animated typing effect -->
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/vaibhav-nagre/nagregpt/main/public/logo-horizontal.svg" width="120" />
+<img src="https://raw.githubusercontent.com/vaibhav-nagre/nagregpt/main/public/logo-horizontal.svg" width="400" />
 
 <br/><br/>
 
