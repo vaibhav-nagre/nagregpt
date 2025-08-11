@@ -2,6 +2,7 @@ import { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark, oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import vaibhavPhoto from '/photo.jpg';
 import { 
   ClipboardIcon, 
   CheckIcon,
@@ -170,7 +171,7 @@ export default function MessageComponent({ message, onRegenerate, onEdit, onDele
                   {isUser && (
                     <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full flex items-center justify-center overflow-hidden border-2 border-blue-300 dark:border-blue-600 flex-shrink-0 bg-blue-100 dark:bg-blue-800">
                       <img 
-                        src="./public/photo.jpg" 
+                        src={vaibhavPhoto} 
                         alt="Vaibhav" 
                         className="w-full h-full object-cover"
                         onError={(e) => {
