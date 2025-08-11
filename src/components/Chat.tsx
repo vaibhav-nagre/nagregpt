@@ -15,6 +15,11 @@ export default function Chat() {
   const [currentStreamingMessage, setCurrentStreamingMessage] = useState<string>('');
   const [abortController, setAbortController] = useState<AbortController | null>(null);
 
+  // Detect if user is on mobile device
+  const isMobile = () => {
+    return window.innerWidth <= 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  };
+
     // Handle URL-based conversation switching
   useEffect(() => {
     if (conversationId) {
@@ -31,12 +36,19 @@ export default function Chat() {
       }
     } else {
       // No conversation ID in URL - we're on home page
-      // Clear current conversation to show welcome page
+      // On mobile, automatically create a new conversation instead of showing welcome page
+      if (isMobile() && !state.currentConversationId) {
+        const newConversationId = createNewConversation();
+        navigate(`/chat/${newConversationId}`, { replace: true });
+        return;
+      }
+      
+      // On desktop, clear current conversation to show welcome page
       if (state.currentConversationId) {
         clearCurrentConversation();
       }
     }
-  }, [conversationId, state.conversations, state.currentConversationId, switchConversation, clearCurrentConversation, navigate]);
+  }, [conversationId, state.conversations, state.currentConversationId, switchConversation, clearCurrentConversation, navigate, createNewConversation]);
 
   const currentConversation = state.conversations.find(
     conv => conv.id === state.currentConversationId
@@ -209,37 +221,56 @@ export default function Chat() {
   };
 
   if (!currentConversation) {
+    // Show simplified mobile experience or redirect to new chat
+    const isMobileDevice = isMobile();
+    
     return (
       <div className="flex-1 flex flex-col">
         {/* Animated Welcome screen */}
-        <div className="flex-1 flex items-center justify-center p-8">
-          <div className="text-center max-w-2xl mx-auto animate-fade-in-up">
+        <div className="flex-1 flex items-center justify-center p-4 sm:p-8">
+          <div className={`text-center mx-auto animate-fade-in-up ${isMobileDevice ? 'max-w-sm' : 'max-w-2xl'}`}>
             {/* Animated Logo */}
-            <div className="relative mb-8 animate-bounce-in">
-              <div className="w-24 h-24 bg-gradient-to-br from-gpt-green-500 via-gpt-blue-500 to-purple-500 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-2xl animate-glow">
-                <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="relative mb-6 sm:mb-8 animate-bounce-in">
+              <div className={`${isMobileDevice ? 'w-16 h-16' : 'w-24 h-24'} bg-gradient-to-br from-gpt-green-500 via-gpt-blue-500 to-purple-500 rounded-3xl flex items-center justify-center mx-auto mb-4 sm:mb-6 shadow-2xl animate-glow`}>
+                <svg className={`${isMobileDevice ? 'w-8 h-8' : 'w-12 h-12'} text-white`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
               </div>
-              <div className="absolute -top-2 -right-2 w-6 h-6 bg-gpt-green-500 rounded-full animate-pulse"></div>
-              <div className="absolute -bottom-2 -left-2 w-4 h-4 bg-gpt-blue-500 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
+              <div className="absolute -top-2 -right-2 w-4 h-4 sm:w-6 sm:h-6 bg-gpt-green-500 rounded-full animate-pulse"></div>
+              <div className="absolute -bottom-2 -left-2 w-3 h-3 sm:w-4 sm:h-4 bg-gpt-blue-500 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
             </div>
 
-            <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4 animate-slide-in-left">
+            <h1 className={`${isMobileDevice ? 'text-2xl' : 'text-4xl'} font-bold text-gray-900 dark:text-gray-100 mb-3 sm:mb-4 animate-slide-in-left`}>
               Welcome to{' '}
               <span className="bg-gradient-to-r from-gpt-green-500 to-gpt-blue-500 bg-clip-text text-transparent">
                 NagreGPT
               </span>
             </h1>
             
-            <p className="text-xl text-gray-600 dark:text-gray-400 mb-12 animate-slide-in-right">
+            <p className={`${isMobileDevice ? 'text-base mb-6' : 'text-xl mb-12'} text-gray-600 dark:text-gray-400 animate-slide-in-right`}>
               Your AI assistant powered by{' '}
               <span className="font-semibold text-gpt-green-500">Groq's lightning-fast</span>{' '}
-              Llama models. Ask anything, and let's start creating together! ✨
+              Llama models. {!isMobileDevice && 'Ask anything, and let\'s start creating together! ✨'}
+              {isMobileDevice && 'Start chatting! ✨'}
             </p>
             
-            {/* Feature Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+            {/* Mobile: Quick start button, Desktop: Feature Grid */}
+            {isMobileDevice ? (
+              <div className="mb-6">
+                <button
+                  onClick={() => {
+                    const newConversationId = createNewConversation();
+                    navigate(`/chat/${newConversationId}`, { replace: true });
+                  }}
+                  className="w-full px-6 py-3 bg-gradient-to-r from-gpt-green-500 to-gpt-blue-500 text-white rounded-xl font-medium hover:from-gpt-green-600 hover:to-gpt-blue-600 transition-all duration-200 shadow-lg hover:shadow-xl animate-glow"
+                >
+                  🚀 Start New Chat
+                </button>
+              </div>
+            ) : (
+              <>
+                {/* Feature Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
               {[
                 { icon: '💡', title: 'Creative Writing', desc: 'Stories, poems, and ideas' },
                 { icon: '🔧', title: 'Code Assistant', desc: 'Debug, write, and learn' },
@@ -261,36 +292,36 @@ export default function Chat() {
                     {feature.desc}
                   </p>
                 </div>
-              ))}
-            </div>
+                ))}
+                </div>
 
-          
+                {/* API Test Button */}
+                <div className="mb-8">
+                  <button
+                    onClick={() => handleSendMessage("Say hello and tell me you're working!")}
+                    className="px-6 py-3 bg-gradient-to-r from-gpt-green-500 to-gpt-blue-500 text-white rounded-xl font-medium hover:from-gpt-green-600 hover:to-gpt-blue-600 transition-all duration-200 shadow-lg hover:shadow-xl animate-glow mr-4"
+                  >
+                    🧪 Test API Connection
+                  </button>
+                </div>
 
-            {/* API Test Button */}
-            <div className="mb-8">
-              <button
-                onClick={() => handleSendMessage("Say hello and tell me you're working!")}
-                className="px-6 py-3 bg-gradient-to-r from-gpt-green-500 to-gpt-blue-500 text-white rounded-xl font-medium hover:from-gpt-green-600 hover:to-gpt-blue-600 transition-all duration-200 shadow-lg hover:shadow-xl animate-glow mr-4"
-              >
-                🧪 Test API Connection
-              </button>
-            </div>
-
-            {/* Stats */}
-            <div className="flex justify-center space-x-8 text-sm text-gray-500 dark:text-gray-400 animate-fade-in">
-              <div className="flex items-center space-x-2">
-                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                <span>Lightning Fast</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
-                <span>Always Available</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
-                <span>Privacy Focused</span>
-              </div>
-            </div>
+                {/* Stats */}
+                <div className="flex justify-center space-x-8 text-sm text-gray-500 dark:text-gray-400 animate-fade-in">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                    <span>Lightning Fast</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
+                    <span>Always Available</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
+                    <span>Privacy Focused</span>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         </div>
         
