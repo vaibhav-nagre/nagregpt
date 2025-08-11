@@ -9,7 +9,7 @@ import {
   ChartBarIcon
 } from '@heroicons/react/24/outline';
 import { FeedbackManager } from '../utils/feedbackManager';
-import logoSvg from '/logo.svg';
+import logoSvg from '/logo-large.svg';
 
 interface HeaderProps {
   onHomeClick?: () => void;

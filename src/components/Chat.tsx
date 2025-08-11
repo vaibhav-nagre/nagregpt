@@ -6,7 +6,7 @@ import EnhancedChatInput from './EnhancedChatInput';
 import { groqAPI, convertToGroqMessages } from '../services/groqAPI';
 import { FileProcessor } from '../utils/fileProcessor';
 import type { FileAnalysis } from '../utils/fileProcessor';
-import logoSvg from '/logo.svg';
+import logoSvg from '/logo-large.svg';
 
 export default function Chat() {
   const { conversationId } = useParams<{ conversationId?: string }>();
