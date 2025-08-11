@@ -1,11 +1,7 @@
 <!-- Header with animated typing effect -->
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/vaibhav-nagre/nagregpt/main/public" /> width="120" />
-
-### 🔄 How It Works
-
-<table>-horizontal.svg" alt="NagreGPT Logo" width="400" />
+<img src="https://raw.githubusercontent.com/vaibhav-nagre/nagregpt/main/public" width="120" />
 
 <br/><br/>
 
