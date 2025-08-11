@@ -1,7 +1,7 @@
 <!-- Header with animated typing effect -->
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/vaibhav-nagre/nagregpt/main/public" width="120" />
+<img src="https://raw.githubusercontent.com/vaibhav-nagre/nagregpt/main/public/logo-horizontal.svg" width="120" />
 
 <br/><br/>
 
@@ -17,17 +17,6 @@
   <img src="https://img.shields.io/badge/Tailwind-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" />
 </p>
 
-<p align="center">
-  <a href="https://vaibhav-nagre.github.io/nagregpt">
-    <img src="https://img.shields.io/badge/🌟_Live_Demo-37a779?style=for-the-badge&logoColor=white" />
-  </a>
-  <a href="#-installation">
-    <img src="https://img.shields.io/badge/⚡_Quick_Setup-blue?style=for-the-badge&logoColor=white" />
-  </a>
-  <a href="#-features">
-    <img src="https://img.shields.io/badge/🚀_Features-orange?style=for-the-badge&logoColor=white" />
-  </a>
-</p>
 
 <!-- Animated wave -->
 <img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=0,2,2,5,30&height=100&section=header&animation=fadeIn" />
@@ -50,17 +39,11 @@
 ### 🆓 Completely Free
 <img src="https://user-images.githubusercontent.com/74038190/216122041-518ac897-8d92-4c6b-9b3f-ca01dcaf38ee.png" width="60" />
 
-**Zero Cost** - No subscriptions  
-**Unlimited Usage** - Powered by Groq  
-
 </td>
 <td align="center" width="25%">
 
 ### ⚡ Lightning Fast
 <img src="https://user-images.githubusercontent.com/74038190/213760705-0d5bf320-4f43-4352-b74b-0889ae726bf7.gif" width="60" />
-
-**Sub-second Responses**  
-**Real-time Streaming**  
 
 </td>
 <td align="center" width="25%">
@@ -68,17 +51,11 @@
 ### 🧠 Intelligent Learning
 <img src="https://user-images.githubusercontent.com/74038190/225813708-98b745f2-7d22-48cf-9150-083f1b00d6c9.gif" width="60" />
 
-**Adaptive AI** - Learns from feedback  
-**Context Memory**  
-
 </td>
 <td align="center" width="25%">
 
 ### 🎨 Beautiful Interface
 <img src="https://user-images.githubusercontent.com/74038190/212284087-bbe7e430-757e-4901-90bf-4cd2ce3e1852.gif" width="60" />
-
-**ChatGPT-like UI**  
-**Dark/Light Themes**  
 
 </td>
 </tr>
@@ -142,7 +119,7 @@
 
 ## 🧠 AI Learning System
 
-<img src="https://user-images.githubusercontent.com/74038190/225813708-98b745f2-7d22-48cf-9150-083f1b00d6c9.gif" width="120" />
+<img src="https://user-images.githubusercontent.com/74038190/225813708-98b745f2-7d22-48cf-9150-083f1b00d6c9.gif" width="200" />
 
 ### � How It Works
 
