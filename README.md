@@ -1,7 +1,7 @@
 <!-- Header with animated typing effect -->
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/vaibhav-nagre/nagregpt/main/public/logo-horizontal.svg" width="400" />
+<img src="https://raw.githubusercontent.com/vaibhav-nagre/nagregpt/main/public/logo-horizontal.svg" width="370" />
 
 <br/><br/>
 
@@ -178,13 +178,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-### **💖 Created with passion by [Vaibhav Nagre](https://github.com/vaibhav-nagre)**
+### ** ♥︎ Created with passion by [Vaibhav Nagre](https://github.com/vaibhav-nagre)**
 
-<div align="center">
-  <div style="display: inline-block; padding: 10px; background: linear-gradient(45deg, #00D4FF, #4ECDC4, #45B7D1); border-radius: 50%; margin: 10px;">
-    <img src="https://github.com/vaibhav-nagre.png" alt="Vaibhav Nagre" width="100" style="border-radius: 50%; border: 4px solid #ffffff; box-shadow: 0 8px 24px rgba(0, 212, 255, 0.4), 0 0 0 3px rgba(0, 212, 255, 0.2); display: block;" />
-  </div>
-</div>
 
 <p>
   <a href="https://github.com/vaibhav-nagre">
