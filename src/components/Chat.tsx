@@ -287,10 +287,10 @@ export default function Chat() {
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
               {[
-                { icon: '💡', title: 'Creative Writing', desc: 'Stories, poems, and ideas' },
-                { icon: '🔧', title: 'Code Assistant', desc: 'Debug, write, and learn' },
-                { icon: '📚', title: 'Learning Helper', desc: 'Explanations and tutorials' },
-                { icon: '✨', title: 'General Chat', desc: 'Friendly conversations' },
+                { icon: '💡', title: 'Creative Writing' },
+                { icon: '🔧', title: 'Code Assistant'},
+                { icon: '📚', title: 'Learning Helper'},
+                { icon: '✨', title: 'General Chat'},
               ].map((feature, index) => (
                 <div 
                   key={feature.title}

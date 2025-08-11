@@ -1,13 +1,24 @@
 <!-- Header with animated typing effect -->
 <div align="center">
 
-<img src="public/logo-horizontal.svg" alt="NagreGPT Logo" width="400" />
+<img src="https://raw.githubusercontent.com/vaibhav-nagre/nagregpt/main/public/logo-horizontal.svg" alt="NagreGPT Logo" width="400" />
 
 <br/><br/>
 
-<img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=22&pause=1000&color=00D4FF&center=true&vCenter=true&width=600&lines=🤖+Powered+by+Groq's+Lightning-Fast+Models;📱+Beautiful+Responsive+Interface;🧠+Learns+from+Your+Interactions;📄+Analyzes+Files+%26+Documents;🌟+100%25+Free+%26+Open+Source" alt="Typing SVG" />
+<img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=22&pause=1000&color=00D4FF&center=true&vCenter=true&width=600&lines=🤖+Powered+by+Groq's+Lightning-Fast+Models;📱+Beautiful+Responsive+Interface;🧠+Learns+from+Your+Interactions;📄+Analyzes+Files+%26+Documents;🌟+100%25+Free+%26+Open+Source" alt="Typing SVG"### 💖 Created with passion by [Vaibhav Nagre](https://github.com/vaibhav-nagre)
 
-<p align="center">
+<div align="center">
+  <img src="https://github.com/vaibhav-nagre.png" alt="Vaibhav Nagre" width="80" style="border-radius: 50%; border: 3px solid #00D4FF;" />
+</div>
+
+<p>
+  <a href="https://github.com/vaibhav-nagre">
+    <img src="https://img.shields.io/badge/GitHub-vaibhav--nagre-181717?style=for-the-badge&logo=github" />
+  </a>
+  <a href="https://linkedin.com/in/nagre">
+    <img src="https://img.shields.io/badge/LinkedIn-Connect-0077B5?style=for-the-badge&logo=linkedin" />
+  </a>
+</p>ign="center">
   <img src="ht## 📄 License
 
 <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" />
@@ -56,7 +67,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 <td align="center" width="25%">
 
 ### 🆓 Completely Free
+<div align="center">
 <img src="https://user-images.githubusercontent.com/74038190/216122041-518ac897-8d92-4c6b-9b3f-ca01dcaf38ee.png" width="60" />
+</div>
 
 **Zero Cost** - No subscriptions  
 **Unlimited Usage** - Chat forever  
@@ -66,7 +79,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 <td align="center" width="25%">
 
 ### ⚡ Lightning Fast
+<div align="center">
 <img src="https://user-images.githubusercontent.com/74038190/213760705-0d5bf320-4f43-4352-b74b-0889ae726bf7.gif" width="60" />
+</div>
 
 **Sub-second Responses** - Optimized hardware  
 **Real-time Streaming** - Live generation  
@@ -76,7 +91,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 <td align="center" width="25%">
 
 ### 🧠 Intelligent Learning
+<div align="center">
 <img src="https://user-images.githubusercontent.com/74038190/225813708-98b745f2-7d22-48cf-9150-083f1b00d6c9.gif" width="60" />
+</div>
 
 **Adaptive AI** - Learns from feedback  
 **Context Memory** - Remembers history  
@@ -86,7 +103,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 <td align="center" width="25%">
 
 ### 🎨 Beautiful Interface
+<div align="center">
 <img src="https://user-images.githubusercontent.com/74038190/212284087-bbe7e430-757e-4901-90bf-4cd2ce3e1852.gif" width="60" />
+</div>
 
 **Modern Design** - ChatGPT-like UI  
 **Responsive** - Mobile & desktop  
@@ -153,15 +172,32 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 </td>
 <td align="center" width="33%">
 
-### 📁 File Intelligence
-<img src="https://user-images.githubusercontent.com/74038190/229223156-0cbdaba9-3128-4d8e-8719-b6b4cf741b67.gif" width="80" />
+### 📁 Smart File Analysis
+<div align="center">
+<img src="https://user-images.githubusercontent.com/74038190/229223156-0cbdaba9-3128-4d8e-8719-b6b4cf741b67.gif" width="60" />
+</div>
 
-**PDF Analysis & Summary**  
-**CSV/Excel Processing**  
-**Image Understanding**  
-**Text Document Review**  
+Instantly upload and analyze documents, images, or data files. Our AI understands context and provides intelligent insights.
 
-<img src="https://user-images.githubusercontent.com/74038190/212257468-1e9a91f1-b626-4baa-b15d-5c385b1974d3.gif" width="30">
+</td>
+<td align="center" width="33%">
+
+### 💬 Context-Aware Chat
+<div align="center">
+<img src="https://user-images.githubusercontent.com/74038190/212257467-871d32b7-e401-42e8-a166-fcfd7baa4c6b.gif" width="60" />
+</div>
+
+Maintains conversation history and context across sessions. Every interaction builds on previous conversations for richer dialogue.
+
+</td>
+<td align="center" width="33%">
+
+### 🔄 Continuous Improvement
+<div align="center">
+<img src="https://user-images.githubusercontent.com/74038190/216120981-b9507c36-0e04-4469-8e27-c99271b45ba5.gif" width="60" />
+</div>
+
+Global learning system that improves responses based on user feedback across all interactions worldwide.
 
 </td>
 <td align="center" width="33%">
