@@ -1,7 +1,4 @@
 import { config } from '../config';
-import { FeedbackManager } from '../utils/feedbackManager';
-import { ResponseAnalyzer } from '../utils/responseAnalyzer';
-import GlobalLearningSystem from './globalLearning';
 
 export interface GroqMessage {
   role: 'system' | 'user' | 'assistant';
@@ -47,36 +44,21 @@ export class GroqAPI {
     console.log('🌐 Base URL:', this.baseUrl);
     console.log('🤖 Model:', model);
     console.log('💬 Messages count:', messages.length);
-    console.log('📝 Messages:', messages);
-    
-    // 🧠 ENHANCE WITH LEARNING: Improve user message with learning context
-    const lastUserMessage = messages[messages.length - 1];
-    if (lastUserMessage && lastUserMessage.role === 'user') {
-      try {
-        const enhancedContent = await GlobalLearningSystem.generateImprovedPrompt(lastUserMessage.content);
-        if (enhancedContent !== lastUserMessage.content) {
-          console.log('🎯 Enhanced prompt with learning context');
-          lastUserMessage.content = enhancedContent;
-        }
-      } catch (error) {
-        console.warn('Failed to enhance prompt with learning:', error);
-      }
-    }
     
     try {
       const requestBody = {
         model,
         messages,
         stream: !!onStream,
-        max_tokens: 6144, // Increased to allow for more detailed responses
-        temperature: 0.6, // Balanced for accuracy and natural flow
-        top_p: 0.85, // Balanced for comprehensive yet focused responses
-        frequency_penalty: 0.1, // Reduced to allow for detailed explanations
-        presence_penalty: 0.15, // Balanced to encourage thoroughness without repetition
+        max_tokens: 4096,
+        temperature: 0.7,
+        top_p: 0.9,
+        frequency_penalty: 0,
+        presence_penalty: 0,
         stop: null,
       };
       
-      console.log('📤 Request body:', requestBody);
+      console.log('📤 Sending request to Groq API');
       
       const response = await fetch(`${this.baseUrl}/chat/completions`, {
         method: 'POST',
@@ -88,7 +70,6 @@ export class GroqAPI {
       });
 
       console.log('📥 Response status:', response.status);
-      console.log('📥 Response ok:', response.ok);
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({ error: { message: 'Unknown error' } }));
@@ -195,43 +176,21 @@ export const groqAPI = new GroqAPI();
 
 // Utility function to convert our Message type to Groq format
 export function convertToGroqMessages(messages: { role: 'user' | 'assistant'; content: string }[]): GroqMessage[] {
-  // Get learning context from user feedback
-  const learningContext = FeedbackManager.generateLearningContext();
-  
-  // Analyze the conversation for response style
-  const userMessages = messages.filter(m => m.role === 'user').map(m => m.content);
-  const lastUserMessage = userMessages[userMessages.length - 1] || '';
-  const previousUserMessages = userMessages.slice(0, -1);
-  
-  const responseStyle = ResponseAnalyzer.getResponseStyle(lastUserMessage, previousUserMessages);
-  const responseInstructions = ResponseAnalyzer.generateResponseInstructions(responseStyle);
-  
   return [
     {
       role: 'system',
-      content: `You are NagreGPT, a knowledgeable AI assistant that provides accurate, well-structured responses.
+      content: `You are NagreGPT, a helpful AI assistant. You should:
 
-${responseInstructions}
+- Be conversational and natural in your responses
+- Provide accurate and helpful information
+- Ask clarifying questions when needed
+- Be concise but thorough
+- Format code blocks with proper syntax highlighting when sharing code
+- Use markdown formatting for better readability
+- Be creative and engaging while staying professional
+- Maintain context throughout the conversation
 
-Core Behaviors:
-- Always prioritize accuracy and relevance over everything else
-- Provide factual, well-researched information
-- Use clear, professional language appropriate for the topic
-- Include specific details that add genuine value
-- When discussing technical topics, explain key concepts appropriately
-- For factual questions, provide complete and accurate answers
-- Only provide code when specifically requested
-- Maintain conversation context and build upon previous topics
-- Learn from user feedback: 👍 = good response, 👎 = needs improvement, ❤️ = excellent response
-- Adapt to user preferences while maintaining high quality
-
-Quality Standards:
-- Ensure high accuracy in all information provided
-- Include relevant examples when they enhance understanding
-- Structure responses with clear organization
-- Balance comprehensiveness with readability
-- Focus on practical, actionable insights when applicable
-- Verify information accuracy before including it${learningContext}`,
+Respond in a helpful, friendly, and informative manner similar to ChatGPT.`,
     },
     ...messages.map(msg => ({
       role: msg.role as 'user' | 'assistant',
