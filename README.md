@@ -1,13 +1,21 @@
 <!-- Header with animated typing effect -->
 <div align="center">
 
-# 🚀 **NagreGPT**
+# 🚀 NagreGPT
 ### *Unlimited Free AI Assistant with High Accuracy*
 
 <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=22&pause=1000&color=00D4FF&center=true&vCenter=true&width=600&lines=🤖+Powered+by+Groq's+Lightning-Fast+Models;📱+Beautiful+Responsive+Interface;🧠+Learns+from+Your+Interactions;📄+Analyzes+Files+%26+Documents;🌟+100%25+Free+%26+Open+Source" alt="Typing SVG" />
 
 <p align="center">
-  <img src="https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=white" />
+  <img src="ht## 📄 License
+
+<img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" />
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+### 💖 Created with passion by [Vaibhav Nagre](https://github.com/vaibhav-nagre).shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=white" />
   <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" />
   <img src="https://img.shields.io/badge/Groq-FF6B6B?style=for-the-badge&logo=nvidia&logoColor=white" />
   <img src="https://img.shields.io/badge/Tailwind-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" />
@@ -37,7 +45,8 @@
 
 ## 🎯 What Makes NagreGPT Special?
 
-<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="900">
+<!-- Animated Data Flow -->
+<img src="https://user-images.githubusercontent.com/74038190/212257454-16e3712e-945a-4ca2-b238-408ad0bf87e6.gif" width="100"><img src="https://user-images.githubusercontent.com/74038190/212257460-738ff738-247f-4445-a718-cdd0ca76e2db.gif" width="100"><img src="https://user-images.githubusercontent.com/74038190/212257465-7ce8d493-cac5-494e-982a-5a9deb852c4b.gif" width="100"><img src="https://user-images.githubusercontent.com/74038190/212257468-1e9a91f1-b626-4baa-b15d-5c385b1974d3.gif" width="100"><img src="https://user-images.githubusercontent.com/74038190/212257459-63ede8ca-7ba7-4b44-a911-38b48bc0a117.gif" width="100">
 
 ### 🚀 Core Advantages
 
@@ -95,21 +104,21 @@
 <!-- Tech Stack Section with animated icons -->
 <div align="center">
 
-## 🛠️ **Tech Stack & Architecture**
+## 🛠️ Tech Stack & Architecture
 
-### **Frontend Technologies**
+### Frontend Technologies
 <p>
   <img src="https://skillicons.dev/icons?i=react,typescript,vite,tailwind,html,css,javascript" />
 </p>
 
-### **AI & Backend**
+### AI & Backend
 <p>
   <img src="https://img.shields.io/badge/Groq_API-FF6B6B?style=for-the-badge&logo=nvidia&logoColor=white" />
   <img src="https://img.shields.io/badge/Llama_3.1-8B-00D4FF?style=for-the-badge&logo=meta&logoColor=white" />
   <img src="https://img.shields.io/badge/Firebase-Database-FFCA28?style=for-the-badge&logo=firebase&logoColor=black" />
 </p>
 
-### **Development & Deployment**
+### Development & Deployment
 <p>
   <img src="https://skillicons.dev/icons?i=git,github,npm,nodejs" />
   <img src="https://img.shields.io/badge/GitHub_Pages-222222?style=for-the-badge&logo=github&logoColor=white" />
@@ -125,7 +134,7 @@
 ## 🚀 Features That Set Us Apart
 
 <img src="https://user-images.githubusercontent.com/74038190/212257454-16e3712e-945a-4ca2-b238-408ad0bf87e6.gif" width="100"><img src="https://user-images.githubusercontent.com/74038190/212257472-08e52665-c503-4bd9-aa20-f5a4dae769b5.gif" width="100">
-
+<img src="https://user-images.githubusercontent.com/74038190/212257460-738ff738-247f-4445-a718-cdd0ca76e2db.gif" width="100"><img src="https://user-images.githubusercontent.com/74038190/212257459-63ede8ca-7ba7-4b44-a911-38b48bc0a117.gif" width="100">
 <table>
 <tr>
 <td align="center" width="33%">
@@ -170,7 +179,7 @@
 </tr>
 </table>
 
-<img src="https://user-images.githubusercontent.com/74038190/212257460-738ff738-247f-4445-a718-cdd0ca76e2db.gif" width="100"><img src="https://user-images.githubusercontent.com/74038190/212257459-63ede8ca-7ba7-4b44-a911-38b48bc0a117.gif" width="100">
+
 
 <!-- Animated separator with floating elements -->
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="600">
@@ -209,7 +218,7 @@
 <!-- Creative AI Learning Algorithm with stunning animations -->
 <div align="center">
 
-## 🧠 **AI Learning Algorithm**
+## 🧠 AI Learning Algorithm
 
 <!-- Animated brain header -->
 <img src="https://user-images.githubusercontent.com/74038190/225813708-98b745f2-7d22-48cf-9150-083f1b00d6c9.gif" width="120" />
@@ -220,79 +229,113 @@
 
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="800">
 
-<!-- Enhanced Learning Flow Diagram -->
+<!-- Redesigned Learning Flow - Vertical Cards Layout -->
 <div align="center">
+
+### 🔄 Learning Pipeline
 
 <table>
 <tr>
-<td align="center" width="20%">
+<td align="center" width="16%">
 
-<img src="https://img.shields.io/badge/STEP_1-INPUT-FF6B6B?style=for-the-badge&logo=user&logoColor=white" />
-<img src="https://user-images.githubusercontent.com/74038190/229223263-cf2e4b07-2615-4f87-9c38-e37600f8381a.gif" width="80" />
-<br/>**User Query Processing**<br/>
+<img src="https://img.shields.io/badge/1-INPUT-FF6B6B?style=for-the-badge&logo=user&logoColor=white" />
+<br/><br/>
+<img src="https://user-images.githubusercontent.com/74038190/229223263-cf2e4b07-2615-4f87-9c38-e37600f8381a.gif" width="60" />
+<br/><br/>
+<strong>User Query Processing</strong>
+<br/>
 <sub>Context analysis & intent recognition</sub>
 
 </td>
-<td align="center" width="5%">
-
-<img src="https://user-images.githubusercontent.com/74038190/212257454-16e3712e-945a-4ca2-b238-408ad0bf87e6.gif" width="40" />
-
+<td align="center" width="4%">
+<img src="https://user-images.githubusercontent.com/74038190/212257454-16e3712e-945a-4ca2-b238-408ad0bf87e6.gif" width="30" />
 </td>
-<td align="center" width="20%">
+<td align="center" width="16%">
 
-<img src="https://img.shields.io/badge/STEP_2-PROCESS-4ECDC4?style=for-the-badge&logo=cpu&logoColor=white" />
-<img src="https://user-images.githubusercontent.com/74038190/212257467-871d32b7-e401-42e8-a166-fcfd7baa4c6b.gif" width="80" />
-<br/>**AI Generation**<br/>
+<img src="https://img.shields.io/badge/2-PROCESS-4ECDC4?style=for-the-badge&logo=cpu&logoColor=white" />
+<br/><br/>
+<img src="https://user-images.githubusercontent.com/74038190/212257467-871d32b7-e401-42e8-a166-fcfd7baa4c6b.gif" width="60" />
+<br/><br/>
+<strong>AI Generation</strong>
+<br/>
 <sub>Groq Llama model inference</sub>
 
 </td>
-<td align="center" width="5%">
-
-<img src="https://user-images.githubusercontent.com/74038190/212257465-7ce8d493-cac5-494e-982a-5a9deb852c4b.gif" width="40" />
-
+<td align="center" width="4%">
+<img src="https://user-images.githubusercontent.com/74038190/212257465-7ce8d493-cac5-494e-982a-5a9deb852c4b.gif" width="30" />
 </td>
-<td align="center" width="20%">
+<td align="center" width="16%">
 
-<img src="https://img.shields.io/badge/STEP_3-OUTPUT-45B7D1?style=for-the-badge&logo=message-square&logoColor=white" />
-<img src="https://user-images.githubusercontent.com/74038190/212284115-f47cd8ff-2ffb-4b04-b5bf-4d1c14c0247f.gif" width="80" />
-<br/>**Response Delivery**<br/>
+<img src="https://img.shields.io/badge/3-OUTPUT-45B7D1?style=for-the-badge&logo=message-square&logoColor=white" />
+<br/><br/>
+<img src="https://user-images.githubusercontent.com/74038190/212284115-f47cd8ff-2ffb-4b04-b5bf-4d1c14c0247f.gif" width="60" />
+<br/><br/>
+<strong>Response Delivery</strong>
+<br/>
 <sub>Real-time streaming output</sub>
 
 </td>
-<td align="center" width="5%">
-
-<img src="https://user-images.githubusercontent.com/74038190/212257468-1e9a91f1-b626-4baa-b15d-5c385b1974d3.gif" width="40" />
-
+<td align="center" width="4%">
+<img src="https://user-images.githubusercontent.com/74038190/212257468-1e9a91f1-b626-4baa-b15d-5c385b1974d3.gif" width="30" />
 </td>
-<td align="center" width="20%">
+<td align="center" width="16%">
 
-<img src="https://img.shields.io/badge/STEP_4-FEEDBACK-9C27B0?style=for-the-badge&logo=heart&logoColor=white" />
-<img src="https://user-images.githubusercontent.com/74038190/216120981-b9507c36-0e04-4469-8e27-c99271b45ba5.png" width="80" />
-<br/>**User Feedback**<br/>
+<img src="https://img.shields.io/badge/4-FEEDBACK-9C27B0?style=for-the-badge&logo=heart&logoColor=white" />
+<br/><br/>
+<img src="https://user-images.githubusercontent.com/74038190/216120981-b9507c36-0e04-4469-8e27-c99271b45ba5.png" width="60" />
+<br/><br/>
+<strong>User Feedback</strong>
+<br/>
 <sub>Reaction collection</sub>
 
+</td>
+<td align="center" width="4%">
+<img src="https://user-images.githubusercontent.com/74038190/212257459-63ede8ca-7ba7-4b44-a911-38b48bc0a117.gif" width="30" />
+</td>
+<td align="center" width="16%">
+
+<img src="https://img.shields.io/badge/5-LEARNING-4CAF50?style=for-the-badge&logo=brain&logoColor=white" />
+<br/><br/>
+<img src="https://user-images.githubusercontent.com/74038190/229223156-0cbdaba9-3128-4d8e-8719-b6b4cf741b67.gif" width="60" />
+<br/><br/>
+<strong>Pattern Analysis</strong>
+<br/>
+<sub>Global optimization</sub>
+
+</td>
+<td align="center" width="4%">
+<img src="https://user-images.githubusercontent.com/74038190/212257460-738ff738-247f-4445-a718-cdd0ca76e2db.gif" width="30" />
 </td>
 </tr>
 </table>
 
-<img src="https://user-images.githubusercontent.com/74038190/212257459-63ede8ca-7ba7-4b44-a911-38b48bc0a117.gif" width="60" />
+<!-- Completion Arrow -->
+<img src="https://user-images.githubusercontent.com/74038190/212257472-08e52665-c503-4bd9-aa20-f5a4dae769b5.gif" width="100" />
+
+### 🎯 Learning Evolution Loop
 
 <table>
 <tr>
 <td align="center" width="50%">
 
-<img src="https://img.shields.io/badge/STEP_5-LEARNING-4CAF50?style=for-the-badge&logo=brain&logoColor=white" />
-<img src="https://user-images.githubusercontent.com/74038190/229223156-0cbdaba9-3128-4d8e-8719-b6b4cf741b67.gif" width="100" />
-<br/>**Pattern Storage & Analysis**<br/>
-<sub>Global database optimization</sub>
+<img src="https://img.shields.io/badge/EVOLUTION-NEXT_GEN_AI-FF9800?style=for-the-badge&logo=trending-up&logoColor=white" />
+<br/><br/>
+<img src="https://user-images.githubusercontent.com/74038190/229223185-c15c5bff-edb7-44c6-bf44-a5ac7afd25af.gif" width="120" />
+<br/><br/>
+<strong>Next Generation Intelligence</strong>
+<br/>
+<sub>Enhanced responses with learned patterns</sub>
 
 </td>
 <td align="center" width="50%">
 
-<img src="https://img.shields.io/badge/STEP_6-EVOLUTION-FF9800?style=for-the-badge&logo=trending-up&logoColor=white" />
-<img src="https://user-images.githubusercontent.com/74038190/229223185-c15c5bff-edb7-44c6-bf44-a5ac7afd25af.gif" width="100" />
-<br/>**Next Generation AI**<br/>
-<sub>Improved future responses</sub>
+<img src="https://img.shields.io/badge/CONTINUOUS-IMPROVEMENT-00BCD4?style=for-the-badge&logo=refresh&logoColor=white" />
+<br/><br/>
+<img src="https://user-images.githubusercontent.com/74038190/213760705-0d5bf320-4f43-4352-b74b-0889ae726bf7.gif" width="120" />
+<br/><br/>
+<strong>Continuous Learning Cycle</strong>
+<br/>
+<sub>Always improving, never stopping</sub>
 
 </td>
 </tr>
@@ -427,22 +470,22 @@ graph TD
 <td align="center" width="25%">
 <img src="https://img.shields.io/badge/Learning_Rate-97%25-4CAF50?style=for-the-badge&logo=brain&logoColor=white" /><br/>
 <img src="https://user-images.githubusercontent.com/74038190/216122003-9306a43f-dcc8-4f24-af31-28ebc2e17d85.png" width="40" /><br/>
-<sub>**Pattern Recognition**</sub>
+<sub><strong>Pattern Recognition</strong></sub>
 </td>
 <td align="center" width="25%">
 <img src="https://img.shields.io/badge/Adaptation_Speed-0.3s-FF6B6B?style=for-the-badge&logo=flash&logoColor=white" /><br/>
 <img src="https://user-images.githubusercontent.com/74038190/216120981-b9507c36-0e04-4469-8e27-c99271b45ba5.png" width="40" /><br/>
-<sub>**Real-time Updates**</sub>
+<sub><strong>Real-time Updates</strong></sub>
 </td>
 <td align="center" width="25%">
 <img src="https://img.shields.io/badge/Memory_Efficiency-94%25-2196F3?style=for-the-badge&logo=memory&logoColor=white" /><br/>
 <img src="https://user-images.githubusercontent.com/74038190/216121986-1a506a75-2381-41c2-8e14-a7e09cb49d7e.png" width="40" /><br/>
-<sub>**Context Retention**</sub>
+<sub><strong>Context Retention</strong></sub>
 </td>
 <td align="center" width="25%">
 <img src="https://img.shields.io/badge/Accuracy_Gain-+23%25-9C27B0?style=for-the-badge&logo=target&logoColor=white" /><br/>
 <img src="https://user-images.githubusercontent.com/74038190/216122069-5b8169d7-1d8e-4a13-b245-a8e4176c99f8.png" width="40" /><br/>
-<sub>**Response Quality**</sub>
+<sub><strong>Response Quality</strong></sub>
 </td>
 </tr>
 </table>
@@ -450,7 +493,7 @@ graph TD
 <!-- Neural Network Visualization -->
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="800">
 
-### 🎯 **The Magic Behind the Intelligence**
+### 🎯 The Magic Behind the Intelligence
 
 > *"Every interaction makes NagreGPT smarter. Each feedback loop creates a more personalized, accurate, and helpful AI assistant that grows with you."*
 
@@ -477,7 +520,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
   <a href="https://github.com/vaibhav-nagre">
     <img src="https://img.shields.io/badge/GitHub-vaibhav--nagre-181717?style=for-the-badge&logo=github" />
   </a>
-  <a href="https://linkedin.com/in/vaibhav-nagre">
+  <a href="https://linkedin.com/in/nagre">
     <img src="https://img.shields.io/badge/LinkedIn-Connect-0077B5?style=for-the-badge&logo=linkedin" />
   </a>
 </p>
