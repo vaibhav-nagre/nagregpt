@@ -30,7 +30,7 @@ export const config = {
   features: {
     fileUpload: true,
     voiceInput: true,
-    imageGeneration: false, // Will be enabled when we add image generation
+    imageGeneration: false,
     webBrowsing: false,
     plugins: false,
   }

@@ -31,7 +31,6 @@ export default function EnhancedChatInput({ onSendMessage, isLoading, onStop, di
   const fileInputRef = useRef<HTMLInputElement>(null);
   const recognitionRef = useRef<any>(null);
 
-  // Initialize speech recognition
   useEffect(() => {
     if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
       const SpeechRecognition = (window as any).webkitSpeechRecognition || (window as any).SpeechRecognition;
@@ -88,7 +87,6 @@ export default function EnhancedChatInput({ onSendMessage, isLoading, onStop, di
     
     const newFiles: AttachedFile[] = [];
     Array.from(files).forEach(file => {
-      // Better file type detection
       const isImage = file.type.startsWith('image/');
       
       let fileType: 'image' | 'document';
@@ -144,7 +142,6 @@ export default function EnhancedChatInput({ onSendMessage, isLoading, onStop, di
     handleFileUpload(e.dataTransfer.files);
   };
 
-  // Auto-resize textarea
   useEffect(() => {
     if (textareaRef.current) {
       textareaRef.current.style.height = 'auto';
@@ -156,7 +153,6 @@ export default function EnhancedChatInput({ onSendMessage, isLoading, onStop, di
     <div className="sticky bottom-0 bg-white/95 dark:bg-gpt-gray-800/95 backdrop-blur-md border-t border-gray-200/50 dark:border-gpt-gray-600/50 safe-area-bottom">
       <div className="max-w-4xl mx-auto px-2 sm:px-4 py-2 sm:py-3 chat-input-area">
         
-        {/* File Previews */}
         {attachedFiles.length > 0 && (
           <div className="mb-2 sm:mb-3 flex flex-wrap gap-1 sm:gap-2 animate-fade-in overflow-x-auto pb-1">
             {attachedFiles.map((attachedFile, index) => {
@@ -220,8 +216,7 @@ export default function EnhancedChatInput({ onSendMessage, isLoading, onStop, di
             })}
           </div>
         )}
-
-        {/* Drag & Drop Overlay */}
+        
         {isDragOver && (
           <div className="absolute inset-0 bg-blue-500/20 border-2 border-dashed border-blue-500 rounded-lg flex items-center justify-center z-10">
             <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-lg">
@@ -232,7 +227,7 @@ export default function EnhancedChatInput({ onSendMessage, isLoading, onStop, di
         )}
 
         <form onSubmit={handleSubmit} className="flex items-end space-x-1 sm:space-x-2 md:space-x-3">
-          {/* Enhanced textarea with drag & drop */}
+          
           <div 
             className={`flex-1 relative file-upload-zone transition-all duration-300 ${isDragOver ? 'scale-102' : ''}`}
             onDragOver={handleDragOver}
@@ -241,7 +236,7 @@ export default function EnhancedChatInput({ onSendMessage, isLoading, onStop, di
           >
             <div className="relative flex items-center bg-white dark:bg-gpt-gray-700 rounded-xl sm:rounded-2xl md:rounded-3xl border border-gray-300 dark:border-gpt-gray-600 shadow-lg hover:shadow-xl transition-all duration-200">
               
-              {/* File upload button */}
+              
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
@@ -253,7 +248,7 @@ export default function EnhancedChatInput({ onSendMessage, isLoading, onStop, di
                 <PaperClipIcon className="w-4 h-4 sm:w-5 sm:h-5" />
               </button>
               
-              {/* Text input */}
+              
               <textarea
                 ref={textareaRef}
                 value={message}
@@ -266,7 +261,7 @@ export default function EnhancedChatInput({ onSendMessage, isLoading, onStop, di
                 style={{ fontSize: '16px' }}
               />
               
-              {/* Voice input button */}
+              
               <button
                 type="button"
                 onClick={handleVoiceInput}
@@ -284,7 +279,7 @@ export default function EnhancedChatInput({ onSendMessage, isLoading, onStop, di
             </div>
           </div>
 
-          {/* Send/Stop button */}
+          
           {isLoading ? (
             <button
               type="button"
@@ -308,7 +303,7 @@ export default function EnhancedChatInput({ onSendMessage, isLoading, onStop, di
           )}
         </form>
 
-        {/* Hidden file input */}
+        
         <input
           ref={fileInputRef}
           type="file"

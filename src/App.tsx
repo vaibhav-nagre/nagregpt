@@ -9,7 +9,6 @@ function AppContent() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Apply theme class to document element
     if (state.theme === 'dark') {
       document.documentElement.classList.add('dark');
     } else {
@@ -17,21 +16,18 @@ function AppContent() {
     }
   }, [state.theme]);
 
-  // Handle home navigation
   const handleHomeClick = () => {
-    // Clear current conversation and navigate to home
     clearCurrentConversation();
     navigate('/', { replace: true });
   };
 
-  // No auto-navigation - let users explicitly choose to continue conversations
 
   return (
     <div className="h-screen flex flex-col bg-gradient-to-br from-white to-gray-50 dark:from-gpt-gray-900 dark:to-gpt-gray-800 animate-fade-in mobile-viewport">
-      {/* Header */}
+      
       <Header onHomeClick={handleHomeClick} />
       
-      {/* Main Chat Area */}
+      
       <main className="flex-1 flex flex-col overflow-hidden">
         <Routes>
           <Route path="/" element={<Chat />} />

@@ -1,8 +1,3 @@
-/**
- * Global Learning System for NagreGPT
- * Collects feedback, stores it globally, and improves responses over time
- */
-
 interface GlobalFeedback {
   messageId: string;
   userContext: string;
@@ -29,19 +24,19 @@ interface LearningPattern {
 export class GlobalLearningSystem {
   private static readonly GITHUB_REPO = 'vaibhav-nagre/nagregpt';
   private static readonly FIREBASE_CONFIG = {
-    // Use Firebase Realtime Database for global storage
+   
     databaseURL: 'https://nagregpt-learning-default-rtdb.firebaseio.com/',
     apiKey: import.meta.env.VITE_FIREBASE_API_KEY || '',
   };
 
   private static sessionId = GlobalLearningSystem.generateSessionId();
 
-  // Generate unique session ID
+ 
   private static generateSessionId(): string {
     return `session-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
   }
 
-  // Send feedback to global learning database
+ 
   static async submitGlobalFeedback(
     messageId: string,
     userContext: string,
@@ -66,24 +61,24 @@ export class GlobalLearningSystem {
     };
 
     try {
-      // Method 1: Firebase Realtime Database
+     
       await this.sendToFirebase(feedback);
       
-      // Method 2: GitHub Issues API (Fallback)
+     
       await this.sendToGitHubIssues(feedback);
       
-      // Method 3: Simple webhook/analytics (Alternative)
+     
       await this.sendToWebhook(feedback);
       
       console.log('🌍 Global feedback submitted successfully');
     } catch (error) {
       console.error('Failed to submit global feedback:', error);
-      // Store locally as fallback
+     
       this.storeLocallyForLaterSync(feedback);
     }
   }
 
-  // Send feedback to Firebase Realtime Database
+ 
   private static async sendToFirebase(feedback: GlobalFeedback): Promise<void> {
     if (!this.FIREBASE_CONFIG.apiKey) {
       throw new Error('Firebase API key not configured');

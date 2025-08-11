@@ -198,13 +198,11 @@ const ChatContext = createContext<ChatContextType | undefined>(undefined);
 export function ChatProvider({ children }: { children: React.ReactNode }) {
   const [state, dispatch] = useReducer(chatReducer, initialState);
 
-  // Load state from localStorage on mount
   useEffect(() => {
     const savedState = localStorage.getItem('nagregpt-state');
     if (savedState) {
       try {
         const parsedState = JSON.parse(savedState);
-        // Convert date strings back to Date objects
         const processedState = {
           ...parsedState,
           conversations: parsedState.conversations?.map((conv: any) => ({
@@ -224,12 +222,10 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
-  // Save state to localStorage whenever it changes
   useEffect(() => {
     localStorage.setItem('nagregpt-state', JSON.stringify(state));
   }, [state]);
 
-  // Apply theme to document
   useEffect(() => {
     if (state.theme === 'dark') {
       document.documentElement.classList.add('dark');
@@ -274,7 +270,6 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
       payload: { conversationId: targetConversationId, message },
     });
 
-    // Update conversation title if it's the first user message
     const currentConv = state.conversations.find(c => c.id === targetConversationId);
     if (currentConv && currentConv.messages.length === 0 && messageData.role === 'user') {
       const title = messageData.content.slice(0, 50) + (messageData.content.length > 50 ? '...' : '');

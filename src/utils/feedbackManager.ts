@@ -5,14 +5,13 @@ interface MessageFeedback {
   messageContent: string;
   reaction: 'like' | 'dislike' | 'love';
   timestamp: Date;
-  context: string; // Previous user message for context
+  context: string;
 }
 
 export class FeedbackManager {
   private static readonly STORAGE_KEY = 'nagregpt-feedback';
-  private static readonly MAX_FEEDBACK_ITEMS = 50; // Keep last 50 feedback items
+  private static readonly MAX_FEEDBACK_ITEMS = 50;
 
-  // Store user reaction feedback
   static async storeFeedback(
     messageId: string,
     messageContent: string,
@@ -22,21 +21,20 @@ export class FeedbackManager {
   ): Promise<void> {
     const feedback: MessageFeedback = {
       messageId,
-      messageContent: messageContent.substring(0, 500), // Limit content length
+      messageContent: messageContent.substring(0, 500),
       reaction,
       timestamp: new Date(),
-      context: userContext.substring(0, 200), // Limit context length
+      context: userContext.substring(0, 200),
     };
 
     const existingFeedback = this.getFeedbackHistory();
     const updatedFeedback = [feedback, ...existingFeedback]
-      .slice(0, this.MAX_FEEDBACK_ITEMS); // Keep only recent feedback
+      .slice(0, this.MAX_FEEDBACK_ITEMS);
 
     try {
       localStorage.setItem(this.STORAGE_KEY, JSON.stringify(updatedFeedback));
       console.log(`📝 Stored ${reaction} feedback for message`, messageId);
       
-      // 🌍 NEW: Submit to global learning system
       await GlobalLearningSystem.submitGlobalFeedback(
         messageId,
         userContext,
@@ -45,7 +43,6 @@ export class FeedbackManager {
         responseTime
       );
       
-      // Dispatch custom event for real-time UI updates
       window.dispatchEvent(new CustomEvent('feedback-updated', {
         detail: { reaction, messageId, stats: this.getFeedbackStats() }
       }));
@@ -54,7 +51,6 @@ export class FeedbackManager {
     }
   }
 
-  // Get feedback history
   static getFeedbackHistory(): MessageFeedback[] {
     try {
       const stored = localStorage.getItem(this.STORAGE_KEY);
@@ -71,7 +67,6 @@ export class FeedbackManager {
     }
   }
 
-  // Generate learning context for AI based on feedback history
   static generateLearningContext(): string {
     const feedback = this.getFeedbackHistory();
     if (feedback.length === 0) return '';
@@ -107,7 +102,6 @@ export class FeedbackManager {
     return context;
   }
 
-  // Get feedback statistics
   static getFeedbackStats(): { likes: number; dislikes: number; loves: number; total: number } {
     const feedback = this.getFeedbackHistory();
     return {
@@ -118,7 +112,6 @@ export class FeedbackManager {
     };
   }
 
-  // Clear old feedback (optional maintenance)
   static clearOldFeedback(daysOld: number = 30): void {
     const feedback = this.getFeedbackHistory();
     const cutoffDate = new Date();

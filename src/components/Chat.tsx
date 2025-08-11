@@ -15,44 +15,35 @@ export default function Chat() {
   const [currentStreamingMessage, setCurrentStreamingMessage] = useState<string>('');
   const [abortController, setAbortController] = useState<AbortController | null>(null);
 
-  // Detect if user is on mobile device
   const isMobile = () => {
     return window.innerWidth <= 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   };
 
-  // Enhanced mobile detection with screen size categories
   const getScreenSize = () => {
     const width = window.innerWidth;
-    if (width < 480) return 'xs'; // Extra small phones
-    if (width < 768) return 'sm'; // Small phones/tablets
-    if (width < 1024) return 'md'; // Tablets
-    return 'lg'; // Desktop
+    if (width < 480) return 'xs';
+    if (width < 768) return 'sm';
+    if (width < 1024) return 'md';
+    return 'lg';
   };
 
-    // Handle URL-based conversation switching
   useEffect(() => {
     if (conversationId) {
-      // Check if the conversation exists
       const conversationExists = state.conversations.some(conv => conv.id === conversationId);
       if (conversationExists) {
-        // Switch to the conversation if it's not already active
         if (state.currentConversationId !== conversationId) {
           switchConversation(conversationId);
         }
       } else {
-        // Conversation doesn't exist, redirect to home
         navigate('/', { replace: true });
       }
     } else {
-      // No conversation ID in URL - we're on home page
-      // On mobile, automatically create a new conversation instead of showing welcome page
       if (isMobile() && !state.currentConversationId) {
         const newConversationId = createNewConversation();
         navigate(`/chat/${newConversationId}`, { replace: true });
         return;
       }
       
-      // On desktop, clear current conversation to show welcome page
       if (state.currentConversationId) {
         clearCurrentConversation();
       }
@@ -74,16 +65,13 @@ export default function Chat() {
   const handleSendMessage = async (content: string, files?: File[]) => {
     console.log('🚀 Sending message:', content, 'Files:', files?.length || 0);
     
-    // Create new conversation if none exists
     let conversationId = state.currentConversationId;
     if (!conversationId) {
       conversationId = createNewConversation();
       console.log('📝 Created new conversation:', conversationId);
-      // Navigate to the new conversation URL only when sending a message
       navigate(`/chat/${conversationId}`, { replace: true });
     }
 
-    // Process attached files if any
     let processedContent = content;
     if (files && files.length > 0) {
       console.log('📁 Processing attached files...');
@@ -96,7 +84,6 @@ export default function Chat() {
           fileAnalyses.push(analysis);
         }
 
-        // Create enhanced prompt with file context
         processedContent = FileProcessor.createFileAnalysisPrompt(content, fileAnalyses);
         console.log('✅ Files processed successfully');
         console.log('📝 Enhanced prompt length:', processedContent.length);
@@ -106,11 +93,9 @@ export default function Chat() {
       }
     }
 
-    // Add user message (show original message to user, but send processed content to AI)
     addMessage({ content, role: 'user', files }, conversationId);
     console.log('✅ Added user message');
 
-    // Add assistant message with typing indicator
     addMessage({ 
       content: '', 
       role: 'assistant',
@@ -125,13 +110,11 @@ export default function Chat() {
     setAbortController(controller);
 
     try {
-      // Build conversation history with current processed message
       const conversationHistory = currentConversation?.messages || [];
       const historyMessages = conversationHistory
-        .filter(msg => !msg.isTyping) // Exclude typing indicators
+        .filter(msg => !msg.isTyping)
         .map(msg => ({ role: msg.role, content: msg.content }));
       
-      // Add the current processed message
       const allMessages = [
         ...historyMessages,
         { role: 'user' as const, content: processedContent }
@@ -145,7 +128,6 @@ export default function Chat() {
 
       let fullResponse = '';
 
-      // Stream the response
       const result = await groqAPI.sendMessage(
         messages,
         'llama-3.1-8b-instant',
@@ -163,7 +145,6 @@ export default function Chat() {
       console.log('📄 Final response:', result);
       console.log('📏 Response length:', result.length);
 
-      // Final update without typing indicator
       updateLastMessage(result || fullResponse, conversationId);
       
     } catch (error) {
@@ -201,7 +182,6 @@ export default function Chat() {
       setLoading(false);
       setCurrentStreamingMessage('');
       
-      // Update the last message to remove typing indicator
       if (currentConversation?.messages.length) {
         const lastMessage = currentConversation.messages[currentConversation.messages.length - 1];
         if (lastMessage.isTyping) {
@@ -214,7 +194,6 @@ export default function Chat() {
   const handleRegenerate = async () => {
     if (!currentConversation?.messages.length) return;
     
-    // Find the last user message
     const messages = [...currentConversation.messages];
     const lastUserMessageIndex = messages.map(m => m.role).lastIndexOf('user');
     
@@ -222,28 +201,25 @@ export default function Chat() {
     
     const lastUserMessage = messages[lastUserMessageIndex];
     
-    // Remove the last assistant message if it exists
     if (messages.length > lastUserMessageIndex + 1) {
-      // We'll regenerate by sending the same user message again
       await handleSendMessage(lastUserMessage.content);
     }
   };
 
   if (!currentConversation) {
-    // Show simplified mobile experience or redirect to new chat
     const isMobileDevice = isMobile();
     const screenSize = getScreenSize();
     
     return (
       <div className="flex-1 flex flex-col min-h-0">
-        {/* Animated Welcome screen */}
+        
         <div className="flex-1 flex items-center justify-center p-3 sm:p-6 md:p-8 overflow-y-auto">
           <div className={`text-center mx-auto animate-fade-in-up w-full ${
             screenSize === 'xs' ? 'max-w-xs px-2' : 
             screenSize === 'sm' ? 'max-w-sm px-4' : 
             isMobileDevice ? 'max-w-md px-6' : 'max-w-2xl'
           }`}>
-            {/* Animated Logo */}
+            
             <div className="relative mb-4 sm:mb-6 md:mb-8 animate-bounce-in">
               <div className={`${
                 screenSize === 'xs' ? 'w-12 h-12' :
@@ -288,7 +264,7 @@ export default function Chat() {
               {isMobileDevice && 'Start chatting! ✨'}
             </p>
             
-            {/* Mobile: Quick start button, Desktop: Feature Grid */}
+            
             {isMobileDevice ? (
               <div className={`${screenSize === 'xs' ? 'mb-4' : 'mb-6'}`}>
                 <button
@@ -311,7 +287,7 @@ export default function Chat() {
               </div>
             ) : (
               <>
-                {/* Feature Grid */}
+                
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
               {[
                 { icon: '💡', title: 'Creative Writing', desc: 'Stories, poems, and ideas' },
@@ -337,7 +313,7 @@ export default function Chat() {
                 ))}
                 </div>
 
-                {/* API Test Button */}
+                
                 <div className="mb-8">
                   <button
                     onClick={() => handleSendMessage("Say hello and tell me you're working!")}
@@ -347,7 +323,7 @@ export default function Chat() {
                   </button>
                 </div>
 
-                {/* Stats */}
+                
                 <div className="flex justify-center space-x-8 text-sm text-gray-500 dark:text-gray-400 animate-fade-in">
                   <div className="flex items-center space-x-2">
                     <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
@@ -378,14 +354,14 @@ export default function Chat() {
 
   return (
     <div className="flex-1 flex flex-col h-full min-h-0">
-      {/* Messages container with enhanced mobile animations */}
+      
       <div className="flex-1 overflow-y-auto px-1 sm:px-2 md:px-4 py-1 sm:py-2 md:py-4 space-y-1 sm:space-y-2 scroll-smooth max-w-4xl mx-auto w-full scrollbar-hide overscroll-contain">
-        {/* Animated gradient background overlay */}
+        
         <div className="fixed inset-0 pointer-events-none">
           <div className="absolute inset-0 bg-gradient-to-br from-transparent via-gpt-blue-500/5 to-transparent animate-gradient-shift"></div>
         </div>
         
-        {/* Empty state message for new chat */}
+        
         {currentConversation.messages.length === 0 && (
           <div className="flex-1 flex items-center justify-center py-6 sm:py-8 md:py-12 animate-fade-in-up min-h-[50vh]">
             <div className="text-center max-w-xs sm:max-w-md mx-auto px-3 sm:px-4">
@@ -438,11 +414,11 @@ export default function Chat() {
           </div>
         ))}
         
-        {/* Scroll anchor */}
+        
         <div ref={messagesEndRef} className="h-1" />
       </div>
 
-      {/* Input */}
+      
       <EnhancedChatInput 
         onSendMessage={handleSendMessage}
         isLoading={state.isLoading}

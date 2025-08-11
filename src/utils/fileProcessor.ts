@@ -7,7 +7,6 @@ export interface FileAnalysis {
 }
 
 export class FileProcessor {
-  // Extract text content from different file types
   static async processFile(file: File): Promise<FileAnalysis> {
     const analysis: FileAnalysis = {
       filename: file.name,
@@ -18,22 +17,17 @@ export class FileProcessor {
 
     try {
       if (file.type.startsWith('text/') || this.isTextFile(file.name)) {
-        // Handle text files (logs, txt, csv, etc.)
         analysis.content = await this.readTextFile(file);
       } else if (file.type === 'application/pdf') {
-        // Handle PDF files
         analysis.content = await this.readPDFFile(file);
       } else if (file.type.startsWith('image/')) {
-        // Handle images (OCR could be added later)
         analysis.content = `[Image file: ${file.name}]`;
         analysis.summary = `Image file uploaded. Filename: ${file.name}, Size: ${this.formatFileSize(file.size)}`;
       } else {
-        // Handle other file types
         analysis.content = `[File: ${file.name}]`;
         analysis.summary = `File uploaded. Filename: ${file.name}, Type: ${file.type}, Size: ${this.formatFileSize(file.size)}`;
       }
 
-      // Generate a summary for large files
       if (analysis.content.length > 1000) {
         analysis.summary = this.generateFileSummary(analysis);
       }
@@ -47,7 +41,6 @@ export class FileProcessor {
     return analysis;
   }
 
-  // Read text files
   private static async readTextFile(file: File): Promise<string> {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -60,16 +53,13 @@ export class FileProcessor {
     });
   }
 
-  // Read PDF files (basic implementation)
   private static async readPDFFile(file: File): Promise<string> {
     try {
-      // For now, we'll use a basic approach. In a production app, you'd want to use pdf-parse or similar
       const arrayBuffer = await file.arrayBuffer();
       const uint8Array = new Uint8Array(arrayBuffer);
       const textDecoder = new TextDecoder('utf-8');
       const text = textDecoder.decode(uint8Array);
       
-      // Try to extract readable text (very basic)
       const readableText = text.match(/[a-zA-Z0-9\s\.,!?;:'"()-]+/g)?.join(' ') || '';
       
       if (readableText.length > 50) {
@@ -82,7 +72,6 @@ export class FileProcessor {
     }
   }
 
-  // Check if file is a text file based on extension
   private static isTextFile(filename: string): boolean {
     const textExtensions = [
       '.txt', '.log', '.csv', '.json', '.xml', '.yaml', '.yml', 
@@ -93,7 +82,6 @@ export class FileProcessor {
     return textExtensions.includes(extension);
   }
 
-  // Get file type from extension
   private static getFileTypeFromExtension(filename: string): string {
     const extension = filename.toLowerCase().substring(filename.lastIndexOf('.'));
     const typeMap: { [key: string]: string } = {
@@ -111,7 +99,6 @@ export class FileProcessor {
     return typeMap[extension] || 'application/octet-stream';
   }
 
-  // Format file size
   private static formatFileSize(bytes: number): string {
     if (bytes === 0) return '0 Bytes';
     const k = 1024;
@@ -120,7 +107,6 @@ export class FileProcessor {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
   }
 
-  // Generate file summary
   private static generateFileSummary(analysis: FileAnalysis): string {
     const { filename, type, size, content } = analysis;
     const preview = content.substring(0, 500) + (content.length > 500 ? '...' : '');
@@ -130,7 +116,6 @@ Type: ${type}
 Content preview: ${preview}`;
   }
 
-  // Create a formatted message for the AI with file context
   static createFileAnalysisPrompt(userMessage: string, fileAnalyses: FileAnalysis[]): string {
     if (fileAnalyses.length === 0) {
       return userMessage;
@@ -149,7 +134,6 @@ Content preview: ${preview}`;
       }
       
       if (analysis.content && analysis.content.length > 0 && !analysis.content.startsWith('[')) {
-        // Only include content if it's actual readable text
         const contentPreview = analysis.content.length > 2000 
           ? analysis.content.substring(0, 2000) + '\n... (content truncated for brevity)'
           : analysis.content;

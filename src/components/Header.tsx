@@ -23,7 +23,6 @@ export default function Header({ onHomeClick }: HeaderProps) {
   const [feedbackStats, setFeedbackStats] = useState({ likes: 0, dislikes: 0, loves: 0, total: 0 });
 
   const handleNewChat = () => {
-    // Create a new conversation and navigate to it
     const newConversationId = createNewConversation();
     navigate(`/chat/${newConversationId}`, { replace: true });
     setShowNewChatMessage(true);
@@ -33,26 +32,21 @@ export default function Header({ onHomeClick }: HeaderProps) {
     if (onHomeClick) {
       onHomeClick();
     } else {
-      // Fallback behavior - clear conversation and go to home
       clearCurrentConversation();
       navigate('/', { replace: true });
     }
   };
 
-  // Update feedback stats more frequently and listen for changes
   useEffect(() => {
     const updateStats = () => {
       const newStats = FeedbackManager.getFeedbackStats();
       setFeedbackStats(newStats);
     };
     
-    // Initial update
     updateStats();
     
-    // Set up interval for regular updates (every 2 seconds)
     const interval = setInterval(updateStats, 2000);
     
-    // Listen for storage changes (in case feedback is updated in another tab)
     const handleStorageChange = (e: StorageEvent) => {
       if (e.key === 'nagregpt-feedback' || e.key === 'nagregpt-state') {
         updateStats();
@@ -61,7 +55,6 @@ export default function Header({ onHomeClick }: HeaderProps) {
     
     window.addEventListener('storage', handleStorageChange);
     
-    // Listen for custom events (for real-time updates)
     const handleFeedbackUpdate = () => {
       updateStats();
     };
@@ -75,7 +68,6 @@ export default function Header({ onHomeClick }: HeaderProps) {
     };
   }, []);
 
-  // Hide the message after 2 seconds
   useEffect(() => {
     if (showNewChatMessage) {
       const timer = setTimeout(() => {
@@ -87,7 +79,7 @@ export default function Header({ onHomeClick }: HeaderProps) {
 
   return (
     <header className="flex items-center justify-between h-14 sm:h-16 px-3 sm:px-6 border-b border-gray-200/50 dark:border-gpt-gray-600/50 bg-white/80 dark:bg-gpt-gray-800/80 backdrop-blur-md glass animate-slide-in-left">
-      {/* Left side - Logo and New Chat */}
+      
       <div className="flex items-center space-x-2 sm:space-x-4">
         <button 
           onClick={handleLogoClick}
@@ -114,7 +106,7 @@ export default function Header({ onHomeClick }: HeaderProps) {
           <span className="xs:hidden">New</span>
         </button>
 
-        {/* New Chat Success Message */}
+        
         {showNewChatMessage && (
           <div className="hidden sm:flex items-center space-x-2 px-3 py-2 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded-lg animate-slide-in-right">
             <CheckIcon className="w-4 h-4" />
@@ -123,9 +115,9 @@ export default function Header({ onHomeClick }: HeaderProps) {
         )}
       </div>
 
-      {/* Right side - Learning indicator and Theme toggle */}
+      
       <div className="flex items-center space-x-1 sm:space-x-3">
-        {/* Learning Status Indicator */}
+        
         {feedbackStats.total > 0 && (
           <div 
             className="relative hidden sm:block"
@@ -139,7 +131,7 @@ export default function Header({ onHomeClick }: HeaderProps) {
               </span>
             </div>
             
-            {/* Feedback Tooltip */}
+            
             {showFeedbackTooltip && (
               <div className="absolute top-full right-0 mt-2 w-48 p-3 bg-white dark:bg-gpt-gray-800 border border-gray-200 dark:border-gpt-gray-600 rounded-xl shadow-lg z-50 animate-slide-in-up">
                 <div className="text-sm font-medium text-gray-900 dark:text-white mb-2">AI Learning Progress</div>

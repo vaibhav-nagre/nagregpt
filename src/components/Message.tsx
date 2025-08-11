@@ -2,7 +2,6 @@ import { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark, oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism';
-import vaibhavPhoto from '/photo.jpg';
 import { 
   ClipboardIcon, 
   CheckIcon,
@@ -67,9 +66,7 @@ export default function MessageComponent({ message, onRegenerate, onEdit, onDele
     setUserReaction(newReaction);
     onReaction?.(message.id, reaction);
     
-    // Store feedback for learning if it's an AI message with a reaction
     if (message.role === 'assistant' && newReaction && state.currentConversationId) {
-      // Find the current conversation and the previous user message for context
       const conversation = state.conversations.find(conv => conv.id === state.currentConversationId);
       const messages = conversation?.messages || [];
       const messageIndex = messages.findIndex((m: Message) => m.id === message.id);
@@ -80,7 +77,6 @@ export default function MessageComponent({ message, onRegenerate, onEdit, onDele
       
       const userContext = previousUserMessage?.content || 'No previous context';
       
-      // Calculate response time if available
       const responseTime = message.timestamp && previousUserMessage?.timestamp 
         ? message.timestamp.getTime() - previousUserMessage.timestamp.getTime()
         : undefined;
@@ -107,7 +103,6 @@ export default function MessageComponent({ message, onRegenerate, onEdit, onDele
     }
   };
 
-  // Custom code block component
   const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
     const match = /language-(\w+)/.exec(className || '');
     const language = match ? match[1] : '';
@@ -170,14 +165,14 @@ export default function MessageComponent({ message, onRegenerate, onEdit, onDele
               : 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border border-gray-200 dark:border-gray-600'
             }
           `}>
-            {/* Content */}
+            
             <div className="flex-1 min-w-0">
               <div className="flex items-center justify-between mb-1 sm:mb-2">
                 <div className="flex items-center space-x-1 sm:space-x-2">
                   {isUser && (
                     <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full flex items-center justify-center overflow-hidden border-2 border-blue-300 dark:border-blue-600 flex-shrink-0 bg-blue-100 dark:bg-blue-800">
                       <img 
-                        src={vaibhavPhoto} 
+                        src="/photo.jpg" 
                         alt="Vaibhav" 
                         className="w-full h-full object-cover"
                         onError={(e) => {
@@ -200,7 +195,7 @@ export default function MessageComponent({ message, onRegenerate, onEdit, onDele
                   </span>
                 </div>
                 
-                {/* Timestamp */}
+                
                 {message.timestamp && (
                   <span className="text-xs text-gray-400 dark:text-gray-500 hidden sm:inline">
                     {formatTimestamp(message.timestamp.getTime())}
@@ -208,7 +203,7 @@ export default function MessageComponent({ message, onRegenerate, onEdit, onDele
                 )}
               </div>
               
-              {/* Message Content */}
+              
               {isEditing ? (
                 <div className="mb-2 sm:mb-3">
                   <textarea
@@ -336,7 +331,7 @@ export default function MessageComponent({ message, onRegenerate, onEdit, onDele
                 </div>
               )}
 
-              {/* Message Reactions */}
+              
               {!isUser && !message.isTyping && !isEditing && (
                 <div className="flex items-center space-x-1 mt-1 sm:mt-2 mb-1">
                   <button
@@ -380,10 +375,10 @@ export default function MessageComponent({ message, onRegenerate, onEdit, onDele
                 </div>
               )}
 
-              {/* Enhanced Actions */}
+              
               <div className="flex items-center justify-between mt-1 sm:mt-2 opacity-100 sm:opacity-0 group-hover:opacity-100 transition-opacity">
                 <div className="flex items-center space-x-1">
-                  {/* User message actions */}
+                  
                   {isUser && !message.isTyping && (
                     <>
                       <button
@@ -396,7 +391,7 @@ export default function MessageComponent({ message, onRegenerate, onEdit, onDele
                     </>
                   )}
                   
-                  {/* AI message actions */}
+                  
                   {!isUser && !message.isTyping && onRegenerate && (
                     <button
                       onClick={onRegenerate}
@@ -408,7 +403,7 @@ export default function MessageComponent({ message, onRegenerate, onEdit, onDele
                   )}
                 </div>
 
-                {/* Copy button */}
+                
                 <button
                   onClick={() => copyToClipboard(message.content, message.id)}
                   className="flex items-center space-x-1 text-xs text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 px-1 sm:px-2 py-0.5 sm:py-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"

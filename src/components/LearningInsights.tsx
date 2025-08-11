@@ -39,12 +39,10 @@ export default function LearningInsights({ isOpen, onClose }: LearningInsightsPr
   const loadLearningData = async () => {
     setIsLoading(true);
     try {
-      // Load local stats
       const stats = FeedbackManager.getFeedbackStats();
       const feedback = FeedbackManager.getFeedbackHistory();
       setLocalStats({ ...stats, feedback });
 
-      // Load global patterns
       const patterns = await GlobalLearningSystem.fetchGlobalLearningPatterns();
       setGlobalPatterns(patterns);
     } catch (error) {
@@ -79,7 +77,7 @@ export default function LearningInsights({ isOpen, onClose }: LearningInsightsPr
           </button>
         </div>
 
-        {/* Tabs */}
+        
         <div className="flex border-b border-gray-200 dark:border-gray-600">
           <button
             onClick={() => setActiveTab('local')}
@@ -123,7 +121,7 @@ export default function LearningInsights({ isOpen, onClose }: LearningInsightsPr
             </div>
           ) : (
             <>
-              {/* Local Feedback Tab */}
+              
               {activeTab === 'local' && localStats && (
                 <div className="space-y-6">
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -204,7 +202,7 @@ export default function LearningInsights({ isOpen, onClose }: LearningInsightsPr
                 </div>
               )}
 
-              {/* Global Learning Tab */}
+              
               {activeTab === 'global' && (
                 <div className="space-y-6">
                   <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 p-6 rounded-lg">
@@ -251,7 +249,7 @@ export default function LearningInsights({ isOpen, onClose }: LearningInsightsPr
                 </div>
               )}
 
-              {/* Success Patterns Tab */}
+              
               {activeTab === 'patterns' && (
                 <div className="space-y-6">
                   <div className="text-center">

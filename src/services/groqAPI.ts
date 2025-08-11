@@ -135,7 +135,6 @@ export class GroqAPI {
                 onStream(content);
               }
             } catch (e) {
-              // Ignore parsing errors for incomplete chunks
               console.log('⚠️ Parsing error (normal for incomplete chunks):', e);
             }
           }
@@ -149,7 +148,6 @@ export class GroqAPI {
     return fullContent;
   }
 
-  // Get available models
   async getModels(): Promise<string[]> {
     try {
       const response = await fetch(`${this.baseUrl}/models`, {
@@ -171,10 +169,8 @@ export class GroqAPI {
   }
 }
 
-// Export singleton instance
 export const groqAPI = new GroqAPI();
 
-// Utility function to convert our Message type to Groq format
 export function convertToGroqMessages(messages: { role: 'user' | 'assistant'; content: string }[]): GroqMessage[] {
   return [
     {
