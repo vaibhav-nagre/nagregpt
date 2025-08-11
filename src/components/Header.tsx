@@ -9,6 +9,7 @@ import {
   ChartBarIcon
 } from '@heroicons/react/24/outline';
 import { FeedbackManager } from '../utils/feedbackManager';
+import logoSvg from '/logo.svg';
 
 interface HeaderProps {
   onHomeClick?: () => void;
@@ -87,7 +88,7 @@ export default function Header({ onHomeClick }: HeaderProps) {
         >
           <div className="relative">
             <img 
-              src="/logo.svg" 
+              src={logoSvg} 
               alt="NagreGPT Logo" 
               className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl shadow-lg animate-glow"
             />

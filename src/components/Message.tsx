@@ -19,6 +19,7 @@ import {
 import { useChat } from '../context/ChatContext';
 import type { Message } from '../types';
 import { FeedbackManager } from '../utils/feedbackManager';
+import photoJpg from '/photo.jpg';
 
 interface MessageProps {
   message: Message;
@@ -172,7 +173,7 @@ export default function MessageComponent({ message, onRegenerate, onEdit, onDele
                   {isUser && (
                     <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full flex items-center justify-center overflow-hidden border-2 border-blue-300 dark:border-blue-600 flex-shrink-0 bg-blue-100 dark:bg-blue-800">
                       <img 
-                        src="/photo.jpg" 
+                        src={photoJpg} 
                         alt="Vaibhav" 
                         className="w-full h-full object-cover"
                         onError={(e) => {

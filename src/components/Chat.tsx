@@ -6,6 +6,7 @@ import EnhancedChatInput from './EnhancedChatInput';
 import { groqAPI, convertToGroqMessages } from '../services/groqAPI';
 import { FileProcessor } from '../utils/fileProcessor';
 import type { FileAnalysis } from '../utils/fileProcessor';
+import logoSvg from '/logo.svg';
 
 export default function Chat() {
   const { conversationId } = useParams<{ conversationId?: string }>();
@@ -228,7 +229,7 @@ export default function Chat() {
             {/* Logo and Brand */}
             <div className="relative mb-4 sm:mb-6 md:mb-8 animate-bounce-in">
               <img 
-                src="/logo.svg" 
+                src={logoSvg} 
                 alt="NagreGPT Logo" 
                 className={`${
                   screenSize === 'xs' ? 'w-16 h-16' :
@@ -281,7 +282,7 @@ export default function Chat() {
                     screenSize === 'xs' ? 'px-4 py-3 text-sm' :
                     screenSize === 'sm' ? 'px-5 py-3 text-base' :
                     'px-6 py-4 text-base'
-                  } bg-gradient-to-r from-gpt-green-500 to-gpt-blue-500 text-white rounded-xl font-medium hover:from-gpt-green-600 hover:to-gpt-blue-600 active:scale-95 transition-all duration-200 shadow-lg hover:shadow-xl animate-glow touch-manipulation`}
+                  } bg-gradient-to-r from-gpt-green-500 to-gpt-blue-500 text-white rounded-xl font-medium hover:from-gpt-green-600 hover:to-gpt-blue-600 active:scale-95 transition-all duration-200 shadow-lg hover:shadow-xl touch-manipulation`}
                   style={{ minHeight: '48px' }}
                 >
                   <span className="flex items-center justify-center space-x-2">
@@ -322,7 +323,7 @@ export default function Chat() {
                 <div className="mb-8">
                   <button
                     onClick={() => handleSendMessage("Say hello and tell me you're working!")}
-                    className="px-6 py-3 bg-gradient-to-r from-gpt-green-500 to-gpt-blue-500 text-white rounded-xl font-medium hover:from-gpt-green-600 hover:to-gpt-blue-600 transition-all duration-200 shadow-lg hover:shadow-xl animate-glow mr-4"
+                    className="px-6 py-3 bg-gradient-to-r from-gpt-green-500 to-gpt-blue-500 text-white rounded-xl font-medium hover:from-gpt-green-600 hover:to-gpt-blue-600 transition-all duration-200 shadow-lg hover:shadow-xl mr-4"
                   >
                     🧪 Test API Connection
                   </button>
