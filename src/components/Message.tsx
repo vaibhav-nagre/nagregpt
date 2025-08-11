@@ -162,7 +162,7 @@ export default function MessageComponent({ message, onRegenerate, onEdit, onDele
           <div className={`
             max-w-[95%] sm:max-w-3xl p-2 sm:p-3 rounded-xl sm:rounded-2xl shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-1
             ${isUser 
-              ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-900 dark:text-blue-100 border border-blue-200 dark:border-blue-700' 
+              ? 'bg-indigo-50/80 dark:bg-indigo-900/20 text-indigo-900 dark:text-indigo-100 border border-indigo-200/60 dark:border-indigo-700/50 backdrop-blur-sm' 
               : 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border border-gray-200 dark:border-gray-600'
             }
           `}>
@@ -171,7 +171,7 @@ export default function MessageComponent({ message, onRegenerate, onEdit, onDele
               <div className="flex items-center justify-between mb-1 sm:mb-2">
                 <div className="flex items-center space-x-1 sm:space-x-2">
                   {isUser && (
-                    <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full flex items-center justify-center overflow-hidden border-2 border-blue-300 dark:border-blue-600 flex-shrink-0 bg-blue-100 dark:bg-blue-800">
+                    <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full flex items-center justify-center overflow-hidden border-2 border-indigo-300/60 dark:border-indigo-600/50 flex-shrink-0 bg-indigo-100/70 dark:bg-indigo-800/40 backdrop-blur-sm">
                       <img 
                         src={photoJpg} 
                         alt="Vaibhav" 
@@ -179,7 +179,7 @@ export default function MessageComponent({ message, onRegenerate, onEdit, onDele
                         onError={(e) => {
                           const target = e.target as HTMLImageElement;
                           target.style.display = 'none';
-                          target.parentElement!.innerHTML = '<span class="text-blue-600 dark:text-blue-300 text-xs font-bold">V</span>';
+                          target.parentElement!.innerHTML = '<span class="text-indigo-600 dark:text-indigo-300 text-xs font-bold">V</span>';
                         }}
                       />
                     </div>
@@ -191,7 +191,7 @@ export default function MessageComponent({ message, onRegenerate, onEdit, onDele
                       </svg>
                     </div>
                   )}
-                  <span className={`font-medium text-xs ${isUser ? 'text-blue-700 dark:text-blue-300' : 'text-gray-700 dark:text-gray-300'}`}>
+                  <span className={`font-medium text-xs ${isUser ? 'text-indigo-700 dark:text-indigo-300' : 'text-gray-700 dark:text-gray-300'}`}>
                     {isUser ? 'Vaibhav' : 'NagreGPT'}
                   </span>
                 </div>
@@ -233,7 +233,7 @@ export default function MessageComponent({ message, onRegenerate, onEdit, onDele
                   </div>
                 </div>
               ) : (
-                <div className={`prose prose-sm max-w-none ${isUser ? 'prose-blue dark:prose-invert' : 'prose-gray dark:prose-invert'}`}>
+                <div className={`prose prose-sm max-w-none ${isUser ? 'prose-indigo dark:prose-invert' : 'prose-gray dark:prose-invert'}`}>
                   <ReactMarkdown
                     components={{
                       code: CodeBlock,
@@ -243,7 +243,7 @@ export default function MessageComponent({ message, onRegenerate, onEdit, onDele
                           href={href} 
                           target="_blank" 
                           rel="noopener noreferrer"
-                          className={`${isUser ? 'text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300' : 'text-gpt-blue-500 hover:text-gpt-blue-600 dark:text-gpt-blue-400 dark:hover:text-gpt-blue-300'} underline font-medium`}
+                          className={`${isUser ? 'text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 dark:hover:text-indigo-300' : 'text-gpt-blue-500 hover:text-gpt-blue-600 dark:text-gpt-blue-400 dark:hover:text-gpt-blue-300'} underline font-medium`}
                         >
                           {children}
                         </a>
