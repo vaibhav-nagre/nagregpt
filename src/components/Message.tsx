@@ -62,7 +62,7 @@ export default function MessageComponent({ message, onRegenerate, onEdit, onDele
     setIsEditing(false);
   };
 
-  const handleReaction = (reaction: string) => {
+  const handleReaction = async (reaction: string) => {
     const newReaction = userReaction === reaction ? null : reaction;
     setUserReaction(newReaction);
     onReaction?.(message.id, reaction);
@@ -80,14 +80,20 @@ export default function MessageComponent({ message, onRegenerate, onEdit, onDele
       
       const userContext = previousUserMessage?.content || 'No previous context';
       
-      FeedbackManager.storeFeedback(
+      // Calculate response time if available
+      const responseTime = message.timestamp && previousUserMessage?.timestamp 
+        ? message.timestamp.getTime() - previousUserMessage.timestamp.getTime()
+        : undefined;
+      
+      await FeedbackManager.storeFeedback(
         message.id,
         message.content,
         newReaction as 'like' | 'dislike' | 'love',
-        userContext
+        userContext,
+        responseTime
       );
       
-      console.log(`💫 Learning from ${newReaction} reaction on AI response`);
+      console.log(`💫 Learning from ${newReaction} reaction on AI response (${responseTime}ms response time)`);
     }
   };
 

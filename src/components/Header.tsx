@@ -7,9 +7,10 @@ import {
   PlusIcon,
   SparklesIcon,
   CheckIcon,
-  BoltIcon
+  ChartBarIcon
 } from '@heroicons/react/24/outline';
 import { FeedbackManager } from '../utils/feedbackManager';
+import LearningInsights from './LearningInsights';
 
 interface HeaderProps {
   onHomeClick?: () => void;
@@ -20,6 +21,7 @@ export default function Header({ onHomeClick }: HeaderProps) {
   const navigate = useNavigate();
   const [showNewChatMessage, setShowNewChatMessage] = useState(false);
   const [showFeedbackTooltip, setShowFeedbackTooltip] = useState(false);
+  const [showLearningInsights, setShowLearningInsights] = useState(false);
   const [feedbackStats, setFeedbackStats] = useState({ likes: 0, dislikes: 0, loves: 0, total: 0 });
 
   const handleNewChat = () => {
@@ -132,15 +134,19 @@ export default function Header({ onHomeClick }: HeaderProps) {
             onMouseEnter={() => setShowFeedbackTooltip(true)}
             onMouseLeave={() => setShowFeedbackTooltip(false)}
           >
-            <div className="flex items-center space-x-1 px-2 sm:px-3 py-1.5 sm:py-2 rounded-xl bg-gradient-to-r from-gpt-green-500/10 to-gpt-blue-500/10 border border-gpt-green-500/20">
-              <BoltIcon className="w-3 h-3 sm:w-4 sm:h-4 text-gpt-green-500 animate-pulse" />
+            <button 
+              onClick={() => setShowLearningInsights(true)}
+              className="flex items-center space-x-1 px-2 sm:px-3 py-1.5 sm:py-2 rounded-xl bg-gradient-to-r from-gpt-green-500/10 to-gpt-blue-500/10 border border-gpt-green-500/20 hover:from-gpt-green-500/20 hover:to-gpt-blue-500/20 transition-all duration-200 hover-lift focus-ring"
+              title="View detailed learning insights"
+            >
+              <ChartBarIcon className="w-3 h-3 sm:w-4 sm:h-4 text-gpt-green-500" />
               <span className="text-xs font-medium text-gpt-green-600 dark:text-gpt-green-400">
                 Learning ({feedbackStats.total})
               </span>
-            </div>
+            </button>
             
             {/* Feedback Tooltip */}
-            {showFeedbackTooltip && (
+            {showFeedbackTooltip && !showLearningInsights && (
               <div className="absolute top-full right-0 mt-2 w-48 p-3 bg-white dark:bg-gpt-gray-800 border border-gray-200 dark:border-gpt-gray-600 rounded-xl shadow-lg z-50 animate-slide-in-up">
                 <div className="text-sm font-medium text-gray-900 dark:text-white mb-2">AI Learning Progress</div>
                 <div className="space-y-1 text-xs">
@@ -155,6 +161,11 @@ export default function Header({ onHomeClick }: HeaderProps) {
                   <div className="flex justify-between text-gray-600 dark:text-gray-400">
                     <span>👎 Needs Work:</span>
                     <span>{feedbackStats.dislikes}</span>
+                  </div>
+                </div>
+                <div className="mt-2 pt-2 border-t border-gray-200 dark:border-gpt-gray-600">
+                  <div className="text-xs text-gray-500 dark:text-gray-400">
+                    Click to view detailed insights
                   </div>
                 </div>
               </div>
@@ -174,6 +185,28 @@ export default function Header({ onHomeClick }: HeaderProps) {
           )}
         </button>
       </div>
+
+      {/* Learning Insights Modal */}
+      {showLearningInsights && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in">
+          <div className="relative bg-white dark:bg-gpt-gray-800 rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto animate-slide-in-up">
+            <div className="sticky top-0 bg-white dark:bg-gpt-gray-800 border-b border-gray-200 dark:border-gpt-gray-600 p-4 flex items-center justify-between rounded-t-2xl">
+              <h2 className="text-xl font-bold text-gray-900 dark:text-white">AI Learning Insights</h2>
+              <button
+                onClick={() => setShowLearningInsights(false)}
+                className="p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gpt-gray-700 transition-colors focus-ring"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <div className="p-6">
+              <LearningInsights isOpen={true} onClose={() => setShowLearningInsights(false)} />
+            </div>
+          </div>
+        </div>
+      )}
     </header>
   );
 }

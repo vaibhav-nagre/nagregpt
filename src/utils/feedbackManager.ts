@@ -1,3 +1,5 @@
+import GlobalLearningSystem from '../services/globalLearning';
+
 interface MessageFeedback {
   messageId: string;
   messageContent: string;
@@ -11,12 +13,13 @@ export class FeedbackManager {
   private static readonly MAX_FEEDBACK_ITEMS = 50; // Keep last 50 feedback items
 
   // Store user reaction feedback
-  static storeFeedback(
+  static async storeFeedback(
     messageId: string,
     messageContent: string,
     reaction: 'like' | 'dislike' | 'love',
-    userContext: string
-  ): void {
+    userContext: string,
+    responseTime?: number
+  ): Promise<void> {
     const feedback: MessageFeedback = {
       messageId,
       messageContent: messageContent.substring(0, 500), // Limit content length
@@ -32,6 +35,15 @@ export class FeedbackManager {
     try {
       localStorage.setItem(this.STORAGE_KEY, JSON.stringify(updatedFeedback));
       console.log(`📝 Stored ${reaction} feedback for message`, messageId);
+      
+      // 🌍 NEW: Submit to global learning system
+      await GlobalLearningSystem.submitGlobalFeedback(
+        messageId,
+        userContext,
+        messageContent,
+        reaction,
+        responseTime
+      );
       
       // Dispatch custom event for real-time UI updates
       window.dispatchEvent(new CustomEvent('feedback-updated', {

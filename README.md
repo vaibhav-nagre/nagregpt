@@ -19,27 +19,6 @@
 
 > A beautiful, intelligent chat interface that learns from your interactions and provides contextual responses using the **Groq API** with **Llama models**.
 
-<details>
-<summary>🎬 <strong>View Features</strong></summary>
-
-### 🔥 **Core Features**
-- 🎨 **Pixel-perfect ChatGPT UI** - Exact replica of chat.openai.com
-- 🧠 **Smart Session Memory** - Remembers entire conversation context
-- 📊 **AI Learning System** - Adapts based on your reactions (👍👎❤️)
-- 🌓 **Dark/Light Themes** - Seamless theme switching
-- 📁 **File Analysis** - Upload and analyze PDFs, logs, and documents
-- 🎤 **Voice Integration** - Voice input and audio responses
-- ⚡ **Real-time Streaming** - Live response generation
-- 💫 **Smooth Animations** - Glassmorphism and modern effects
-
-### 🎛️ **Advanced Features**
-- ✏️ **Message Editing** - Edit and regenerate responses
-- ⭐ **Reaction System** - Like, dislike, or love responses
-- 📱 **Responsive Design** - Perfect on all devices
-- 🔄 **Auto-save** - Never lose your conversations
-- 🎯 **Focused Responses** - Concise, relevant answers
-
-</details>
 
 ---
 
@@ -129,22 +108,10 @@ The AI learns from your feedback patterns and adapts its response style to match
 
 ---
 
-## 🤝 **Contributing**
-
-We love contributions! Feel free to:
-
-- 🐛 Report bugs
-- 💡 Suggest features  
-- 🔧 Submit pull requests
-- ⭐ Star the repo
-
----
-
 <div align="center">
 
 ### 💖 **Made with love by [Vaibhav Nagre](https://github.com/vaibhav-nagre)**
 
-**[⭐ Star this repo](https://github.com/vaibhav-nagre/nagregpt)** • **[🐦 Follow on Twitter](https://twitter.com/vaibhavnagre)** • **[💼 LinkedIn](https://linkedin.com/in/vaibhavnagre)**
 
 ---
 

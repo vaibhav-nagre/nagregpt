@@ -1,6 +1,7 @@
 import { config } from '../config';
 import { FeedbackManager } from '../utils/feedbackManager';
 import { ResponseAnalyzer } from '../utils/responseAnalyzer';
+import GlobalLearningSystem from './globalLearning';
 
 export interface GroqMessage {
   role: 'system' | 'user' | 'assistant';
@@ -47,6 +48,20 @@ export class GroqAPI {
     console.log('🤖 Model:', model);
     console.log('💬 Messages count:', messages.length);
     console.log('📝 Messages:', messages);
+    
+    // 🧠 ENHANCE WITH LEARNING: Improve user message with learning context
+    const lastUserMessage = messages[messages.length - 1];
+    if (lastUserMessage && lastUserMessage.role === 'user') {
+      try {
+        const enhancedContent = await GlobalLearningSystem.generateImprovedPrompt(lastUserMessage.content);
+        if (enhancedContent !== lastUserMessage.content) {
+          console.log('🎯 Enhanced prompt with learning context');
+          lastUserMessage.content = enhancedContent;
+        }
+      } catch (error) {
+        console.warn('Failed to enhance prompt with learning:', error);
+      }
+    }
     
     try {
       const requestBody = {
