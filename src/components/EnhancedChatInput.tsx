@@ -6,12 +6,8 @@ import {
   DocumentIcon,
   PhotoIcon,
   XMarkIcon,
-  SpeakerWaveIcon,
-  PaperAirplaneIcon,
-  MusicalNoteIcon
+  PaperAirplaneIcon
 } from '@heroicons/react/24/outline';
-import AudioRecorder from './AudioRecorder';
-// import speechTranscription from '../services/speechTranscription'; // Uncomment to enable transcription
 
 interface ChatInputProps {
   onSendMessage: (message: string, files?: File[]) => void;
@@ -23,22 +19,17 @@ interface ChatInputProps {
 interface AttachedFile {
   file: File;
   preview?: string;
-  type: 'image' | 'document' | 'audio';
+  type: 'image' | 'document';
 }
 
 export default function EnhancedChatInput({ onSendMessage, isLoading, onStop, disabled }: ChatInputProps) {
   const [message, setMessage] = useState('');
-  const [isRecording, setIsRecording] = useState(false);
-  const [recordingDuration, setRecordingDuration] = useState(0);
   const [attachedFiles, setAttachedFiles] = useState<AttachedFile[]>([]);
   const [isDragOver, setIsDragOver] = useState(false);
   const [isListening, setIsListening] = useState(false);
-  const [showAdvancedRecorder, setShowAdvancedRecorder] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const recognitionRef = useRef<any>(null);
-  const recordingTimerRef = useRef<number | null>(null);
 
   // Initialize speech recognition
   useEffect(() => {
@@ -99,13 +90,10 @@ export default function EnhancedChatInput({ onSendMessage, isLoading, onStop, di
     Array.from(files).forEach(file => {
       // Better file type detection
       const isImage = file.type.startsWith('image/');
-      const isAudio = file.type.startsWith('audio/');
       
-      let fileType: 'image' | 'document' | 'audio';
+      let fileType: 'image' | 'document';
       if (isImage) {
         fileType = 'image';
-      } else if (isAudio) {
-        fileType = 'audio';
       } else {
         fileType = 'document';
       }
@@ -140,58 +128,6 @@ export default function EnhancedChatInput({ onSendMessage, isLoading, onStop, di
     setAttachedFiles(prev => prev.filter((_, i) => i !== index));
   };
 
-  const handleVoiceRecord = async () => {
-    if (!isRecording) {
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        mediaRecorderRef.current = new MediaRecorder(stream);
-        
-        const audioChunks: BlobPart[] = [];
-        mediaRecorderRef.current.ondataavailable = (event) => {
-          audioChunks.push(event.data);
-        };
-        
-        mediaRecorderRef.current.onstop = async () => {
-          const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
-          const audioFile = new File([audioBlob], `recording-${Date.now()}.wav`, { type: 'audio/wav' });
-          
-          // Option 1: Just attach the audio file
-          handleFileUpload([audioFile] as any);
-          
-          // Option 2: Also try to transcribe (if you want to add this feature)
-          // const transcription = await transcribeAudio(audioBlob);
-          // if (transcription) {
-          //   setMessage(prev => prev + (prev ? ' ' : '') + transcription);
-          // }
-          
-          stream.getTracks().forEach(track => track.stop());
-          
-          // Reset timer
-          if (recordingTimerRef.current) {
-            clearInterval(recordingTimerRef.current);
-            recordingTimerRef.current = null;
-          }
-          setRecordingDuration(0);
-        };
-        
-        mediaRecorderRef.current.start();
-        setIsRecording(true);
-        
-        // Start recording timer
-        setRecordingDuration(0);
-        recordingTimerRef.current = window.setInterval(() => {
-          setRecordingDuration(prev => prev + 1);
-        }, 1000);
-        
-      } catch (err) {
-        console.error('Error accessing microphone:', err);
-      }
-    } else {
-      mediaRecorderRef.current?.stop();
-      setIsRecording(false);
-    }
-  };
-
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
     setIsDragOver(true);
@@ -215,15 +151,6 @@ export default function EnhancedChatInput({ onSendMessage, isLoading, onStop, di
       textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
     }
   }, [message]);
-
-  // Cleanup timer on unmount
-  useEffect(() => {
-    return () => {
-      if (recordingTimerRef.current) {
-        clearInterval(recordingTimerRef.current);
-      }
-    };
-  }, []);
 
   return (
     <div className="sticky bottom-0 bg-white/95 dark:bg-gpt-gray-800/95 backdrop-blur-md border-t border-gray-200/50 dark:border-gpt-gray-600/50">
@@ -264,10 +191,6 @@ export default function EnhancedChatInput({ onSendMessage, isLoading, onStop, di
                       <div className="w-8 h-8 sm:w-10 sm:h-10 bg-green-100 dark:bg-green-900 rounded flex items-center justify-center">
                         <DocumentIcon className="w-4 h-4 sm:w-6 sm:h-6 text-green-600 dark:text-green-400" />
                       </div>
-                    ) : attachedFile.type === 'audio' ? (
-                      <div className="w-8 h-8 sm:w-10 sm:h-10 bg-purple-100 dark:bg-purple-900 rounded flex items-center justify-center">
-                        <SpeakerWaveIcon className="w-4 h-4 sm:w-6 sm:h-6 text-purple-600 dark:text-purple-400" />
-                      </div>
                     ) : (
                       <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gray-200 dark:bg-gray-600 rounded flex items-center justify-center">
                         <DocumentIcon className="w-4 h-4 sm:w-6 sm:h-6 text-gray-500" />
@@ -283,7 +206,6 @@ export default function EnhancedChatInput({ onSendMessage, isLoading, onStop, di
                       {isPDF && ' • PDF'}
                       {isLogFile && ' • Log File'}
                       {isTextFile && !isLogFile && ' • Text File'}
-                      {attachedFile.type === 'audio' && ' • Audio'}
                       {attachedFile.type === 'image' && ' • Image'}
                     </p>
                   </div>
@@ -356,37 +278,6 @@ export default function EnhancedChatInput({ onSendMessage, isLoading, onStop, di
               >
                 <MicrophoneIcon className="w-3 h-3 sm:w-4 sm:h-4" />
               </button>
-
-              {/* Voice record button */}
-              <button
-                type="button"
-                onClick={handleVoiceRecord}
-                disabled={disabled}
-                className={`flex-shrink-0 p-1.5 sm:p-2 mr-1 sm:mr-2 rounded-full transition-all disabled:opacity-50 disabled:cursor-not-allowed relative ${
-                  isRecording 
-                    ? 'text-red-500 bg-red-100 dark:bg-red-900 recording-pulse' 
-                    : 'text-gray-400 dark:text-gray-500 hover:text-red-500 dark:hover:text-red-400 hover:bg-gray-100 dark:hover:bg-gpt-gray-600'
-                }`}
-                title={isRecording ? `Stop recording (${Math.floor(recordingDuration / 60)}:${(recordingDuration % 60).toString().padStart(2, '0')})` : "Record audio"}
-              >
-                <div className="w-3 h-3 sm:w-4 sm:h-4 bg-current rounded-full" />
-                {isRecording && (
-                  <div className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full px-1 min-w-[20px] h-4 flex items-center justify-center">
-                    {Math.floor(recordingDuration / 60)}:{(recordingDuration % 60).toString().padStart(2, '0')}
-                  </div>
-                )}
-              </button>
-
-              {/* Advanced Audio Recorder Toggle */}
-              <button
-                type="button"
-                onClick={() => setShowAdvancedRecorder(!showAdvancedRecorder)}
-                disabled={disabled}
-                className="flex-shrink-0 p-1.5 sm:p-2 mr-1 sm:mr-2 text-gray-400 dark:text-gray-500 hover:text-purple-500 dark:hover:text-purple-400 hover:bg-gray-100 dark:hover:bg-gpt-gray-600 rounded-full transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                title="Advanced Audio Recorder"
-              >
-                <MusicalNoteIcon className="w-3 h-3 sm:w-4 sm:h-4" />
-              </button>
             </div>
           </div>
 
@@ -412,51 +303,12 @@ export default function EnhancedChatInput({ onSendMessage, isLoading, onStop, di
           )}
         </form>
 
-        {/* Advanced Audio Recorder Modal */}
-        {showAdvancedRecorder && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full">
-              <div className="p-6">
-                <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                    Advanced Audio Recorder
-                  </h3>
-                  <button
-                    onClick={() => setShowAdvancedRecorder(false)}
-                    className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
-                  >
-                    <XMarkIcon className="w-5 h-5" />
-                  </button>
-                </div>
-                
-                <AudioRecorder
-                  onRecordingComplete={(audioFile) => {
-                    handleFileUpload([audioFile] as any);
-                    setShowAdvancedRecorder(false);
-                  }}
-                  disabled={disabled}
-                />
-                
-                <div className="mt-4 text-sm text-gray-600 dark:text-gray-400">
-                  <p className="font-medium mb-2">Features:</p>
-                  <ul className="space-y-1 text-xs">
-                    <li>• Song identification and analysis</li>
-                    <li>• Voice training feedback</li>
-                    <li>• Audio quality assessment</li>
-                    <li>• Real-time visualization</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
         {/* Hidden file input */}
         <input
           ref={fileInputRef}
           type="file"
           multiple
-          accept="image/*,audio/*,.pdf,.doc,.docx,.txt,.md,.log,.csv,.json,.xml,.yaml,.yml,.js,.ts,.py,.java,.cpp,.c,.h,.html,.css,.sql,.sh,.bat,.conf,.ini"
+          accept="image/*,.pdf,.doc,.docx,.txt,.md,.log,.csv,.json,.xml,.yaml,.yml,.js,.ts,.py,.java,.cpp,.c,.h,.html,.css,.sql,.sh,.bat,.conf,.ini"
           onChange={handleFileChange}
           className="hidden"
         />
