@@ -1,131 +1,221 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
   <defs>
-    <!-- Professional gradient system for trust and innovation -->
-    <linearGradient id="primaryGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#3B82F6;stop-opacity:1" />
-      <stop offset="50%" style="stop-color:#1E40AF;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#1E3A8A;stop-opacity:1" />
+    <!-- Bold multi-layer gradient system -->
+    <linearGradient id="primaryBold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00D4AA;stop-opacity:1" />
+      <stop offset="25%" style="stop-color:#06B6D4;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#0EA5E9;stop-opacity:1" />
+      <stop offset="75%" style="stop-color:#3B82F6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#6366F1;stop-opacity:1" />
     </linearGradient>
     
-    <linearGradient id="accentGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#06B6D4;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#0EA5E9;stop-opacity:1" />
+    <linearGradient id="accentBold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F59E0B;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#EF4444;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#DC2626;stop-opacity:1" />
     </linearGradient>
     
-    <linearGradient id="subtleGlow" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#FFFFFF;stop-opacity:0.4" />
-      <stop offset="50%" style="stop-color:#3B82F6;stop-opacity:0.2" />
-      <stop offset="100%" style="stop-color:#1E3A8A;stop-opacity:0.1" />
+    <linearGradient id="energyGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFFFFF;stop-opacity:0.9" />
+      <stop offset="50%" style="stop-color:#00D4AA;stop-opacity:0.6" />
+      <stop offset="100%" style="stop-color:#6366F1;stop-opacity:0.3" />
     </linearGradient>
     
-    <!-- Clean, professional filters -->
-    <filter id="professionalGlow" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
-      <feDropShadow dx="0" dy="1" stdDeviation="3" flood-color="#1E3A8A" flood-opacity="0.2"/>
+    <radialGradient id="coreGlow" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" style="stop-color:#FFFFFF;stop-opacity:0.8" />
+      <stop offset="40%" style="stop-color:#00D4AA;stop-opacity:0.4" />
+      <stop offset="100%" style="stop-color:#6366F1;stop-opacity:0.1" />
+    </radialGradient>
+    
+    <!-- Cool effects filters -->
+    <filter id="boldGlow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#00D4AA" flood-opacity="0.6"/>
+      <feDropShadow dx="0" dy="0" stdDeviation="15" flood-color="#6366F1" flood-opacity="0.4"/>
       <feMerge> 
         <feMergeNode in="coloredBlur"/>
         <feMergeNode in="SourceGraphic"/>
       </feMerge>
     </filter>
     
-    <filter id="subtleShine" x="-50%" y="-50%" width="200%" height="200%">
-      <feSpecularLighting result="specOut" in="SourceGraphic" specularConstant="1.2" specularExponent="20" lighting-color="white">
-        <fePointLight x="50" y="50" z="100"/>
+    <filter id="energyPulse" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#F59E0B" flood-opacity="0.8"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <filter id="coreLight" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="1" result="offset" in="SourceGraphic"/>
+      <feSpecularLighting result="specOut" in="offset" specularConstant="2" specularExponent="30" lighting-color="white">
+        <fePointLight x="100" y="100" z="300"/>
       </feSpecularLighting>
-      <feComposite in="SourceGraphic" in2="specOut" operator="arithmetic" k1="0" k2="1" k3="0.8" k4="0"/>
+      <feComposite in="specOut" in2="SourceAlpha" operator="in" result="specOut2"/>
+      <feComposite in="SourceGraphic" in2="specOut2" operator="arithmetic" k1="0" k2="1" k3="1" k4="0"/>
     </filter>
   </defs>
   
-  <!-- Minimal outer ring for subtle depth -->
-  <circle cx="100" cy="100" r="85" fill="none" stroke="url(#primaryGradient)" 
-          stroke-width="0.5" opacity="0.3" stroke-dasharray="2,4">
+  <!-- Dynamic background energy rings -->
+  <circle cx="100" cy="100" r="85" fill="none" stroke="url(#primaryBold)" 
+          stroke-width="3" opacity="0.3" stroke-dasharray="10,5" stroke-linecap="round">
+    <animate attributeName="r" values="85;95;85" dur="4s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.3;0.6;0.3" dur="4s" repeatCount="indefinite"/>
     <animateTransform attributeName="transform" type="rotate" 
-                      values="0 100 100;360 100 100" dur="30s" repeatCount="indefinite"/>
+                      values="0 100 100;360 100 100" dur="20s" repeatCount="indefinite"/>
   </circle>
   
-  <!-- Main conversation bubble foundation -->
+  <circle cx="100" cy="100" r="75" fill="none" stroke="url(#accentBold)" 
+          stroke-width="2" opacity="0.4" stroke-dasharray="5,3" stroke-linecap="round">
+    <animate attributeName="r" values="75;80;75" dur="3s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.4;0.7;0.4" dur="3s" repeatCount="indefinite"/>
+    <animateTransform attributeName="transform" type="rotate" 
+                      values="360 100 100;0 100 100" dur="15s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- Bold conversation bubble with energy -->
   <g transform="translate(100, 100)">
-    <!-- Primary conversation bubble - rounded rectangle with perfect proportions -->
-    <rect x="-35" y="-25" width="70" height="50" rx="25" ry="25" 
-          fill="url(#primaryGradient)" opacity="0.15" filter="url(#professionalGlow)"/>
+    <!-- Core energy background -->
+    <circle r="50" fill="url(#coreGlow)" opacity="0.4" filter="url(#boldGlow)">
+      <animate attributeName="r" values="50;55;50" dur="5s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.4;0.7;0.4" dur="5s" repeatCount="indefinite"/>
+    </circle>
     
-    <!-- Sleek border for the conversation bubble -->
-    <rect x="-32" y="-22" width="64" height="44" rx="22" ry="22" 
-          fill="none" stroke="url(#accentGradient)" stroke-width="1.5" opacity="0.6"/>
+    <!-- Main conversation bubble - bold and dynamic -->
+    <rect x="-35" y="-20" width="70" height="40" rx="20" ry="20" 
+          fill="url(#primaryBold)" opacity="0.8" filter="url(#boldGlow)">
+      <animate attributeName="opacity" values="0.8;1;0.8" dur="3s" repeatCount="indefinite"/>
+    </rect>
     
-    <!-- Modern "N" lettermark with conversational design -->
-    <g filter="url(#professionalGlow)">
-      <!-- Clean, geometric N with perfect proportions -->
-      <path d="M -15 -18 L -15 18 L -10 18 L -10 -6 L 10 18 L 15 18 L 15 -18 L 10 -18 L 10 6 L -10 -18 Z" 
-            fill="url(#primaryGradient)" filter="url(#subtleShine)"/>
+    <!-- Bold border with energy -->
+    <rect x="-32" y="-17" width="64" height="34" rx="17" ry="17" 
+          fill="none" stroke="url(#energyGlow)" stroke-width="2" opacity="0.9"/>
+    
+    <!-- Powerful "N" lettermark -->
+    <g filter="url(#coreLight)">
+      <path d="M -18 -22 L -18 22 L -12 22 L -12 -5 L 12 22 L 18 22 L 18 -22 L 12 -22 L 12 5 L -12 -22 Z" 
+            fill="url(#energyGlow)" filter="url(#energyPulse)">
+        <animate attributeName="opacity" values="0.9;1;0.9" dur="2s" repeatCount="indefinite"/>
+      </path>
       
-      <!-- Subtle accent line representing data flow/conversation -->
-      <line x1="-15" y1="0" x2="15" y2="0" stroke="url(#subtleGlow)" 
-            stroke-width="2" opacity="0.8" stroke-linecap="round"/>
+      <!-- Dynamic energy lines -->
+      <line x1="-18" y1="0" x2="18" y2="0" stroke="url(#accentBold)" 
+            stroke-width="3" opacity="0.8" stroke-linecap="round">
+        <animate attributeName="opacity" values="0.8;1;0.8" dur="1.5s" repeatCount="indefinite"/>
+      </line>
+      
+      <line x1="-18" y1="-6" x2="18" y2="-6" stroke="url(#energyGlow)" 
+            stroke-width="2" opacity="0.6" stroke-linecap="round">
+        <animate attributeName="opacity" values="0.6;0.9;0.6" dur="2.5s" repeatCount="indefinite"/>
+      </line>
+      
+      <line x1="-18" y1="6" x2="18" y2="6" stroke="url(#energyGlow)" 
+            stroke-width="2" opacity="0.6" stroke-linecap="round">
+        <animate attributeName="opacity" values="0.6;0.9;0.6" dur="2.2s" repeatCount="indefinite"/>
+      </line>
     </g>
     
-    <!-- Conversation tail/pointer - subtle triangle -->
-    <path d="M 20 15 L 28 20 L 20 25 Z" 
-          fill="url(#primaryGradient)" opacity="0.4" stroke="none"/>
+    <!-- Energy burst tail -->
+    <path d="M 30 12 L 40 15 L 30 18 Z" 
+          fill="url(#accentBold)" opacity="0.8" filter="url(#energyPulse)">
+      <animate attributeName="opacity" values="0.8;1;0.8" dur="1.8s" repeatCount="indefinite"/>
+    </path>
     
-    <!-- Neural connection dots - minimal and clean -->
-    <g opacity="0.6">
-      <circle cx="-25" cy="-8" r="2" fill="url(#accentGradient)">
-        <animate attributeName="opacity" values="0.6;1;0.6" dur="3s" repeatCount="indefinite"/>
+    <!-- Power indicators -->
+    <g opacity="0.9">
+      <circle cx="-45" cy="-12" r="3" fill="url(#accentBold)" filter="url(#energyPulse)">
+        <animate attributeName="opacity" values="0.9;1;0.9" dur="2s" repeatCount="indefinite"/>
+        <animate attributeName="r" values="3;4;3" dur="2s" repeatCount="indefinite"/>
       </circle>
-      <circle cx="25" cy="8" r="2" fill="url(#accentGradient)">
-        <animate attributeName="opacity" values="0.6;1;0.6" dur="3.5s" repeatCount="indefinite"/>
+      <circle cx="45" cy="12" r="3" fill="url(#accentBold)" filter="url(#energyPulse)">
+        <animate attributeName="opacity" values="0.9;1;0.9" dur="2.3s" repeatCount="indefinite"/>
+        <animate attributeName="r" values="3;4;3" dur="2.3s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="-45" cy="12" r="2" fill="url(#primaryBold)" filter="url(#boldGlow)">
+        <animate attributeName="opacity" values="0.7;1;0.7" dur="1.8s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="45" cy="-12" r="2" fill="url(#primaryBold)" filter="url(#boldGlow)">
+        <animate attributeName="opacity" values="0.7;1;0.7" dur="2.1s" repeatCount="indefinite"/>
       </circle>
       
-      <!-- Subtle connecting lines representing intelligence flow -->
-      <line x1="-25" y1="-8" x2="-15" y2="-5" stroke="url(#accentGradient)" 
-            stroke-width="1" opacity="0.4" stroke-linecap="round"/>
-      <line x1="15" y1="5" x2="25" y2="8" stroke="url(#accentGradient)" 
-            stroke-width="1" opacity="0.4" stroke-linecap="round"/>
+      <!-- Energy connection lines -->
+      <line x1="-45" y1="-12" x2="-25" y2="-15" stroke="url(#accentBold)" 
+            stroke-width="1.5" opacity="0.6" stroke-linecap="round">
+        <animate attributeName="opacity" values="0.6;0.9;0.6" dur="3s" repeatCount="indefinite"/>
+      </line>
+      <line x1="25" y1="15" x2="45" y2="12" stroke="url(#accentBold)" 
+            stroke-width="1.5" opacity="0.6" stroke-linecap="round">
+        <animate attributeName="opacity" values="0.6;0.9;0.6" dur="3.2s" repeatCount="indefinite"/>
+      </line>
     </g>
   </g>
   
-  <!-- Minimal neural network visualization -->
-  <g opacity="0.3">
-    <!-- Strategic intelligence nodes -->
-    <circle cx="100" cy="55" r="3" fill="url(#accentGradient)">
-      <animate attributeName="opacity" values="0.3;0.7;0.3" dur="4s" repeatCount="indefinite"/>
+  <!-- Bold energy network -->
+  <g opacity="0.5">
+    <circle cx="100" cy="50" r="4" fill="url(#accentBold)" filter="url(#energyPulse)">
+      <animate attributeName="opacity" values="0.5;1;0.5" dur="2.5s" repeatCount="indefinite"/>
+      <animate attributeName="r" values="4;6;4" dur="2.5s" repeatCount="indefinite"/>
     </circle>
-    <circle cx="145" cy="100" r="3" fill="url(#accentGradient)">
-      <animate attributeName="opacity" values="0.3;0.7;0.3" dur="4.5s" repeatCount="indefinite"/>
+    <circle cx="150" cy="100" r="4" fill="url(#accentBold)" filter="url(#energyPulse)">
+      <animate attributeName="opacity" values="0.5;1;0.5" dur="2.8s" repeatCount="indefinite"/>
+      <animate attributeName="r" values="4;6;4" dur="2.8s" repeatCount="indefinite"/>
     </circle>
-    <circle cx="100" cy="145" r="3" fill="url(#accentGradient)">
-      <animate attributeName="opacity" values="0.3;0.7;0.3" dur="5s" repeatCount="indefinite"/>
+    <circle cx="100" cy="150" r="4" fill="url(#accentBold)" filter="url(#energyPulse)">
+      <animate attributeName="opacity" values="0.5;1;0.5" dur="3.1s" repeatCount="indefinite"/>
+      <animate attributeName="r" values="4;6;4" dur="3.1s" repeatCount="indefinite"/>
     </circle>
-    <circle cx="55" cy="100" r="3" fill="url(#accentGradient)">
-      <animate attributeName="opacity" values="0.3;0.7;0.3" dur="3.5s" repeatCount="indefinite"/>
+    <circle cx="50" cy="100" r="4" fill="url(#accentBold)" filter="url(#energyPulse)">
+      <animate attributeName="opacity" values="0.5;1;0.5" dur="2.2s" repeatCount="indefinite"/>
+      <animate attributeName="r" values="4;6;4" dur="2.2s" repeatCount="indefinite"/>
     </circle>
     
-    <!-- Clean, curved connection paths -->
-    <path d="M 100,55 Q 122.5,77.5 145,100" fill="none" stroke="url(#primaryGradient)" 
-          stroke-width="1" opacity="0.4" stroke-linecap="round"/>
-    <path d="M 145,100 Q 122.5,122.5 100,145" fill="none" stroke="url(#primaryGradient)" 
-          stroke-width="1" opacity="0.4" stroke-linecap="round"/>
-    <path d="M 100,145 Q 77.5,122.5 55,100" fill="none" stroke="url(#primaryGradient)" 
-          stroke-width="1" opacity="0.4" stroke-linecap="round"/>
-    <path d="M 55,100 Q 77.5,77.5 100,55" fill="none" stroke="url(#primaryGradient)" 
-          stroke-width="1" opacity="0.4" stroke-linecap="round"/>
+    <!-- Dynamic energy paths -->
+    <path d="M 100,50 Q 125,75 150,100" fill="none" stroke="url(#primaryBold)" 
+          stroke-width="2" opacity="0.4" stroke-linecap="round">
+      <animate attributeName="opacity" values="0.4;0.8;0.4" dur="4s" repeatCount="indefinite"/>
+    </path>
+    <path d="M 150,100 Q 125,125 100,150" fill="none" stroke="url(#primaryBold)" 
+          stroke-width="2" opacity="0.4" stroke-linecap="round">
+      <animate attributeName="opacity" values="0.4;0.8;0.4" dur="4.2s" repeatCount="indefinite"/>
+    </path>
+    <path d="M 100,150 Q 75,125 50,100" fill="none" stroke="url(#primaryBold)" 
+          stroke-width="2" opacity="0.4" stroke-linecap="round">
+      <animate attributeName="opacity" values="0.4;0.8;0.4" dur="3.8s" repeatCount="indefinite"/>
+    </path>
+    <path d="M 50,100 Q 75,75 100,50" fill="none" stroke="url(#primaryBold)" 
+          stroke-width="2" opacity="0.4" stroke-linecap="round">
+      <animate attributeName="opacity" values="0.4;0.8;0.4" dur="4.5s" repeatCount="indefinite"/>
+    </path>
   </g>
   
-  <!-- Subtle pulsing effect for living intelligence -->
-  <circle cx="100" cy="100" r="25" fill="none" stroke="url(#accentGradient)" 
-          stroke-width="1" opacity="0" stroke-linecap="round">
-    <animate attributeName="r" values="25;35;25" dur="6s" repeatCount="indefinite"/>
-    <animate attributeName="opacity" values="0;0.3;0" dur="6s" repeatCount="indefinite"/>
+  <!-- Power surge effect -->
+  <circle cx="100" cy="100" r="25" fill="none" stroke="url(#accentBold)" 
+          stroke-width="4" opacity="0" stroke-linecap="round">
+    <animate attributeName="r" values="25;45;25" dur="3s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;0.8;0" dur="3s" repeatCount="indefinite"/>
+    <animate attributeName="stroke-width" values="4;1;4" dur="3s" repeatCount="indefinite"/>
   </circle>
   
-  <!-- Intelligent data particle flow -->
-  <g opacity="0.5">
-    <circle r="1.5" fill="url(#accentGradient)">
-      <animateMotion dur="8s" repeatCount="indefinite">
-        <path d="M 100,55 Q 145,77.5 145,100 Q 122.5,145 100,145 Q 55,122.5 55,100 Q 77.5,55 100,55"/>
+  <!-- Energy particles -->
+  <g opacity="0.7">
+    <circle r="2" fill="url(#accentBold)">
+      <animateMotion dur="6s" repeatCount="indefinite">
+        <path d="M 100,40 Q 140,70 170,100 Q 140,130 100,160 Q 60,130 30,100 Q 60,70 100,40"/>
       </animateMotion>
-      <animate attributeName="opacity" values="0;0.8;0" dur="8s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0;1;0" dur="6s" repeatCount="indefinite"/>
+    </circle>
+    <circle r="1.5" fill="url(#primaryBold)">
+      <animateMotion dur="8s" repeatCount="indefinite" begin="2s">
+        <path d="M 30,100 Q 60,60 100,40 Q 140,60 170,100 Q 140,140 100,160 Q 60,140 30,100"/>
+      </animateMotion>
+      <animate attributeName="opacity" values="0;0.8;0" dur="8s" repeatCount="indefinite" begin="2s"/>
+    </circle>
+    <circle r="1" fill="url(#energyGlow)">
+      <animateMotion dur="10s" repeatCount="indefinite" begin="4s">
+        <path d="M 100,160 Q 60,140 30,100 Q 60,60 100,40 Q 140,60 170,100 Q 140,140 100,160"/>
+      </animateMotion>
+      <animate attributeName="opacity" values="0;0.6;0" dur="10s" repeatCount="indefinite" begin="4s"/>
     </circle>
   </g>
 </svg>
