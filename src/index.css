@@ -5,70 +5,35 @@
 @layer base {
   body {
     @apply bg-white dark:bg-gpt-gray-800 text-gray-900 dark:text-gray-100;
-    font-family: "Söhne", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", 
-                 "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", 
-                 sans-serif;
+    font-family: "Söhne", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif;
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
   }
 }
 
 @layer components {
-  /* Enhanced progress animation */
 @keyframes progress {
-  0% {
-    transform: translateX(-100%);
-  }
-  50% {
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(100%);
-  }
+  0% { transform: translateX(-100%); }
+  50% { transform: translateX(0%); }
+  100% { transform: translateX(100%); }
 }
 
-/* Enhanced gradient animation */
 @keyframes gradient-shift {
-  0%, 100% {
-    transform: translateX(-100%) translateY(-100%) rotate(0deg);
-  }
-  50% {
-    transform: translateX(100%) translateY(100%) rotate(180deg);
-  }
+  0%, 100% { transform: translateX(-100%) translateY(-100%) rotate(0deg); }
+  50% { transform: translateX(100%) translateY(100%) rotate(180deg); }
 }
 
-/* Message container animation */
 @keyframes message-fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(20px) scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+  from { opacity: 0; transform: translateY(20px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-/* Bounce in animation */
 @keyframes bounce-in {
-  0% {
-    opacity: 0;
-    transform: scale(0.3) translateY(-100px);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.05) translateY(0);
-  }
-  70% {
-    transform: scale(0.9);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
+  0% { opacity: 0; transform: scale(0.3) translateY(-100px); }
+  50% { opacity: 1; transform: scale(1.05) translateY(0); }
+  70% { transform: scale(0.9); }
+  100% { opacity: 1; transform: scale(1); }
 }
 
-/* Custom scrollbar */
 .custom-scrollbar {
   scrollbar-width: thin;
   scrollbar-color: rgba(156, 163, 175, 0.5) transparent;
@@ -91,7 +56,6 @@
   background: rgba(156, 163, 175, 0.7);
 }
 
-/* Dark theme scrollbar */
 .dark .custom-scrollbar {
   scrollbar-color: rgba(75, 85, 99, 0.5) transparent;
 }
@@ -580,6 +544,39 @@
   /* Instant feedback for touches */
   .touch-manipulation {
     touch-action: manipulation;
+  }
+
+  /* Typewriter effect for streaming messages */
+  .typewriter-cursor::after {
+    content: '|';
+    animation: typewriter-blink 1s infinite;
+    color: #3b82f6;
+    margin-left: 2px;
+  }
+
+  @keyframes typewriter-blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+  }
+
+  /* Smooth streaming text animation */
+  .streaming-text {
+    animation: streaming-glow 2s ease-in-out infinite;
+  }
+
+  @keyframes streaming-glow {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+  }
+
+  /* Performance optimizations */
+  .message-container {
+    transform: translateZ(0);
+    will-change: transform, opacity;
+  }
+
+  .prose {
+    transform: translateZ(0);
   }
 }
 

@@ -27,9 +27,17 @@ interface MessageProps {
   onEdit?: (messageId: string, newContent: string) => void;
   onDelete?: (messageId: string) => void;
   onReaction?: (messageId: string, reaction: string) => void;
+  isStreaming?: boolean;
 }
 
-export default function MessageComponent({ message, onRegenerate, onEdit, onDelete, onReaction }: MessageProps) {
+export default function MessageComponent({ 
+  message, 
+  onRegenerate, 
+  onEdit, 
+  onDelete, 
+  onReaction,
+  isStreaming = false
+}: MessageProps) {
   const { state } = useChat();
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -89,8 +97,6 @@ export default function MessageComponent({ message, onRegenerate, onEdit, onDele
         userContext,
         responseTime
       );
-      
-      console.log(`💫 Learning from ${newReaction} reaction on AI response (${responseTime}ms response time)`);
     }
   };
 
@@ -233,7 +239,7 @@ export default function MessageComponent({ message, onRegenerate, onEdit, onDele
                   </div>
                 </div>
               ) : (
-                <div className={`prose prose-sm max-w-none ${isUser ? 'prose-cyan dark:prose-invert' : 'prose-gray dark:prose-invert'}`}>
+                <div className={`prose prose-sm max-w-none ${isUser ? 'prose-cyan dark:prose-invert' : 'prose-gray dark:prose-invert'} ${isStreaming ? 'streaming-text typewriter-cursor' : ''}`}>
                   <ReactMarkdown
                     components={{
                       code: CodeBlock,

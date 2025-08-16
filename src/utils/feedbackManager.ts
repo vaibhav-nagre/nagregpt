@@ -33,7 +33,6 @@ export class FeedbackManager {
 
     try {
       localStorage.setItem(this.STORAGE_KEY, JSON.stringify(updatedFeedback));
-      console.log(`📝 Stored ${reaction} feedback for message`, messageId);
       
       await GlobalLearningSystem.submitGlobalFeedback(
         messageId,
@@ -121,7 +120,6 @@ export class FeedbackManager {
     
     try {
       localStorage.setItem(this.STORAGE_KEY, JSON.stringify(recentFeedback));
-      console.log(`🧹 Cleaned up old feedback, kept ${recentFeedback.length} recent items`);
     } catch (error) {
       console.error('Failed to clean up feedback:', error);
     }

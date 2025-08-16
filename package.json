@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "NagreGPT - A ChatGPT clone powered by Groq's Llama models",
+  "description": "NagreGPT - Premium AI Chat Application with Latest Models (Llama 3.3 70B, Gemini, Mixtral) - Free & No Token Limits",
   "author": "Vaibhav Nagre",
   "homepage": "https://vaibhav-nagre.github.io/nagregpt/",
   "repository": {

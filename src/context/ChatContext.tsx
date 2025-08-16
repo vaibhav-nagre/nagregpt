@@ -286,9 +286,6 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
     const targetConversationId = conversationId || state.currentConversationId;
     if (!targetConversationId) return;
     
-    console.log('🔄 Updating last message in conversation:', targetConversationId);
-    console.log('📝 New content:', content.substring(0, 100) + '...');
-    
     dispatch({
       type: 'UPDATE_LAST_MESSAGE',
       payload: { conversationId: targetConversationId, content },

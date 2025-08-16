@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useChat } from '../context/ChatContext';
 import MessageComponent from './Message';
 import EnhancedChatInput from './EnhancedChatInput';
-import { groqAPI, convertToGroqMessages } from '../services/groqAPI';
+import { latest2025AI, convertToMessages } from '../services/latest2025AI';
 import { FileProcessor } from '../utils/fileProcessor';
 import type { FileAnalysis } from '../utils/fileProcessor';
 import logoSvg from '/logo.svg';
@@ -15,6 +15,7 @@ export default function Chat() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [currentStreamingMessage, setCurrentStreamingMessage] = useState<string>('');
   const [abortController, setAbortController] = useState<AbortController | null>(null);
+  const [isCurrentlyStreaming, setIsCurrentlyStreaming] = useState<boolean>(false);
   const redirectingRef = useRef(false);
 
   const isMobile = () => {
@@ -69,30 +70,24 @@ export default function Chat() {
   }, [currentConversation?.messages, currentStreamingMessage]);
 
   const handleSendMessage = async (content: string, files?: File[]) => {
-    console.log('🚀 Sending message:', content, 'Files:', files?.length || 0);
     
     let conversationId = state.currentConversationId;
     if (!conversationId) {
       conversationId = createNewConversation();
-      console.log('📝 Created new conversation:', conversationId);
       navigate(`/chat/${conversationId}`, { replace: true });
     }
 
     let processedContent = content;
     if (files && files.length > 0) {
-      console.log('📁 Processing attached files...');
       try {
         const fileAnalyses: FileAnalysis[] = [];
         
         for (const file of files) {
-          console.log(`📄 Processing file: ${file.name}`);
           const analysis = await FileProcessor.processFile(file);
           fileAnalyses.push(analysis);
         }
 
         processedContent = FileProcessor.createFileAnalysisPrompt(content, fileAnalyses);
-        console.log('✅ Files processed successfully');
-        console.log('📝 Enhanced prompt length:', processedContent.length);
       } catch (error) {
         console.error('❌ Error processing files:', error);
         processedContent = `${content}\n\n[Note: Error processing attached files. Please describe the files manually.]`;
@@ -100,19 +95,16 @@ export default function Chat() {
     }
 
     addMessage({ content, role: 'user', files }, conversationId);
-    console.log('✅ Added user message');
 
     addMessage({ 
       content: '', 
       role: 'assistant',
       isTyping: true 
     }, conversationId);
-    console.log('⏳ Added typing indicator');
 
-    setLoading(true);
-    setCurrentStreamingMessage('');
-
-    const controller = new AbortController();
+      setLoading(true);
+      setIsCurrentlyStreaming(true);
+      setCurrentStreamingMessage('');    const controller = new AbortController();
     setAbortController(controller);
 
     try {
@@ -126,32 +118,34 @@ export default function Chat() {
         { role: 'user' as const, content: processedContent }
       ];
       
-      const messages = convertToGroqMessages(allMessages);
-
-      console.log('🔄 Calling Groq API with full conversation history');
-      console.log('📝 Messages count:', messages.length);
-      console.log('📝 Latest message preview:', processedContent.substring(0, 100) + '...');
+      const messages = convertToMessages(allMessages);
 
       let fullResponse = '';
+      let lastUpdateTime = 0;
+      const UPDATE_INTERVAL = 100; // Update UI every 100ms to reduce lag
 
-      const result = await groqAPI.sendMessage(
+      const result = await latest2025AI.sendMessage(
         messages,
-        'llama-3.1-8b-instant',
         (chunk: string) => {
-          console.log('📦 Received chunk:', chunk);
           if (controller.signal.aborted) return;
           
           fullResponse += chunk;
-          setCurrentStreamingMessage(fullResponse);
-          updateLastMessage(fullResponse, conversationId);
+          
+          // Throttle UI updates to prevent lag
+          const now = Date.now();
+          if (now - lastUpdateTime > UPDATE_INTERVAL) {
+            setCurrentStreamingMessage(fullResponse);
+            // Use requestAnimationFrame for smooth updates
+            requestAnimationFrame(() => {
+              updateLastMessage(fullResponse, conversationId);
+            });
+            lastUpdateTime = now;
+          }
         }
       );
 
-      console.log('✅ API call successful');
-      console.log('📄 Final response:', result);
-      console.log('📏 Response length:', result.length);
-
-      updateLastMessage(result || fullResponse, conversationId);
+      updateLastMessage(result.content || fullResponse, conversationId);
+      setIsCurrentlyStreaming(false);
       
     } catch (error) {
       console.error('❌ Error sending message:', error);
@@ -175,9 +169,9 @@ export default function Chat() {
       updateLastMessage(errorMessage, conversationId);
     } finally {
       setLoading(false);
+      setIsCurrentlyStreaming(false);
       setCurrentStreamingMessage('');
       setAbortController(null);
-      console.log('🔚 Message handling complete');
     }
   };
 
@@ -186,6 +180,7 @@ export default function Chat() {
       abortController.abort();
       setAbortController(null);
       setLoading(false);
+      setIsCurrentlyStreaming(false);
       setCurrentStreamingMessage('');
       
       if (currentConversation?.messages.length) {
@@ -261,10 +256,7 @@ export default function Chat() {
               screenSize === 'sm' ? 'text-base mb-5' :
               isMobileDevice ? 'text-base mb-6' : 'text-xl mb-12'
             } text-gray-600 dark:text-gray-400 animate-slide-in-right leading-relaxed`}>
-              Your AI assistant powered by{' '}
-              <span className="font-semibold text-gpt-green-500">Groq's lightning-fast</span>{' '}
-              Llama models. {!isMobileDevice && 'Ask anything, and let\'s start creating together! ✨'}
-              {isMobileDevice && 'Start chatting! ✨'}
+              Your AI assistant powered by the latest available models. Experience advanced AI capabilities for free! ✨
             </p>
             
             
@@ -296,10 +288,10 @@ export default function Chat() {
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
               {[
-                { icon: '💡', title: 'Creative Writing', desc: '' },
-                { icon: '🔧', title: 'Code Assistant', desc: '' },
-                { icon: '📚', title: 'Learning Helper', desc: '' },
-                { icon: '✨', title: 'General Chat', desc: '' },
+                { icon: '�', title: 'Latest AI Model', desc: '' },
+                { icon: '⚡', title: 'Lightning Fast', desc: '' },
+                { icon: '🆓', title: 'Completely Free', desc: '' },
+                { icon: '🧠', title: 'Most Capable', desc: '' },
               ].map((feature, index) => (
                 <div 
                   key={feature.title}
@@ -322,10 +314,10 @@ export default function Chat() {
                 
                 <div className="mb-8">
                   <button
-                    onClick={() => handleSendMessage("Say hello and tell me you're working!")}
-                    className="px-6 py-3 bg-gray-500 text-white rounded-xl font-medium hover:bg-gray-600 transition-colors duration-200 mr-4"
+                    onClick={() => handleSendMessage("Hello NagreGPT, can you say hello and tell me you are working successfully?")}
+                    className="px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-xl font-medium hover:from-purple-700 hover:to-blue-700 transition-colors duration-200"
                   >
-                    🧪 Test API Connection
+                    � Test Connection
                   </button>
                 </div>
 
@@ -361,6 +353,7 @@ export default function Chat() {
   return (
     <div className="flex-1 flex flex-col h-full min-h-0">
       
+      {/* Messages Container */}
       <div className="flex-1 overflow-y-auto px-1 sm:px-2 md:px-4 py-1 sm:py-2 md:py-4 space-y-1 sm:space-y-2 scroll-smooth max-w-4xl mx-auto w-full scrollbar-hide overscroll-contain">
         
         <div className="fixed inset-0 pointer-events-none">
@@ -401,24 +394,30 @@ export default function Chat() {
           </div>
         )}
         
-        {currentConversation.messages.map((message, index) => (
-          <div
-            key={message.id}
-            className="animate-fade-in-up message-container"
-            style={{ 
-              animationDelay: `${Math.min(index * 0.1, 0.5)}s`,
-              animationFillMode: 'both'
-            }}
-          >
-            <MessageComponent 
-              message={message}
-              onRegenerate={message.role === 'assistant' ? handleRegenerate : undefined}
-              onEdit={editMessage}
-              onDelete={deleteMessage}
-              onReaction={addReaction}
-            />
-          </div>
-        ))}
+          {currentConversation.messages.map((message, index) => {
+            const isLastMessage = index === currentConversation.messages.length - 1;
+            const isStreamingMessage = isCurrentlyStreaming && isLastMessage && message.role === 'assistant';
+            
+            return (
+              <div
+                key={message.id}
+                className="animate-fade-in-up message-container"
+                style={{ 
+                  animationDelay: `${Math.min(index * 0.1, 0.5)}s`,
+                  animationFillMode: 'both'
+                }}
+              >
+                <MessageComponent 
+                  message={message}
+                  onRegenerate={message.role === 'assistant' ? handleRegenerate : undefined}
+                  onEdit={editMessage}
+                  onDelete={deleteMessage}
+                  onReaction={addReaction}
+                  isStreaming={isStreamingMessage}
+                />
+              </div>
+            );
+          })}
         
         
         <div ref={messagesEndRef} className="h-1" />

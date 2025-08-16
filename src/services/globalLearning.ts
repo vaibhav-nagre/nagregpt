@@ -67,13 +67,10 @@ export class GlobalLearningSystem {
      
       await this.sendToGitHubIssues(feedback);
       
-     
       await this.sendToWebhook(feedback);
       
-      console.log('🌍 Global feedback submitted successfully');
     } catch (error) {
       console.error('Failed to submit global feedback:', error);
-     
       this.storeLocallyForLaterSync(feedback);
     }
   }
@@ -214,8 +211,7 @@ ${this.generateLearningSuggestions(feedback)}
     try {
       const pending = JSON.parse(localStorage.getItem(pendingKey) || '[]');
       pending.push(feedback);
-      localStorage.setItem(pendingKey, JSON.stringify(pending.slice(-20))); // Keep last 20
-      console.log('📱 Stored feedback locally for later sync');
+      localStorage.setItem(pendingKey, JSON.stringify(pending.slice(-20)));
     } catch (error) {
       console.error('Failed to store pending feedback:', error);
     }
@@ -228,8 +224,6 @@ ${this.generateLearningSuggestions(feedback)}
       const pending = JSON.parse(localStorage.getItem(pendingKey) || '[]');
       if (pending.length === 0) return;
 
-      console.log(`🔄 Syncing ${pending.length} pending feedback items...`);
-
       for (const feedback of pending) {
         try {
           await this.sendToFirebase(feedback);
@@ -241,7 +235,6 @@ ${this.generateLearningSuggestions(feedback)}
 
       // Clear synced items
       localStorage.removeItem(pendingKey);
-      console.log('✅ Pending feedback synced successfully');
     } catch (error) {
       console.error('Failed to sync pending feedback:', error);
     }
