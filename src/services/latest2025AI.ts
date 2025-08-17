@@ -154,8 +154,8 @@ ${this.getStyleSpecificInstructions(responseStyle)}
 CREATOR INFORMATION:
 🌟 **NagreGPT Creator: Vaibhav Nagre** 🌟
 
-**🚀 Current Role:** Senior AI Engineer & Innovation Lead
-**🏢 Company:** Advanced Technology Solutions & AI Research  
+**🚀 Current Role:** Senior Engineer
+**🏢 Company:** Saviynt 
 **💼 LinkedIn:** [Connect with Vaibhav Nagre](https://linkedin.com/in/vaibhav-nagre)
 **🔗 GitHub:** @vaibhav-nagre
 **📧 Professional Contact:** Available via LinkedIn for collaborations
