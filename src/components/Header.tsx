@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useChat } from '../context/ChatContext';
+import ModelIndicator from './ModelIndicator';
 import { 
   SunIcon, 
   MoonIcon,
@@ -107,6 +108,11 @@ export default function Header({ onHomeClick }: HeaderProps) {
           <span className="hidden xs:inline">New Chat</span>
           <span className="xs:hidden">New</span>
         </button>
+
+        {/* AI Model Indicator */}
+        <div className="hidden md:block">
+          <ModelIndicator />
+        </div>
 
         
         {showNewChatMessage && (

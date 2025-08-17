@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useChat } from '../context/ChatContext';
 import MessageComponent from './Message';
 import EnhancedChatInput from './EnhancedChatInput';
+import ModelIndicator from './ModelIndicator';
 import { latest2025AI, convertToMessages } from '../services/latest2025AI';
 import { FileProcessor } from '../utils/fileProcessor';
 import type { FileAnalysis } from '../utils/fileProcessor';
@@ -68,6 +69,9 @@ export default function Chat() {
   useEffect(() => {
     scrollToBottom();
   }, [currentConversation?.messages, currentStreamingMessage]);
+
+  // Get current model info on component mount
+  // Model info is now handled by ModelIndicator component
 
   const handleSendMessage = async (content: string, files?: File[]) => {
     
@@ -422,6 +426,9 @@ export default function Chat() {
         
         <div ref={messagesEndRef} className="h-1" />
       </div>
+
+      {/* AI Model Indicator */}
+      <ModelIndicator />
 
       
       <EnhancedChatInput 
