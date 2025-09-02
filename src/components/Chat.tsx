@@ -4,19 +4,34 @@ import { useChat } from '../context/ChatContext';
 import MessageComponent from './Message';
 import EnhancedChatInput from './EnhancedChatInput';
 import ModelIndicator from './ModelIndicator';
-import { latest2025AI, convertToMessages } from '../services/latest2025AI';
+import ConsensusIndicator from './ConsensusIndicator';
+import { IntelligenceDashboard } from './IntelligenceDashboard';
+import { multiModelAPI } from '../services/multiModelAPI';
 import { FileProcessor } from '../utils/fileProcessor';
 import type { FileAnalysis } from '../utils/fileProcessor';
+import { SecurityGuard } from '../utils/securityGuard';
+import type { SecurityAnalysis } from '../utils/securityGuard';
 import logoSvg from '/logo.svg';
 
 export default function Chat() {
   const { conversationId } = useParams<{ conversationId?: string }>();
   const navigate = useNavigate();
-  const { state, addMessage, updateLastMessage, setLoading, createNewConversation, switchConversation, clearCurrentConversation, editMessage, deleteMessage, addReaction } = useChat();
+  const { state, addMessage, updateLastMessage, setLoading, createNewConversation, switchConversation, clearCurrentConversation, editMessage, deleteMessage } = useChat();
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [currentStreamingMessage, setCurrentStreamingMessage] = useState<string>('');
   const [abortController, setAbortController] = useState<AbortController | null>(null);
   const [isCurrentlyStreaming, setIsCurrentlyStreaming] = useState<boolean>(false);
+  const [processingStep, setProcessingStep] = useState<string>('');
+  const [processingProgress, setProcessingProgress] = useState<number>(0);
+  const [userId] = useState<string>(() => {
+    // Generate or retrieve user ID for personalization
+    const stored = localStorage.getItem('nagregpt_user_id');
+    if (stored) return stored;
+    const newId = `user_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    localStorage.setItem('nagregpt_user_id', newId);
+    return newId;
+  });
+  const [showIntelligenceDashboard, setShowIntelligenceDashboard] = useState<boolean>(false);
   const redirectingRef = useRef(false);
 
   const isMobile = () => {
@@ -81,7 +96,41 @@ export default function Chat() {
       navigate(`/chat/${conversationId}`, { replace: true });
     }
 
-    let processedContent = content;
+    // 🛡️ SECURITY ANALYSIS - Protect against manipulation
+    const securityAnalysis: SecurityAnalysis = SecurityGuard.analyzeInput(content, {
+      previousMessages: currentConversation?.messages.map(m => m.content),
+      fileUploads: files && files.length > 0
+    });
+
+    // If input is too risky, block it entirely
+    if (SecurityGuard.shouldBlockResponse(securityAnalysis)) {
+      const secureResponse = SecurityGuard.generateSecureResponse(securityAnalysis, content);
+      
+      addMessage({ content, role: 'user' }, conversationId);
+      addMessage({ 
+        content: secureResponse, 
+        role: 'assistant',
+        metadata: { 
+          securityBlocked: true, 
+          riskScore: securityAnalysis.riskScore,
+          threatCount: securityAnalysis.threats.length 
+        }
+      }, conversationId);
+      
+      return;
+    }
+
+    // Use sanitized input if security issues were detected
+    let processedContent = securityAnalysis.isSafe ? content : securityAnalysis.sanitizedInput;
+    
+    // Add security notice if manipulation was detected
+    if (!securityAnalysis.isSafe) {
+      const securityNotice = SecurityGuard.generateSecureResponse(securityAnalysis, content);
+      if (securityNotice) {
+        processedContent = `${processedContent}\n\n[Security Note: ${securityNotice}]`;
+      }
+    }
+
     if (files && files.length > 0) {
       try {
         const fileAnalyses: FileAnalysis[] = [];
@@ -91,10 +140,10 @@ export default function Chat() {
           fileAnalyses.push(analysis);
         }
 
-        processedContent = FileProcessor.createFileAnalysisPrompt(content, fileAnalyses);
+        processedContent = FileProcessor.createFileAnalysisPrompt(processedContent, fileAnalyses);
       } catch (error) {
         console.error('❌ Error processing files:', error);
-        processedContent = `${content}\n\n[Note: Error processing attached files. Please describe the files manually.]`;
+        processedContent = `${processedContent}\n\n[Note: Error processing attached files. Please describe the files manually.]`;
       }
     }
 
@@ -106,6 +155,23 @@ export default function Chat() {
       isTyping: true 
     }, conversationId);
 
+    // Check for specific greeting message
+    const normalizedContent = content.toLowerCase().trim();
+    if (normalizedContent.includes('hello nagregpt') && 
+        normalizedContent.includes('working successfully')) {
+      
+      const customResponse = "Hello! 👋 Yes, NagreGPT is working successfully! I'm an advanced AI assistant created by Vaibhav Nagre, powered by multiple LLM providers including DeepSeek, Groq, and Gemini. Ready to assist you!";
+      
+      // Simulate typing delay
+      setTimeout(() => {
+        updateLastMessage(customResponse, conversationId);
+        setLoading(false);
+        setIsCurrentlyStreaming(false);
+      }, 1000);
+      
+      return;
+    }
+
       setLoading(true);
       setIsCurrentlyStreaming(true);
       setCurrentStreamingMessage('');    const controller = new AbortController();
@@ -115,21 +181,28 @@ export default function Chat() {
       const conversationHistory = currentConversation?.messages || [];
       const historyMessages = conversationHistory
         .filter(msg => !msg.isTyping)
-        .map(msg => ({ role: msg.role, content: msg.content }));
+        .map(msg => ({ 
+          id: msg.id,
+          role: msg.role, 
+          content: msg.content,
+          timestamp: msg.timestamp
+        }));
       
-      const allMessages = [
-        ...historyMessages,
-        { role: 'user' as const, content: processedContent }
-      ];
+      const newUserMessage = {
+        id: `msg-${Date.now()}`,
+        role: 'user' as const,
+        content: processedContent,
+        timestamp: new Date()
+      };
       
-      const messages = convertToMessages(allMessages);
+      const allMessages = [...historyMessages, newUserMessage];
 
       let fullResponse = '';
       let lastUpdateTime = 0;
       const UPDATE_INTERVAL = 100; // Update UI every 100ms to reduce lag
 
-      const result = await latest2025AI.sendMessage(
-        messages,
+      const result = await multiModelAPI.sendMessage(
+        allMessages,
         (chunk: string) => {
           if (controller.signal.aborted) return;
           
@@ -145,10 +218,15 @@ export default function Chat() {
             });
             lastUpdateTime = now;
           }
-        }
+        },
+        (step: string, progress: number) => {
+          setProcessingStep(step);
+          setProcessingProgress(progress);
+        },
+        userId // Pass user ID for personalization
       );
 
-      updateLastMessage(result.content || fullResponse, conversationId);
+      updateLastMessage(result.content || fullResponse, conversationId, result.model);
       setIsCurrentlyStreaming(false);
       
     } catch (error) {
@@ -416,7 +494,6 @@ export default function Chat() {
                   onRegenerate={message.role === 'assistant' ? handleRegenerate : undefined}
                   onEdit={editMessage}
                   onDelete={deleteMessage}
-                  onReaction={addReaction}
                   isStreaming={isStreamingMessage}
                 />
               </div>
@@ -427,8 +504,36 @@ export default function Chat() {
         <div ref={messagesEndRef} className="h-1" />
       </div>
 
-      {/* AI Model Indicator */}
+      {/* AI Model Indicator - Only visible on chat screen */}
       <ModelIndicator />
+
+      {/* Consensus Processing Indicator */}
+      <ConsensusIndicator 
+        step={processingStep}
+        progress={processingProgress}
+        isVisible={isCurrentlyStreaming && processingProgress > 0 && processingProgress < 100}
+      />
+
+      {/* Control Buttons */}
+      <div className="fixed bottom-20 right-4 flex flex-col space-y-2 z-40">
+        {/* Intelligence Dashboard Button */}
+        <button
+          onClick={() => setShowIntelligenceDashboard(true)}
+          className="bg-gradient-to-r from-purple-600 to-pink-600 text-white p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 group"
+          title="Intelligence Dashboard"
+        >
+          <svg className="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+          </svg>
+        </button>
+      </div>
+
+      {/* Intelligence Dashboard Modal */}
+      <IntelligenceDashboard 
+        isOpen={showIntelligenceDashboard}
+        onClose={() => setShowIntelligenceDashboard(false)}
+        userId={userId}
+      />
 
       
       <EnhancedChatInput 

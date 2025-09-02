@@ -1,12 +1,20 @@
 export interface Message {
   id: string;
   content: string;
-  role: 'user' | 'assistant';
+  role: 'user' | 'assistant' | 'system';
   timestamp: Date;
   isTyping?: boolean;
   edited?: boolean;
   reactions?: string[];
   files?: File[];
+  model?: string;
+  metadata?: {
+    securityBlocked?: boolean;
+    riskScore?: number;
+    threatCount?: number;
+    securityAnalysis?: any;
+    [key: string]: any;
+  };
 }
 
 export interface Conversation {

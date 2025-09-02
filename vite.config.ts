@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: '/nagregpt/', // Replace with your GitHub repository name
+  base: process.env.NODE_ENV === 'production' ? '/nagregpt/' : '/', // Use root in dev, /nagregpt/ in production
   build: {
     outDir: 'dist',
     sourcemap: false,

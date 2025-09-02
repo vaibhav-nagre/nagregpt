@@ -8,7 +8,7 @@ interface ChatContextType {
   switchConversation: (id: string) => void;
   clearCurrentConversation: () => void;
   addMessage: (message: Omit<Message, 'id' | 'timestamp'>, conversationId?: string) => void;
-  updateLastMessage: (content: string, conversationId?: string) => void;
+  updateLastMessage: (content: string, conversationId?: string, model?: string) => void;
   editMessage: (messageId: string, newContent: string, conversationId?: string) => void;
   deleteMessage: (messageId: string, conversationId?: string) => void;
   addReaction: (messageId: string, reaction: string, conversationId?: string) => void;
@@ -22,7 +22,7 @@ type ChatAction =
   | { type: 'SWITCH_CONVERSATION'; payload: string }
   | { type: 'CLEAR_CURRENT_CONVERSATION' }
   | { type: 'ADD_MESSAGE'; payload: { conversationId: string; message: Message } }
-  | { type: 'UPDATE_LAST_MESSAGE'; payload: { conversationId: string; content: string } }
+  | { type: 'UPDATE_LAST_MESSAGE'; payload: { conversationId: string; content: string; model?: string } }
   | { type: 'EDIT_MESSAGE'; payload: { conversationId: string; messageId: string; content: string } }
   | { type: 'DELETE_MESSAGE'; payload: { conversationId: string; messageId: string } }
   | { type: 'ADD_REACTION'; payload: { conversationId: string; messageId: string; reaction: string } }
@@ -83,7 +83,7 @@ function chatReducer(state: ChatState, action: ChatAction): ChatState {
                 ...conv,
                 messages: conv.messages.map((msg, index) =>
                   index === conv.messages.length - 1
-                    ? { ...msg, content: action.payload.content, isTyping: false }
+                    ? { ...msg, content: action.payload.content, isTyping: false, ...(action.payload.model && { model: action.payload.model }) }
                     : msg
                 ),
                 updatedAt: new Date(),
@@ -282,13 +282,13 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const updateLastMessage = (content: string, conversationId?: string) => {
+  const updateLastMessage = (content: string, conversationId?: string, model?: string) => {
     const targetConversationId = conversationId || state.currentConversationId;
     if (!targetConversationId) return;
     
     dispatch({
       type: 'UPDATE_LAST_MESSAGE',
-      payload: { conversationId: targetConversationId, content },
+      payload: { conversationId: targetConversationId, content, model },
     });
   };
 

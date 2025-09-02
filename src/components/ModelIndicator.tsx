@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { latest2025AI } from '../services/latest2025AI';
+import { multiModelAPI } from '../services/multiModelAPI';
 import type { ModelInfo } from '../services/latest2025AI';
 import { CpuChipIcon } from '@heroicons/react/24/outline';
 
@@ -11,10 +12,15 @@ interface ModelIndicatorProps {
 export default function ModelIndicator({ variant = 'floating', className = '' }: ModelIndicatorProps) {
   const [currentModel, setCurrentModel] = useState<ModelInfo | null>(null);
   const [showTooltip, setShowTooltip] = useState(false);
+  const [consensusStatus, setConsensusStatus] = useState<any>(null);
 
   useEffect(() => {
     const modelInfo = latest2025AI.getBestModel();
     setCurrentModel(modelInfo);
+    
+    // Get consensus status
+    const status = multiModelAPI.getStatus();
+    setConsensusStatus(status);
   }, []);
 
   if (!currentModel) return null;
@@ -49,12 +55,19 @@ export default function ModelIndicator({ variant = 'floating', className = '' }:
   };
 
   if (variant === 'header') {
+    const isConsensusMode = consensusStatus?.consensusEnabled && consensusStatus?.consensusAvailable;
+    
     return (
-      <div className={`hidden md:flex items-center space-x-1 px-2 sm:px-3 py-1.5 sm:py-2 rounded-xl bg-gradient-to-r ${getProviderColor(currentModel.provider)}/10 border border-current/20 ${className}`}>
-        <div className={`w-2 h-2 bg-gradient-to-r ${getProviderColor(currentModel.provider)} rounded-full animate-pulse`}></div>
-        <span className={`text-xs font-medium bg-gradient-to-r ${getProviderColor(currentModel.provider)} bg-clip-text text-transparent`}>
-          {currentModel.name}
+      <div className={`hidden md:flex items-center space-x-1 px-2 sm:px-3 py-1.5 sm:py-2 rounded-xl bg-gradient-to-r ${isConsensusMode ? 'from-purple-500/10 to-blue-500/10' : getProviderColor(currentModel.provider) + '/10'} border border-current/20 ${className}`}>
+        <div className={`w-2 h-2 bg-gradient-to-r ${isConsensusMode ? 'from-purple-500 to-blue-500' : getProviderColor(currentModel.provider)} rounded-full animate-pulse`}></div>
+        <span className={`text-xs font-medium bg-gradient-to-r ${isConsensusMode ? 'from-purple-500 to-blue-500' : getProviderColor(currentModel.provider)} bg-clip-text text-transparent`}>
+          {isConsensusMode ? '🧠 Consensus AI' : currentModel.name}
         </span>
+        {isConsensusMode && (
+          <span className="text-xs text-gray-500 dark:text-gray-400">
+            ({consensusStatus.availableProviders.length} models)
+          </span>
+        )}
       </div>
     );
   }
@@ -101,6 +114,8 @@ export default function ModelIndicator({ variant = 'floating', className = '' }:
   }
 
   // Default floating variant
+  const isConsensusMode = consensusStatus?.consensusEnabled && consensusStatus?.consensusAvailable;
+  
   return (
     <div 
       className={`fixed bottom-20 right-4 sm:bottom-24 sm:right-6 z-10 ${className}`}
@@ -109,28 +124,48 @@ export default function ModelIndicator({ variant = 'floating', className = '' }:
     >
       <div className="bg-white/90 dark:bg-gpt-gray-800/90 backdrop-blur-md border border-gray-200/50 dark:border-gpt-gray-600/50 rounded-lg px-3 py-2 shadow-lg hover:shadow-xl transition-all duration-200 group cursor-pointer">
         <div className="flex items-center space-x-2">
-          <div className={`w-2 h-2 bg-gradient-to-r ${getProviderColor(currentModel.provider)} rounded-full animate-pulse`}></div>
+          <div className={`w-2 h-2 bg-gradient-to-r ${isConsensusMode ? 'from-purple-500 to-blue-500' : getProviderColor(currentModel.provider)} rounded-full animate-pulse`}></div>
           <div className="text-xs font-medium text-gray-700 dark:text-gray-300">
-            <span className="text-gray-500 dark:text-gray-400">AI:</span> {currentModel.name}
+            <span className="text-gray-500 dark:text-gray-400">AI:</span> {isConsensusMode ? 'Consensus' : currentModel.name}
           </div>
-          <span className="text-xs">{getPerformanceIcon(currentModel.performance)}</span>
+          <span className="text-xs">{isConsensusMode ? '🧠' : getPerformanceIcon(currentModel.performance)}</span>
         </div>
         
         {showTooltip && (
-          <div className="absolute bottom-full right-0 mb-2 w-48 p-3 bg-white dark:bg-gpt-gray-800 border border-gray-200 dark:border-gpt-gray-600 rounded-lg shadow-lg animate-slide-in-up">
-            <div className="text-xs font-medium text-gray-900 dark:text-white mb-2">
-              {currentModel.name}
-            </div>
-            <div className="space-y-1 text-xs text-gray-600 dark:text-gray-400">
-              <div>Provider: {currentModel.provider}</div>
-              <div>Performance: {currentModel.performance}</div>
-              <div>Training: {currentModel.trainingData}</div>
-            </div>
-            <div className="mt-2 pt-2 border-t border-gray-200 dark:border-gray-600">
-              <div className="text-xs text-gray-500 dark:text-gray-400">
-                Top capabilities: {currentModel.capabilities.slice(0, 2).join(', ')}
-              </div>
-            </div>
+          <div className="absolute bottom-full right-0 mb-2 w-56 p-3 bg-white dark:bg-gpt-gray-800 border border-gray-200 dark:border-gpt-gray-600 rounded-lg shadow-lg animate-slide-in-up">
+            {isConsensusMode ? (
+              <>
+                <div className="text-xs font-medium text-gray-900 dark:text-white mb-2">
+                  🧠 Consensus AI Mode
+                </div>
+                <div className="space-y-1 text-xs text-gray-600 dark:text-gray-400">
+                  <div>Active Models: {consensusStatus.availableProviders.length}</div>
+                  <div>Providers: {consensusStatus.availableProviders.join(', ')}</div>
+                  <div>Cache: {consensusStatus.cacheStats.size} entries</div>
+                </div>
+                <div className="mt-2 pt-2 border-t border-gray-200 dark:border-gray-600">
+                  <div className="text-xs text-gray-500 dark:text-gray-400">
+                    Multi-model consensus with verification pipeline
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="text-xs font-medium text-gray-900 dark:text-white mb-2">
+                  {currentModel.name}
+                </div>
+                <div className="space-y-1 text-xs text-gray-600 dark:text-gray-400">
+                  <div>Provider: {currentModel.provider}</div>
+                  <div>Performance: {currentModel.performance}</div>
+                  <div>Training: {currentModel.trainingData}</div>
+                </div>
+                <div className="mt-2 pt-2 border-t border-gray-200 dark:border-gray-600">
+                  <div className="text-xs text-gray-500 dark:text-gray-400">
+                    Top capabilities: {currentModel.capabilities.slice(0, 2).join(', ')}
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         )}
       </div>

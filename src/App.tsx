@@ -39,8 +39,11 @@ function AppContent() {
 }
 
 function App() {
+  // Use basename="/nagregpt" in production, root in development
+  const basename = import.meta.env.PROD ? "/nagregpt" : "";
+  
   return (
-    <Router basename="/nagregpt">
+    <Router basename={basename}>
       <ChatProvider>
         <AppContent />
       </ChatProvider>

@@ -6,19 +6,11 @@ import {
   ClipboardIcon, 
   CheckIcon,
   ArrowPathIcon,
-  TrashIcon,
-  HeartIcon,
-  HandThumbUpIcon,
-  HandThumbDownIcon
+  TrashIcon
 } from '@heroicons/react/24/outline';
-import { 
-  HeartIcon as HeartIconSolid,
-  HandThumbUpIcon as HandThumbUpIconSolid,
-  HandThumbDownIcon as HandThumbDownIconSolid
-} from '@heroicons/react/24/solid';
 import { useChat } from '../context/ChatContext';
 import type { Message } from '../types';
-import { FeedbackManager } from '../utils/feedbackManager';
+import SecurityIndicator from './SecurityIndicator';
 import photoJpg from '/photo.jpg';
 
 interface MessageProps {
@@ -26,7 +18,6 @@ interface MessageProps {
   onRegenerate?: () => void;
   onEdit?: (messageId: string, newContent: string) => void;
   onDelete?: (messageId: string) => void;
-  onReaction?: (messageId: string, reaction: string) => void;
   isStreaming?: boolean;
 }
 
@@ -35,14 +26,12 @@ export default function MessageComponent({
   onRegenerate, 
   onEdit, 
   onDelete, 
-  onReaction,
   isStreaming = false
 }: MessageProps) {
   const { state } = useChat();
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [editContent, setEditContent] = useState(message.content);
-  const [userReaction, setUserReaction] = useState<string | null>(null);
   
   const isUser = message.role === 'user';
   const isDark = state.theme === 'dark';
@@ -68,36 +57,6 @@ export default function MessageComponent({
       onEdit(message.id, editContent.trim());
     }
     setIsEditing(false);
-  };
-
-  const handleReaction = async (reaction: string) => {
-    const newReaction = userReaction === reaction ? null : reaction;
-    setUserReaction(newReaction);
-    onReaction?.(message.id, reaction);
-    
-    if (message.role === 'assistant' && newReaction && state.currentConversationId) {
-      const conversation = state.conversations.find(conv => conv.id === state.currentConversationId);
-      const messages = conversation?.messages || [];
-      const messageIndex = messages.findIndex((m: Message) => m.id === message.id);
-      const previousUserMessage = messages
-        .slice(0, messageIndex)
-        .reverse()
-        .find((m: Message) => m.role === 'user');
-      
-      const userContext = previousUserMessage?.content || 'No previous context';
-      
-      const responseTime = message.timestamp && previousUserMessage?.timestamp 
-        ? message.timestamp.getTime() - previousUserMessage.timestamp.getTime()
-        : undefined;
-      
-      await FeedbackManager.storeFeedback(
-        message.id,
-        message.content,
-        newReaction as 'like' | 'dislike' | 'love',
-        userContext,
-        responseTime
-      );
-    }
   };
 
   const copyToClipboard = async (text: string, id: string) => {
@@ -163,10 +122,10 @@ export default function MessageComponent({
 
   return (
     <div className={`message-fade-in group w-full ${isUser ? 'bg-transparent' : 'bg-transparent'} animate-slide-in-up`}>
-      <div className="max-w-4xl mx-auto px-2 sm:px-4 py-1 sm:py-2">
+      <div className="max-w-3xl mx-auto px-2 sm:px-3 py-0.5 sm:py-1">
         <div className={`flex ${isUser ? 'justify-end' : 'justify-start'}`}>
           <div className={`
-            max-w-[95%] sm:max-w-3xl p-2 sm:p-3 rounded-xl sm:rounded-2xl shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-1
+            max-w-[90%] sm:max-w-2xl p-1.5 sm:p-2 rounded-lg sm:rounded-xl shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-1
             ${isUser 
               ? 'bg-cyan-50/80 dark:bg-cyan-900/20 text-cyan-900 dark:text-cyan-100 border border-cyan-200/60 dark:border-cyan-700/50 backdrop-blur-sm' 
               : 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border border-gray-200 dark:border-gray-600'
@@ -174,10 +133,10 @@ export default function MessageComponent({
           `}>
             
             <div className="flex-1 min-w-0">
-              <div className="flex items-center justify-between mb-1 sm:mb-2">
-                <div className="flex items-center space-x-1 sm:space-x-2">
+              <div className="flex items-center justify-between mb-0.5 sm:mb-1">
+                <div className="flex items-center space-x-1">
                   {isUser && (
-                    <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full flex items-center justify-center overflow-hidden border-2 border-cyan-300/60 dark:border-cyan-600/50 flex-shrink-0 bg-cyan-100/70 dark:bg-cyan-800/40 backdrop-blur-sm">
+                    <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-full flex items-center justify-center overflow-hidden border-2 border-cyan-300/60 dark:border-cyan-600/50 flex-shrink-0 bg-cyan-100/70 dark:bg-cyan-800/40 backdrop-blur-sm">
                       <img 
                         src={photoJpg} 
                         alt="Vaibhav" 
@@ -191,7 +150,7 @@ export default function MessageComponent({
                     </div>
                   )}
                   {!isUser && (
-                    <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full flex items-center justify-center bg-gray-600 dark:bg-gray-500 text-white font-medium text-xs flex-shrink-0">
+                    <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-full flex items-center justify-center bg-gray-600 dark:bg-gray-500 text-white font-medium text-xs flex-shrink-0">
                       <svg className="w-2 h-2 sm:w-2.5 sm:h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                       </svg>
@@ -210,13 +169,24 @@ export default function MessageComponent({
                 )}
               </div>
               
+              {/* Security Indicator for assistant messages */}
+              {!isUser && message.metadata && (
+                <div className="mb-1">
+                  <SecurityIndicator 
+                    isSecure={!message.metadata.securityBlocked}
+                    riskScore={message.metadata.riskScore || 0}
+                    threatCount={message.metadata.threatCount || 0}
+                    className="text-xs"
+                  />
+                </div>
+              )}
               
               {isEditing ? (
-                <div className="mb-2 sm:mb-3">
+                <div className="mb-1 sm:mb-2">
                   <textarea
                     value={editContent}
                     onChange={(e) => setEditContent(e.target.value)}
-                    className="w-full p-2 sm:p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none text-sm"
+                    className="w-full p-1.5 sm:p-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none text-sm"
                     rows={3}
                     autoFocus
                   />
@@ -339,51 +309,7 @@ export default function MessageComponent({
               )}
 
               
-              {!isUser && !message.isTyping && !isEditing && (
-                <div className="flex items-center space-x-1 mt-1 sm:mt-2 mb-1">
-                  <button
-                    onClick={() => handleReaction('like')}
-                    className={`flex items-center space-x-1 px-1 sm:px-1.5 py-0.5 sm:py-1 rounded-full text-xs transition-all hover:bg-gray-200 dark:hover:bg-gray-600 ${
-                      userReaction === 'like' ? 'bg-green-100 dark:bg-green-900 text-green-600 dark:text-green-400' : 'text-gray-500 dark:text-gray-400'
-                    }`}
-                  >
-                    {userReaction === 'like' ? (
-                      <HandThumbUpIconSolid className="w-3 h-3" />
-                    ) : (
-                      <HandThumbUpIcon className="w-3 h-3" />
-                    )}
-                  </button>
-                  
-                  <button
-                    onClick={() => handleReaction('dislike')}
-                    className={`flex items-center space-x-1 px-1 sm:px-1.5 py-0.5 sm:py-1 rounded-full text-xs transition-all hover:bg-gray-200 dark:hover:bg-gray-600 ${
-                      userReaction === 'dislike' ? 'bg-red-100 dark:bg-red-900 text-red-600 dark:text-red-400' : 'text-gray-500 dark:text-gray-400'
-                    }`}
-                  >
-                    {userReaction === 'dislike' ? (
-                      <HandThumbDownIconSolid className="w-3 h-3" />
-                    ) : (
-                      <HandThumbDownIcon className="w-3 h-3" />
-                    )}
-                  </button>
-
-                  <button
-                    onClick={() => handleReaction('love')}
-                    className={`flex items-center space-x-1 px-1 sm:px-1.5 py-0.5 sm:py-1 rounded-full text-xs transition-all hover:bg-gray-200 dark:hover:bg-gray-600 ${
-                      userReaction === 'love' ? 'bg-pink-100 dark:bg-pink-900 text-pink-600 dark:text-pink-400' : 'text-gray-500 dark:text-gray-400'
-                    }`}
-                  >
-                    {userReaction === 'love' ? (
-                      <HeartIconSolid className="w-3 h-3" />
-                    ) : (
-                      <HeartIcon className="w-3 h-3" />
-                    )}
-                  </button>
-                </div>
-              )}
-
-              
-              <div className="flex items-center justify-between mt-1 sm:mt-2 opacity-100 sm:opacity-0 group-hover:opacity-100 transition-opacity">
+              <div className="flex items-center justify-between mt-0.5 sm:mt-1 opacity-100 sm:opacity-0 group-hover:opacity-100 transition-opacity">
                 <div className="flex items-center space-x-1">
                   
                   {isUser && !message.isTyping && (

@@ -8,6 +8,7 @@ import {
   XMarkIcon,
   PaperAirplaneIcon
 } from '@heroicons/react/24/outline';
+import { FileProcessor } from '../utils/fileProcessor';
 
 interface ChatInputProps {
   onSendMessage: (message: string, files?: File[]) => void;
@@ -20,6 +21,14 @@ interface AttachedFile {
   file: File;
   preview?: string;
   type: 'image' | 'document';
+  analysis?: {
+    wordCount?: number;
+    documentType?: string;
+    technicalLevel?: string;
+    confidence?: number;
+    mainTopics?: string[];
+    isProcessing?: boolean;
+  };
 }
 
 export default function EnhancedChatInput({ onSendMessage, isLoading, onStop, disabled }: ChatInputProps) {
@@ -82,11 +91,10 @@ export default function EnhancedChatInput({ onSendMessage, isLoading, onStop, di
     }
   };
 
-  const handleFileUpload = (files: FileList | null) => {
+  const handleFileUpload = async (files: FileList | null) => {
     if (!files) return;
     
-    const newFiles: AttachedFile[] = [];
-    Array.from(files).forEach(file => {
+    for (const file of Array.from(files)) {
       const isImage = file.type.startsWith('image/');
       
       let fileType: 'image' | 'document';
@@ -98,7 +106,8 @@ export default function EnhancedChatInput({ onSendMessage, isLoading, onStop, di
       
       const attachedFile: AttachedFile = {
         file,
-        type: fileType
+        type: fileType,
+        analysis: fileType === 'document' ? { isProcessing: true } : undefined
       };
       
       if (fileType === 'image') {
@@ -109,12 +118,47 @@ export default function EnhancedChatInput({ onSendMessage, isLoading, onStop, di
         };
         reader.readAsDataURL(file);
       } else {
-        newFiles.push(attachedFile);
+        // Add file immediately with processing indicator
+        setAttachedFiles(prev => [...prev, attachedFile]);
+        
+        // Perform intelligent document analysis in background
+        try {
+          const analysis = await FileProcessor.processFile(file);
+          
+          // Update file with analysis results
+          setAttachedFiles(prev => prev.map(af => {
+            if (af.file === file) {
+              return {
+                ...af,
+                analysis: {
+                  isProcessing: false,
+                  wordCount: analysis.structure?.metadata.wordCount,
+                  documentType: analysis.structure?.metadata.documentType,
+                  technicalLevel: analysis.structure?.complexity.technicalLevel,
+                  confidence: Math.round((analysis.confidence || 0) * 100),
+                  mainTopics: analysis.structure?.topics.slice(0, 3).map(t => t.topic)
+                }
+              };
+            }
+            return af;
+          }));
+        } catch (error) {
+          console.error('Document analysis failed:', error);
+          // Update with error state
+          setAttachedFiles(prev => prev.map(af => {
+            if (af.file === file) {
+              return {
+                ...af,
+                analysis: {
+                  isProcessing: false,
+                  confidence: 0
+                }
+              };
+            }
+            return af;
+          }));
+        }
       }
-    });
-    
-    if (newFiles.length > 0) {
-      setAttachedFiles(prev => [...prev, ...newFiles]);
     }
   };
 
@@ -202,8 +246,46 @@ export default function EnhancedChatInput({ onSendMessage, isLoading, onStop, di
                       {isPDF && ' • PDF'}
                       {isLogFile && ' • Log File'}
                       {isTextFile && !isLogFile && ' • Text File'}
-                      {attachedFile.type === 'image' && ' • Image'}
                     </p>
+                    
+                    {/* Advanced Analysis Display */}
+                    {attachedFile.analysis && (
+                      <div className="mt-1 text-xs">
+                        {attachedFile.analysis.isProcessing ? (
+                          <div className="flex items-center space-x-1 text-blue-600 dark:text-blue-400">
+                            <div className="w-2 h-2 bg-blue-600 dark:bg-blue-400 rounded-full animate-pulse"></div>
+                            <span>Analyzing...</span>
+                          </div>
+                        ) : (
+                          <div className="space-y-1">
+                            {attachedFile.analysis.confidence !== undefined && attachedFile.analysis.confidence > 0 && (
+                              <div className="flex items-center space-x-1">
+                                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                                <span className="text-green-600 dark:text-green-400">
+                                  Analyzed • {attachedFile.analysis.confidence}% confidence
+                                </span>
+                              </div>
+                            )}
+                            {attachedFile.analysis.wordCount && (
+                              <div className="text-gray-600 dark:text-gray-300">
+                                📊 {attachedFile.analysis.wordCount.toLocaleString()} words
+                                {attachedFile.analysis.documentType && ` • ${attachedFile.analysis.documentType}`}
+                              </div>
+                            )}
+                            {attachedFile.analysis.technicalLevel && (
+                              <div className="text-purple-600 dark:text-purple-400">
+                                🎓 {attachedFile.analysis.technicalLevel} level
+                              </div>
+                            )}
+                            {attachedFile.analysis.mainTopics && attachedFile.analysis.mainTopics.length > 0 && (
+                              <div className="text-indigo-600 dark:text-indigo-400">
+                                🏷️ {attachedFile.analysis.mainTopics.slice(0, 2).join(', ')}
+                              </div>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    )}
                   </div>
                   <button
                     onClick={() => removeFile(index)}
