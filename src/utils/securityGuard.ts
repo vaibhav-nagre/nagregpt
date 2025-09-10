@@ -187,7 +187,7 @@ export class SecurityGuard {
   /**
    * Generate intelligent anti-manipulation response
    */
-  static generateSecureResponse(analysis: SecurityAnalysis, originalInput: string): string {
+  static generateSecureResponse(analysis: SecurityAnalysis, _originalInput: string): string {
     if (analysis.isSafe) {
       return ''; // No special response needed for safe inputs
     }
@@ -395,7 +395,8 @@ export class SecurityGuard {
       
       if (input.toLowerCase().includes('as we discussed') || 
           input.toLowerCase().includes('you mentioned earlier') ||
-          input.toLowerCase().includes('previous conversation')) {
+          input.toLowerCase().includes('previous conversation') ||
+          recentMessages.includes('ignore previous instructions')) {
         
         threats.push({
           type: 'context_poisoning',

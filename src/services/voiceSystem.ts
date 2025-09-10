@@ -6,6 +6,8 @@ interface VoiceConfig {
   language: string;
 }
 
+// Voice conversation interface (not currently used but defined for future implementation)
+/*
 interface VoiceConversation {
   isListening: boolean;
   isSpeaking: boolean;
@@ -13,6 +15,7 @@ interface VoiceConversation {
   transcript: string;
   confidence: number;
 }
+*/
 
 /**
  * Advanced Voice Conversation System

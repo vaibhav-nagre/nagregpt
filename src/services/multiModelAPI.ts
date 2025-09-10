@@ -5,7 +5,6 @@ import { memorySystem } from './memorySystem';
 import { realTimeLearning } from './realTimeLearning';
 import { advancedReasoning } from './advancedReasoning';
 import { webIntegration } from './webIntegration';
-import { SecurityGuard } from '../utils/securityGuard';
 import type { Message } from '../types';
 
 export interface MultiModelResponse {

@@ -98,9 +98,12 @@ export class FileProcessor {
     '.xls', '.xlsx', '.ods', '.numbers', '.csv'
   ];
 
+  // Currently unused but kept for future presentation file support
+  /*
   private static readonly SUPPORTED_PRESENTATION_EXTENSIONS = [
     '.ppt', '.pptx', '.odp', '.key'
   ];
+  */
 
   /**
    * Process any file with advanced AI-powered analysis
@@ -277,7 +280,7 @@ export class FileProcessor {
   private static async generateIntelligentSummary(
     content: string, 
     structure: DocumentStructure,
-    filename: string
+    _filename: string
   ): Promise<IntelligentSummary> {
     
     const executiveSummary = this.generateExecutiveSummary(content, structure);
@@ -326,7 +329,7 @@ export class FileProcessor {
   /**
    * Extract key insights with AI-powered analysis
    */
-  private static extractKeyInsights(content: string, structure: DocumentStructure): string[] {
+  private static extractKeyInsights(_content: string, structure: DocumentStructure): string[] {
     const insights: string[] = [];
     
     // Topic-based insights
@@ -379,7 +382,7 @@ export class FileProcessor {
   /**
    * Generate intelligent questions
    */
-  private static generateQuestions(content: string, structure: DocumentStructure): string[] {
+  private static generateQuestions(_content: string, structure: DocumentStructure): string[] {
     const questions: string[] = [];
     
     // Topic-based questions
@@ -410,7 +413,7 @@ export class FileProcessor {
   /**
    * Generate recommendations
    */
-  private static generateRecommendations(content: string, structure: DocumentStructure): string[] {
+  private static generateRecommendations(_content: string, structure: DocumentStructure): string[] {
     const recommendations: string[] = [];
 
     // Readability recommendations
@@ -441,7 +444,7 @@ export class FileProcessor {
   /**
    * Extract critical insights
    */
-  private static extractCriticalInsights(content: string, structure: DocumentStructure): string[] {
+  private static extractCriticalInsights(_content: string, structure: DocumentStructure): string[] {
     const insights: string[] = [];
     
     // High-importance sections

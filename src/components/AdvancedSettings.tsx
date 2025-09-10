@@ -29,18 +29,22 @@ export const AdvancedSettings: React.FC<AdvancedSettingsProps> = ({ isOpen, onCl
     voice: true
   });
 
-  const [webConfig, setWebConfig] = useState(webIntegration.getConfig());
+  const [webConfig, setWebConfig] = useState<any>({});
   const [memoryStats, setMemoryStats] = useState(memorySystem.getMemoryStats());
   const [learningStats, setLearningStats] = useState(realTimeLearning.getLearningAnalytics('default_user'));
-  const [cacheStats, setCacheStats] = useState(webIntegration.getCacheStats());
+  const [cacheStats, setCacheStats] = useState<any>({});
 
   useEffect(() => {
-    if (isOpen) {
-      // Refresh stats when settings open
-      setMemoryStats(memorySystem.getMemoryStats());
-      setLearningStats(realTimeLearning.getLearningAnalytics('default_user'));
-      setCacheStats(webIntegration.getCacheStats());
-    }
+    const loadConfigs = async () => {
+      if (isOpen) {
+        // Refresh stats when settings open
+        setMemoryStats(memorySystem.getMemoryStats());
+        setLearningStats(realTimeLearning.getLearningAnalytics('default_user'));
+        setCacheStats(await webIntegration.getCacheStats());
+        setWebConfig(await webIntegration.getConfig());
+      }
+    };
+    loadConfigs();
   }, [isOpen]);
 
   const handleSettingChange = (setting: keyof SystemSettings, value: boolean) => {
@@ -56,10 +60,10 @@ export const AdvancedSettings: React.FC<AdvancedSettingsProps> = ({ isOpen, onCl
     }));
   };
 
-  const handleWebConfigChange = (config: Partial<typeof webConfig>) => {
+  const handleWebConfigChange = async (config: Partial<any>) => {
     const newConfig = { ...webConfig, ...config };
     setWebConfig(newConfig);
-    webIntegration.updateConfig(newConfig);
+    await webIntegration.updateConfig(newConfig);
   };
 
   const clearMemory = () => {
