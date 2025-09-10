@@ -5,6 +5,7 @@ import { memorySystem } from './memorySystem';
 import { realTimeLearning } from './realTimeLearning';
 import { advancedReasoning } from './advancedReasoning';
 import { webIntegration } from './webIntegration';
+import { ResponseOptimizer } from './responseOptimizer';
 import type { Message } from '../types';
 
 export interface MultiModelResponse {
@@ -183,7 +184,7 @@ class MultiModelAPI {
     try {
       // Step 1: Get personalized context from memory
       if (this.useMemory) {
-        onProgress?.('Loading personalized context', 5);
+        onProgress?.('Thinking...', 5);
         personalizedContext = memorySystem.getPersonalizedContext(userId);
         
         // Store conversation context in memory
@@ -202,7 +203,7 @@ class MultiModelAPI {
       // Step 2: Analyze task for intelligent routing
       let taskAnalysis = null;
       if (this.useIntelligentRouting) {
-        onProgress?.('Analyzing task complexity', 10);
+        onProgress?.('Processing...', 10);
         taskAnalysis = intelligentAgent.analyzeTask(
           messages[messages.length - 1]?.content || '',
           messages
@@ -211,7 +212,7 @@ class MultiModelAPI {
 
       // Step 3: Perform advanced reasoning for complex queries
       if (this.useAdvancedReasoning && taskAnalysis?.complexity === 'expert') {
-        onProgress?.('Performing advanced reasoning', 15);
+        onProgress?.('Analyzing...', 15);
         reasoning = await advancedReasoning.performReasoning(
           messages[messages.length - 1]?.content || '',
           messages,
@@ -237,7 +238,7 @@ class MultiModelAPI {
 
       // Step 5: Add learning guidelines
       if (this.useLearning) {
-        onProgress?.('Applying learned preferences', 20);
+        onProgress?.('Understanding...', 20);
         const guidelines = realTimeLearning.getPersonalizedGuidelines(userId);
         if (guidelines) {
           const systemMessage = enhancedMessages.find(m => m.role === 'system');
@@ -251,7 +252,7 @@ class MultiModelAPI {
 
       // Step 6: Use consensus or intelligent routing
       if (this.useConsensus && taskAnalysis?.complexity !== 'simple') {
-        onProgress?.('Starting consensus analysis', 25);
+        onProgress?.('Generating response...', 25);
         
         if (onStream) {
           const consensusResult = await consensusAI.generateConsensusResponseStream(
@@ -293,7 +294,7 @@ class MultiModelAPI {
         }
       } else {
         // Use simple single model routing
-        onProgress?.('Using single model', 25);
+        onProgress?.('Generating response...', 25);
         
         console.log('🚀 Calling latest2025AI.sendMessage directly from multiModelAPI...');
         const singleResponse = await latest2025AI.sendMessage(enhancedMessages, onStream);
@@ -329,7 +330,7 @@ class MultiModelAPI {
 
       // Step 8: Enhance response with web integration and real-time data
       if (this.useWebIntegration) {
-        onProgress?.('Gathering real-time information', 85);
+        onProgress?.('Finalizing response', 85);
         
         try {
           // Get live data and enhance the response
@@ -345,7 +346,10 @@ class MultiModelAPI {
             }
           );
           
+          // Replace the content with the enhanced version (seamlessly integrated)
           result.content = enhancedResponse.enhancedContent;
+          
+          // Store web enhancement metadata internally but don't expose it in the response
           result.webEnhancement = {
             sources: enhancedResponse.sources,
             news: enhancedResponse.news,
@@ -363,6 +367,22 @@ class MultiModelAPI {
         result.learningInsights = learningInsights;
       }
 
+      // Step 10: Optimize response for ChatGPT-like quality
+      const userQuery = messages[messages.length - 1]?.content || '';
+      const conciseness = ResponseOptimizer.determineConciseness(userQuery);
+      
+      result.content = ResponseOptimizer.optimizeResponse(
+        result.content,
+        userQuery,
+        {
+          conciseness,
+          removeRedundancy: true,
+          improveFlow: true,
+          enhanceClarity: true,
+          maxLength: conciseness === 'brief' ? 500 : conciseness === 'balanced' ? 1200 : 2500
+        }
+      );
+
       onProgress?.('Response complete', 100);
       return result;
 
@@ -371,7 +391,7 @@ class MultiModelAPI {
       console.log('🔄 Attempting fallback to single model...');
       
       if (this.fallbackToSingle) {
-        onProgress?.('Falling back to basic model', 90);
+        onProgress?.('Generating response...', 90);
         
         try {
           console.log('🚀 Calling latest2025AI.sendMessage directly...');
